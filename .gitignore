@@ -1,0 +1,8 @@
+# media folder
+media/
+
+# executable linux
+QLightClient
+
+# executable windows
+QLightClient.exe
