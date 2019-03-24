@@ -1,6 +1,6 @@
 /***********************************************************************************************************************
 
-QLightClient is Copyright 2019 Roy Dybing - all rights reserved
+QLightClient is Copyright 2019 Roy Dybing - all rights reserved.
 
 Source is open to provide insight into working app, mainly to ensure any and all that this app do not collect any data
 of use or user or device it is installed upon - except as explicitly noted below:
@@ -9,11 +9,22 @@ of use or user or device it is installed upon - except as explicitly noted below
 - appId of app when connecting to WAN and LAN server
 - time of contact with WAN and LAN server
 
-Source is not to be used to facilitate unauthorized distribution of complete compiled app.
+Source is not to be used to facilitate distribution of compiled code.
 
 Configuration files and media files are *NOT* included in this source repo.
 
-contact: roy.dybing.at.gmail.com
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL COPYRIGHT HOLDER BE LIABLE FOR ANY
+DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+Contact: roy[dot]dybing[at]gmail[dot]com
 
 ***********************************************************************************************************************/
 
@@ -34,19 +45,18 @@ contact: roy.dybing.at.gmail.com
 #constant true			= 1
 #constant nil			= -1
 #constant maxLocal		= 0
-#constant on			= 1
-#constant off			= 0
 
 global media		as media_t				// constant IDs
 global font			as font_t				// constant IDs
 global layer		as layer_t				// constant layer values
 global sound 		as sound_t				// constant IDs
 global sprite		as sprite_t				// constant IDs
+global tween		as tween_t				// constant IDs
 global txt			as txt_t				// constant IDs
 global ml 			as menuLang_t[maxLocal]	// constant language strings
 global device 		as device_t				// constant after init
 global app			as appSettings_t		// constant after init
-global color		as color_t[8]			// constant after init
+global color		as color_t[9]			// constant after init
 global state		as globalState_t		// will change here and there
 
 setStartState()
@@ -83,9 +93,9 @@ UseNewDefaultFonts(1)
 SetPrintSize(2.0)
 SetPrintColor(255, 255, 0)
 
+setBackground(9)
 /*
 initWaitSprite()
-setBackground(7)
 setLogo()
 showVersion()
 getPrivateIP()

@@ -13,11 +13,22 @@ Copyright 2019 Roy Dybing - all rights reserved
 function placeStartClock(in as string)
 	
 	mt as txtProp_t
+	chars as integer
 	
 	mt.startX = 50
-	mt.startY = 40
-	mt.size = 15
+	mt.startY = 50
 	mt.align = 1
+	
+	chars = len(in)
+	
+	if chars < 3
+		mt.size = 50
+	elseif chars < 6
+		mt.size = 27
+	else
+		mt.size = 17
+	endif
+	mt.startY = mt.startY - (mt.size / 2)
 	
 	setFontProperties(color[0], media.FontB, mt.size)
 	CreateText(txt.clock, in)

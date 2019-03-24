@@ -10,34 +10,32 @@ Copyright 2019 Roy Dybing - all rights reserved
  
 //************************************************* Countdown Timer ****************************************************
 
-function countdownView(time as clock_t)
+function countdownView(clock as clock_t)
 	
-	quit	as integer
-	items	as integer
-	clock	as timer_t
+	quit		as integer
+	items		as integer
+	time		as timer_t
+	backCol		as color_t[2]
+	backTween	as integer
 	
-	if time.hour <> 0
-		items = 3
-	endif
-	if time.hour = 0 and time.min <> 0
-		items = 2
-	endif
-	if items = 0
-		items = 1
-	endif
-	 
-	placeCountDownStart(time.hour, time.min, time.sec)
-	clock = setTimer(1000)
+	items = setClockItems(clock)	
+	setSecondsInClock(clock)
+	backCol = setClockBackgroundColors()
 	
+	placeCountDownStart(clock.hour, clock.min, clock.sec, backCol[0])
+	time = setTimer(1000)
+		
 	repeat
-		testClockRaw(time)
-		if getTimer(clock)
-			time = updateClockTime(time)
-			updateClockText(time, items)			
-		endif
+		testClockRaw(clock)
 		if GetPointerPressed()
 			quit = true
 		endif
+		if getTimer(time)
+			updateClockTime(clock)
+			getClockBackgroundChange(clock, backCol)
+			updateClockText(clock, items)			
+		endif
+		updateClockBackground()
 		sync()
 	until quit
 	

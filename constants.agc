@@ -46,7 +46,9 @@ Copyright 2019 Roy Dybing - all rights reserved
 	txt.clock				= 1100
 		
 	sprite.logo				= 1098
-	sprite.back				= 1099	
+	sprite.back				= 1099
+	
+	tween.back				= 1000	
 	
 	// images	
 	media.fontA				= 1000
@@ -118,5 +120,10 @@ function initColor()
 	color[8].g = 209
 	color[8].b = 170
 	color[8].a = 255
+	// Dark Purple
+	color[9].r = 43
+	color[9].g = 36
+	color[9].b = 87
+	color[9].a = 255
 	
 endFunction

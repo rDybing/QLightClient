@@ -64,9 +64,14 @@ type clock_t
 	hour				as integer
 	min					as integer
 	sec					as integer
-	tranYellow			as integer
-	tranRed				as integer
-	tranDuration		as integer
+	secCurrent			as integer
+	secTotal			as integer
+	yStartPercent		as integer
+	rStartPercent		as integer
+	rEndPercent			as integer
+	yStartSec			as integer
+	rStartSec			as integer
+	rEndSec				as integer
 endType
 
 //************************************************* Media **************************************************************
@@ -91,6 +96,10 @@ endType
 type sprite_t
 	back				as integer
 	logo				as integer
+endType
+
+type tween_t
+	back				as integer
 endType
 
 type sound_t

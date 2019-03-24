@@ -10,21 +10,63 @@ Copyright 2019 Roy Dybing - all rights reserved
 
 //************************************************* Countdown Functions ************************************************
 
-function updateClockTime(clock as clock_t)
-
-	seconds as integer
+function updateClockTime(c ref as clock_t)
 	
-	seconds = clock.sec + (clock.min * 60) + (clock.hour * 3600)
-	
-	if seconds <> 0
-		dec seconds
+	if c.secCurrent <> 0
+		dec c.secCurrent
 	endif
 	
-	clock.hour = seconds / 3600
-	clock.min = (seconds - (clock.hour * 3600)) / 60
-	clock.sec = seconds - (clock.hour * 3600) - (clock.min * 60)
+	c.hour = c.secCurrent / 3600
+	c.min = (c.secCurrent - (c.hour * 3600)) / 60
+	c.sec = c.secCurrent - (c.hour * 3600) - (c.min * 60)
+	
+endFunction c
 
-endFunction clock
+function setSecondsInClock(c ref as clock_t)
+	
+	percent as float
+	total as float
+			
+	c.secTotal = c.hour * 3600
+	c.secTotal = c.secTotal + (c.min * 60)
+	c.secTotal = c.secTotal + c.sec
+	c.secCurrent = c.secTotal
+	
+	total = c.secTotal
+	
+	percent = total / 100	
+	
+	c.yStartSec = c.yStartPercent * percent
+	c.rStartSec = c.rStartPercent * percent
+	c.rEndSec = c.rEndPercent * percent
+
+endFunction
+
+function setClockItems(c as clock_t)
+	
+	out as integer
+	
+	if c.hour <> 0
+		out = 3
+	endif
+	if c.hour = 0 and c.min <> 0
+		out = 2
+	endif
+	if out = 0
+		out = 1
+	endif
+	
+endFunction out
+
+function setClockBackgroundColors()
+	
+	bc as color_t[]
+	
+	bc.insert(color[5])	
+	bc.insert(color[4])
+	bc.insert(color[3])
+	
+endFunction bc
  
 //************************************************* Startup ************************************************************
 

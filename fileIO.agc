@@ -16,6 +16,8 @@ function loadMedia()
 	loadFont(media.fontB, "Roboto-Medium.ttf")
 	loadFont(media.fontC, "Riffic-Bold.ttf")
 	
+	LoadImage(media.back, "whiteDot.png")
+	
 endFunction
  
 //************************************************* AppSettings Load/Save **********************************************
