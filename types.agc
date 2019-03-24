@@ -40,6 +40,7 @@ type globalState_t
 	live 				as integer
 	apiBusy				as integer
 	fatalError			as integer
+	orientation			as integer
 endType
 
 type timer_t

@@ -104,9 +104,11 @@ function setDevice()
 			device.height = 888
 		endCase
 		endSelect
+		SetWindowSize(device.width, device.height, 0)
 	else
 		device.width = getDeviceWidth()
 		device.height = getDeviceHeight()
+		SetScreenResolution(device.width, device.height)
 	endif
 
 	fDeviceX = device.width

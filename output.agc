@@ -79,6 +79,35 @@ function clearCountDown()
 	
 endFunction
 
+//************************************************* Set Screen Orientation *********************************************
+
+function getScreenOrientation()
+	
+	newOrientation	as integer
+	fDeviceX		as float
+	fDeviceY		as float
+	
+	newOrientation = GetOrientation()
+	
+	if newOrientation <> state.orientation
+		if newOrientation = 1 or newOrientation = 2
+			fDeviceX = device.width
+			fDeviceY = device.height
+			device.aspect = fDeviceX / fDeviceY
+			SetScreenResolution(device.width, device.height)
+			SetDisplayAspect(device.aspect)
+		endif
+		if newOrientation = 3 or newOrientation = 4
+			fDeviceX = device.width
+			fDeviceY = device.height
+			device.aspect = fDeviceY / fDeviceX
+			SetScreenResolution(device.height, device.width)
+			SetDisplayAspect(device.aspect)
+		endif
+		state.orientation = newOrientation
+	endif
+endFunction
+
 //************************************************* Chores Functions ***************************************************
 
 function imageSetup(sID	as integer, depth as integer, spr as spriteProp_t, iID as integer)

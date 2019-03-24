@@ -24,7 +24,7 @@ function testClock()
 	time as clock_t
 	
 	time.hour = 0
-	time.min = 0
+	time.min = 1
 	time.sec = 30
 	// note: 100% = start of countdown || 0% = end of countdown
 	time.yStartPercent = 90
