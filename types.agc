@@ -41,6 +41,7 @@ type globalState_t
 	apiBusy				as integer
 	fatalError			as integer
 	orientation			as integer
+	landscape			as integer
 endType
 
 type timer_t

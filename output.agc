@@ -96,6 +96,7 @@ function getScreenOrientation()
 			device.aspect = fDeviceX / fDeviceY
 			SetScreenResolution(device.width, device.height)
 			SetDisplayAspect(device.aspect)
+			landscape = false
 		endif
 		if newOrientation = 3 or newOrientation = 4
 			fDeviceX = device.width
@@ -103,8 +104,10 @@ function getScreenOrientation()
 			device.aspect = fDeviceY / fDeviceX
 			SetScreenResolution(device.height, device.width)
 			SetDisplayAspect(device.aspect)
+			landscape = true
 		endif
 		state.orientation = newOrientation
+		state.landscape = landscape
 	endif
 endFunction
 

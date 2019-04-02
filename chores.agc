@@ -76,6 +76,8 @@ function setStartState()
 	state.apiBusy = false
 	state.httpOK = false
 	state.live = false
+	state.orientation = 3
+	state.landscape = false
 	
 endFunction
 
@@ -105,15 +107,12 @@ function setDevice()
 		endCase
 		endSelect
 		SetWindowSize(device.width, device.height, 0)
+		fDeviceX = device.width
+		fDeviceY = device.height
+		device.aspect = fDeviceX / fDeviceY
 	else
-		device.width = getDeviceWidth()
-		device.height = getDeviceHeight()
-		SetScreenResolution(device.width, device.height)
+		getScreenOrientation()
 	endif
-
-	fDeviceX = device.width
-	fDeviceY = device.height
-	device.aspect = fDeviceX / fDeviceY
 
 endFunction
 
