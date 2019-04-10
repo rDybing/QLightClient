@@ -97,6 +97,29 @@ function updateTextOrientation(txtID as integer)
 	angles as integer[4] = [180, 0, 180, 270, 90]
 	SetTextAngle(txtID, angles[state.orientation])
 	
+	select state.orientation
+	case 0
+		//SetTextSize(txtID, font.size)
+		SetTextPosition(txtID, 50, 65)
+	endCase
+	case 1
+		//SetTextSize(txtID, font.size)
+		SetTextPosition(txtID, 50, 35)
+	endCase
+	case 2
+		//SetTextSize(txtID, font.size)
+		SetTextPosition(txtID, 50, 50)
+	endCase
+	case 3
+		//SetTextSize(txtID, font.size)
+		SetTextPosition(txtID, 25, 50)
+	endCase
+	case 4
+		//SetTextSize(txtID, font.size)
+		SetTextPosition(txtID, 75, 50)
+	endCase
+	endSelect
+	
 endFunction
 
 //************************************************* Chores *************************************************************

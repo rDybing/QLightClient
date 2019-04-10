@@ -105,7 +105,7 @@ function setDevice()
 		endCase
 		endSelect
 		SetWindowSize(device.width, device.height, 0)
-		state.orientation = 0
+		state.orientation = 1
 		state.landscape = false
 	else
 		device.width = GetDeviceWidth()
