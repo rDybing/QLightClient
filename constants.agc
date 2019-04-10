@@ -44,7 +44,8 @@ Copyright 2019 Roy Dybing - all rights reserved
 		
 	txt.ver					= 1000
 	txt.clock				= 1100
-		
+	
+	sprite.bBack			= 1010	
 	sprite.logo				= 1098
 	sprite.back				= 1099
 	
@@ -56,6 +57,7 @@ Copyright 2019 Roy Dybing - all rights reserved
 	media.fontC				= 1002
 	media.back				= 1004
 	media.logo				= 1005
+	media.bBack				= 1010
 	
 endFunction
 

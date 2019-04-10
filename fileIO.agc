@@ -17,6 +17,7 @@ function loadMedia()
 	loadFont(media.fontC, "Riffic-Bold.ttf")
 	
 	LoadImage(media.back, "whiteDot.png")
+	LoadImage(media.bBack, "back_button.png")
 	
 endFunction
  

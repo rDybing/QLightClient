@@ -76,8 +76,6 @@ function setStartState()
 	state.apiBusy = false
 	state.httpOK = false
 	state.live = false
-	state.orientation = 3
-	state.landscape = false
 	
 endFunction
 
@@ -110,8 +108,10 @@ function setDevice()
 		fDeviceX = device.width
 		fDeviceY = device.height
 		device.aspect = fDeviceX / fDeviceY
+		state.orientation = 3
+		state.landscape = false
 	else
-		getScreenOrientation()
+		getScreenOrientation(true)
 	endif
 
 endFunction

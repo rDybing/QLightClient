@@ -36,6 +36,7 @@ function placeCountdownStart(h, m, s as integer, col as color_t)
 	setBackgroundColor(col)
 	clock = padClock(clock)
 	placeStartClock(clock)
+	placeBackButton()
 	
 endFunction
 
@@ -81,7 +82,7 @@ endFunction
 
 //************************************************* Set Screen Orientation *********************************************
 
-function getScreenOrientation()
+function getScreenOrientation(startup as integer)
 	
 	newOrientation	as integer
 	fDeviceX		as float
@@ -89,7 +90,7 @@ function getScreenOrientation()
 	
 	newOrientation = GetOrientation()
 	
-	if newOrientation <> state.orientation
+	if newOrientation <> state.orientation and startup = false
 		if newOrientation = 1 or newOrientation = 2
 			fDeviceX = device.width
 			fDeviceY = device.height
@@ -109,6 +110,41 @@ function getScreenOrientation()
 		state.orientation = newOrientation
 		state.landscape = landscape
 	endif
+	
+	if startup
+		if newOrientation = 1 or newOrientation = 2
+			fDeviceX = device.width
+			fDeviceY = device.height
+			device.aspect = fDeviceX / fDeviceY
+			SetScreenResolution(device.width, device.height)
+			SetDisplayAspect(device.aspect)
+			landscape = false
+		endif
+		if newOrientation = 3 or newOrientation = 4
+			fDeviceX = device.width
+			fDeviceY = device.height
+			device.aspect = fDeviceY / fDeviceX
+			SetScreenResolution(device.height, device.width)
+			SetDisplayAspect(device.aspect)
+			landscape = true
+		endif
+		state.orientation = newOrientation
+		state.landscape = landscape		
+	endif
+endFunction
+
+function placeBackButton()
+	
+	spr as spriteProp_t
+	
+	spr.posX = 30
+	spr.posY = 30
+	spr.width = 10
+	spr.height = -1
+	
+	imageSetup(sprite.bBack, layer.C, spr, media.bBack)
+	SetSpriteColor(sprite.bBack, color[8].r, color[8].g, color[8].b, color[8].a)
+	
 endFunction
 
 //************************************************* Chores Functions ***************************************************
@@ -127,25 +163,6 @@ function imageSetup(sID	as integer, depth as integer, spr as spriteProp_t, iID a
 	setSpriteVisible(sID, 1)
 
 endFunction
-
-function spriteSetup(sID as integer, depth as integer, spr as spriteProp_t, iID0 as integer, iID1 as integer)
-	
-	if GetSpriteExists(sID) = true
-		DeleteSprite(sID)
-	endif
-
-	createSprite(sID, iID0)
-	AddSpriteAnimationFrame(sID, iID0)
-	AddSpriteAnimationFrame(sID, iID1)
-	setSpritePosition(sID, spr.posX, spr.posY)
-	setSpriteColorAlpha(sID, 256)
-	setSpriteDepth(sID, depth)
-	setSpriteFrame(sID, 1)
-	setSpriteVisible(sID, 1)
-	setSpriteSize(sID, spr.width, -1)
-
-endFunction
-
 
 function spriteClearSingle(in as integer)
 	
@@ -181,18 +198,6 @@ endFunction
 
 function setBackgroundColor(c as color_t)
 
-	SetSpriteColor(sprite.back, c.r, c.g, c.b, c.a)
-
-endFunction
-
-function setBackgroundColorDefault()
-
-	SetSpriteColor(sprite.back, color[9].r, color[9].g, color[9].b, color[9].a)
-
-endFunction
-
-function setBackground(c as integer)
-	
 	spr as spriteProp_t
 	
 	spr.posX = 0
@@ -201,6 +206,12 @@ function setBackground(c as integer)
 	spr.height = 100
 	
 	imageSetup(sprite.back, layer.back, spr, media.back)
-	SetSpriteColor(sprite.back, color[c].r, color[c].g, color[c].b, color[c].a)
+	SetSpriteColor(sprite.back, c.r, c.g, c.b, c.a)
+
+endFunction
+
+function setBackgroundColorDefault()
+
+	SetSpriteColor(sprite.back, color[9].r, color[9].g, color[9].b, color[9].a)
 
 endFunction

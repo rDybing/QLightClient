@@ -84,6 +84,7 @@ type media_t
 	fontC				as integer
 	back				as integer
 	logo				as integer
+	bBack				as integer
 endType
 
 type spriteProp_t
@@ -98,6 +99,7 @@ endType
 type sprite_t
 	back				as integer
 	logo				as integer
+	bBack				as integer
 endType
 
 type tween_t

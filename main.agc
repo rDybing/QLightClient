@@ -59,6 +59,10 @@ global app			as appSettings_t		// constant after init
 global color		as color_t[9]			// constant after init
 global state		as globalState_t		// will change here and there
 
+initConstants()
+initLang(ml)
+initColor()
+loadMedia()
 setStartState()
 setDevice()
 
@@ -75,16 +79,9 @@ if app.id = ""
 	saveAppSettings()
 endif
 
-
-initConstants()
-initLang(ml)
-initColor()
-loadMedia()
-
 SetErrorMode(2)
 SetWindowTitle("QLight Client")
 SetWindowAllowResize(0)
-SetDisplayAspect(device.aspect)
 SetScissor(0,0,0,0)
 SetOrientationAllowed(1, 1, 1, 1)
 SetSyncRate(30, 0)
@@ -92,7 +89,6 @@ UseNewDefaultFonts(1)
 SetPrintSize(2.0)
 SetPrintColor(255, 255, 0)
 
-setBackground(9)
 /*
 initWaitSprite()
 setLogo()

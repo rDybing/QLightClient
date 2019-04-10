@@ -16,13 +16,12 @@ function countdownView(clock as clock_t)
 	items		as integer
 	time		as timer_t
 	backCol		as color_t[2]
-	backTween	as integer
 	
 	items = setClockItems(clock)	
 	setSecondsInClock(clock)
 	backCol = setClockBackgroundColors()
 	
-	placeCountDownStart(clock.hour, clock.min, clock.sec, backCol[0])
+	placeCountdownStart(clock.hour, clock.min, clock.sec, backCol[0])
 	time = setTimer(1000)
 		
 	repeat
@@ -30,7 +29,7 @@ function countdownView(clock as clock_t)
 		if GetPointerPressed()
 			quit = true
 		endif
-		getScreenOrientation()
+		getScreenOrientation(false)
 		if getTimer(time)
 			updateClockTime(clock)
 			getClockBackgroundChange(clock, backCol)
