@@ -29,7 +29,7 @@ function countdownView(clock as clock_t)
 		if GetPointerPressed()
 			quit = true
 		endif
-		getScreenOrientation(false)
+		getScreenOrientation(txt.clock)
 		if getTimer(time)
 			updateClockTime(clock)
 			getClockBackgroundChange(clock, backCol)

@@ -82,55 +82,50 @@ endFunction
 
 //************************************************* Set Screen Orientation *********************************************
 
-function getScreenOrientation(startup as integer)
+function getScreenOrientation(txtID as integer)
 	
 	newOrientation	as integer
+	newLandscape	as integer
+	newRotation		as integer
 	fDeviceX		as float
-	fDeviceY		as float
+	fDeviceY		as float	
 	
-	newOrientation = GetOrientation()
+	newRotation = GetDirectionAngle()
 	
-	if newOrientation <> state.orientation and startup = false
-		if newOrientation = 1 or newOrientation = 2
-			fDeviceX = device.width
-			fDeviceY = device.height
-			device.aspect = fDeviceX / fDeviceY
-			SetScreenResolution(device.width, device.height)
-			SetDisplayAspect(device.aspect)
-			landscape = false
-		endif
-		if newOrientation = 3 or newOrientation = 4
-			fDeviceX = device.width
-			fDeviceY = device.height
-			device.aspect = fDeviceY / fDeviceX
-			SetScreenResolution(device.height, device.width)
-			SetDisplayAspect(device.aspect)
-			landscape = true
-		endif
-		state.orientation = newOrientation
-		state.landscape = landscape
+	if (newRotation > state.rotation + 10) or (newRotation < state.rotation - 10)
+		state.rotation = newRotation
 	endif
 	
-	if startup
+	//normal portrait
+	if state.rotation > 135 and state.rotation < 225
+		newOrientation = 1
+	endif
+	//reverse portrait
+	if state.rotation > 315 and state.rotation < 45
+		newOrientation = 2
+	endif
+	//normal landscape
+	if state.rotation > 45 and state.rotation < 135
+		newOrientation = 3
+	endif
+	//reverse landscape
+	if state.rotation > 225 and state.rotation < 315
+		newOrientation = 4
+	endif
+	
+	if newOrientation <> state.orientation
 		if newOrientation = 1 or newOrientation = 2
-			fDeviceX = device.width
-			fDeviceY = device.height
-			device.aspect = fDeviceX / fDeviceY
-			SetScreenResolution(device.width, device.height)
-			SetDisplayAspect(device.aspect)
-			landscape = false
+			newLandscape = false
 		endif
 		if newOrientation = 3 or newOrientation = 4
-			fDeviceX = device.width
-			fDeviceY = device.height
-			device.aspect = fDeviceY / fDeviceX
-			SetScreenResolution(device.height, device.width)
-			SetDisplayAspect(device.aspect)
-			landscape = true
+			newLandscape = true
 		endif
 		state.orientation = newOrientation
-		state.landscape = landscape		
+		state.landscape = newLandscape
+		updateTextOrientation(txtID)
 	endif
+	
+
 endFunction
 
 function placeBackButton()
@@ -207,7 +202,7 @@ function setBackgroundColor(c as color_t)
 	
 	imageSetup(sprite.back, layer.back, spr, media.back)
 	SetSpriteColor(sprite.back, c.r, c.g, c.b, c.a)
-
+	
 endFunction
 
 function setBackgroundColorDefault()

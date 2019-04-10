@@ -33,7 +33,8 @@ function placeStartClock(in as string)
 	setFontProperties(color[0], media.FontB, mt.size)
 	CreateText(txt.clock, in)
 	textDraw(txt.clock, mt)
-	
+	updateTextOrientation(txt.clock)
+		
 endFunction
 
 function padClock(in as string)
@@ -88,6 +89,13 @@ function updateClockText(in as clock_t, items as integer)
 	
 	out = padClock(out)
 	SetTextString(txt.clock, out)
+	
+endFunction
+
+function updateTextOrientation(txtID as integer)
+	
+	angles as integer[4] = [180, 0, 180, 270, 90]
+	SetTextAngle(txtID, angles[state.orientation])
 	
 endFunction
 

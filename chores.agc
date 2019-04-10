@@ -105,14 +105,21 @@ function setDevice()
 		endCase
 		endSelect
 		SetWindowSize(device.width, device.height, 0)
-		fDeviceX = device.width
-		fDeviceY = device.height
-		device.aspect = fDeviceX / fDeviceY
-		state.orientation = 3
+		state.orientation = 0
 		state.landscape = false
 	else
-		getScreenOrientation(true)
+		device.width = GetDeviceWidth()
+		device.Height = GetDeviceHeight()
+		SetWindowSize(device.width, device.height, 0)
+		state.orientation = 1
+		state.landscape = false
+		getScreenOrientation(0)
 	endif
+	
+	fDeviceX = device.width
+	fDeviceY = device.height
+	device.aspect = fDeviceX / fDeviceY
+	SetDisplayAspect(device.aspect)
 
 endFunction
 

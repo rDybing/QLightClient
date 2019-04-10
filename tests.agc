@@ -13,6 +13,7 @@ function testGeneral(in as string)
 	repeat
 		print("testData...")
 		print(in)
+		print("W: " + str(device.width) + " | H: " + str(device.height))
 		print("click to continue...")
 		sync()
 	until GetPointerPressed()
@@ -36,13 +37,16 @@ endFunction
 
 function testClockRaw(in as clock_t)
 	
-	print("hours     : " + str(in.hour))
-	print("mins      : " + str(in.min))
-	print("secs      : " + str(in.sec))
-	print("secs curr : " + str(in.secCurrent))
-	print("secs total: " + str(in.secTotal))
-	print("y startsec: " + str(in.yStartSec))
-	print("r startsec: " + str(in.rStartSec))
-	print("r endsec  : " + str(in.rEndSec))
+	print("hours      : " + str(in.hour))
+	print("mins       : " + str(in.min))
+	print("secs       : " + str(in.sec))
+	print("secs curr  : " + str(in.secCurrent))
+	print("secs total : " + str(in.secTotal))
+	print("y startsec : " + str(in.yStartSec))
+	print("r startsec : " + str(in.rStartSec))
+	print("r endsec   : " + str(in.rEndSec))
+	print("rotation   : " + str(state.rotation))
+	print("orientation: " + str(state.orientation))
+	print("landscape  : " + str(state.landscape))
 	
 endFunction
