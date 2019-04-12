@@ -30,6 +30,8 @@ function countdownView(clock as clock_t)
 		endif
 		testClockRaw(clock)
 		if device.isComputer
+			// get if new orientation from server
+			// if so:
 			setScreenTextOrientation(txt.clock)
 		else
 			getScreenTextOrientation(txt.clock)

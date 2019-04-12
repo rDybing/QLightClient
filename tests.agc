@@ -8,17 +8,7 @@ Copyright 2019 Roy Dybing - all rights reserved
 
 ***********************************************************************************************************************/
 
-function testGeneral(in as string)
-	
-	repeat
-		print("testData...")
-		print(in)
-		print("W: " + str(device.width) + " | H: " + str(device.height))
-		print("click to continue...")
-		sync()
-	until GetPointerPressed()
-	
-endFunction
+//************************************************* Module Tests *******************************************************
 
 function testClock()
 	
@@ -32,6 +22,20 @@ function testClock()
 	time.rStartPercent = 20
 	time.rEndPercent = 5
 	countdownView(time)
+	
+endFunction
+
+//************************************************* Debug Data *********************************************************
+
+function testGeneral(in as string)
+	
+	repeat
+		print("testData...")
+		print(in)
+		print("W: " + str(device.width) + " | H: " + str(device.height))
+		print("click to continue...")
+		sync()
+	until GetPointerPressed()
 	
 endFunction
 

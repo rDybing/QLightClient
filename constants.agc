@@ -9,30 +9,8 @@ Copyright 2019 Roy Dybing - all rights reserved
 ***********************************************************************************************************************/
 
 //************************************************* Control ************************************************************
-
-/* *******************************************
- *
- * constants.agc
- *
- * Project: msSignFind
- *
- * *******************************************/
  
- function initConstants()
-/* *******************************************
- *
- * ID Map:
- *
- * 1000 -> 1089: UI text
- * 1090 -> 1099: Input text
- * 1100 -> 1199: Data text
- * 2000 -> 2099: Video
- * 8800 -> 8899: Sounds
- * 8900 -> 8999: Sprites
- * 9000 -> 9099: Media Files Import
- * 9100 -> 9199: Animation frames
- *
- * *******************************************/
+function initConstants()
 
 	layer.front				= 0
 	layer.A					= 10
@@ -51,7 +29,6 @@ Copyright 2019 Roy Dybing - all rights reserved
 	
 	tween.back				= 1000	
 	
-	// images	
 	media.fontA				= 1000
 	media.fontB				= 1001
 	media.fontC				= 1002
@@ -62,12 +39,6 @@ Copyright 2019 Roy Dybing - all rights reserved
 endFunction
 
 function initLang(ml ref as menuLang_t[])
-	
-	/* template:
-	ml[0].item = ""
-	ml[0].lang[0] = ""
-	ml[0].lang[1] = ""
-	*/
 	
 	ml[0].item = "version"
 	ml[0].lang[0] = "Versjon:"

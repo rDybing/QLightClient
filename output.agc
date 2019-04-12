@@ -130,9 +130,6 @@ function setScreenTextOrientation(txtID as integer)
 	
 	newOrientation	as integer
 	newLandscape	as integer
-	newRotation		as integer
-	fDeviceX		as float
-	fDeviceY		as float
 		
 	if newOrientation = 1 or newOrientation = 2
 		newLandscape = false
