@@ -45,8 +45,20 @@ function testClockRaw(in as clock_t)
 	print("y startsec : " + str(in.yStartSec))
 	print("r startsec : " + str(in.rStartSec))
 	print("r endsec   : " + str(in.rEndSec))
+
+	testDevice()
+	
+endFunction
+
+function testDevice()
+
+	print("device OS  : " + device.os)
+	print("model      : " + device.model)
 	print("rotation   : " + str(state.rotation))
 	print("orientation: " + str(state.orientation))
 	print("landscape  : " + str(state.landscape))
+	print("width      : " + str(device.width))
+	print("height     : " + str(device.height))
+	print("aspect	  : " + str(device.aspect))
 	
 endFunction

@@ -87,30 +87,19 @@ function setDevice()
 	device.os = GetDeviceBaseName()
 	device.model = GetDeviceType()
 
+	SetWindowSize(device.width, device.height, 1)
+
 	if device.os = "linux" or device.os = "windows" or device.os = "pi" or device.os = "mac"
 		SetAntialiasMode(1)
-		aspectMode = 2
-		select aspectMode
-		case 0									// 0 = iPad || 1 = iPhone
-			device.width = 768					// iPad 50% 4/3
-			device.height = 1024				// iPad 50% 4/3
-		endCase
-		case 1
-			device.width = 640 					// iPhone 16/9
-			device.height = 1136				// iPhone 16/9
-		endCase
-		case 2
-			device.width = 540
-			device.height = 888
-		endCase
-		endSelect
-		SetWindowSize(device.width, device.height, 0)
-		state.orientation = 1
-		state.landscape = false
+		device.width = GetMaxDeviceWidth()
+		device.height = GetMaxDeviceHeight()
+		device.isComputer = true
+		state.orientation = 3
+		state.landscape = true
 	else
 		device.width = GetDeviceWidth()
-		device.Height = GetDeviceHeight()
-		SetWindowSize(device.width, device.height, 0)
+		device.height = GetDeviceHeight()
+		device.isComputer = false
 		state.orientation = 1
 		state.landscape = false
 		getScreenOrientation(0)

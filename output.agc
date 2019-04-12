@@ -90,7 +90,9 @@ function getScreenOrientation(txtID as integer)
 	fDeviceX		as float
 	fDeviceY		as float	
 	
-	newRotation = GetDirectionAngle()
+	if not device.isComputer
+		newRotation = GetDirectionAngle()
+	endif
 	
 	if (newRotation > state.rotation + 10) or (newRotation < state.rotation - 10)
 		state.rotation = newRotation

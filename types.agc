@@ -32,7 +32,7 @@ type device_t
 	id					as string 
 	os					as string
 	model				as string
-	ios					as integer
+	isComputer			as integer
 endType
 
 type globalState_t

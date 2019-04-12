@@ -103,16 +103,10 @@ function main ()
 	appJSON as string
 	if not state.fatalError
 		appJSON = app.toJSON()
-		do
+		repeat
 			print("In JSON")
 			print(appJSON)
-			print("In Type:")
-			print(app.id)
-			print(app.apiIP)
-			print(app.apiPort)
-			print(app.apiId)
-			print(app.apiKey)
 			sync()
-		loop
+		until GetPointerPressed()
 	endif
 endFunction
