@@ -28,6 +28,11 @@ function placeStartClock(in as string)
 	else
 		mt.size = 17
 	endif
+	
+	if device.isComputer
+		mt.size = mt.size * 2
+	endif
+	
 	mt.startY = mt.startY - (mt.size / 2)
 	
 	setFontProperties(color[0], media.FontB, mt.size)
@@ -94,17 +99,24 @@ endFunction
 
 function updateTextOrientation(txtID as integer)
 	
+	offset as integer
 	angles as integer[4] = [180, 0, 180, 270, 90]
 	SetTextAngle(txtID, angles[state.orientation])
+	
+	if device.isComputer
+		offset = 15
+	else
+		offset = 0
+	endif
 	
 	select state.orientation
 	case 0
 		//SetTextSize(txtID, font.size)
-		SetTextPosition(txtID, 50, 65)
+		SetTextPosition(txtID, 50, 65 - offset)
 	endCase
 	case 1
 		//SetTextSize(txtID, font.size)
-		SetTextPosition(txtID, 50, 35)
+		SetTextPosition(txtID, 50, 35 - offset)
 	endCase
 	case 2
 		//SetTextSize(txtID, font.size)
@@ -112,11 +124,11 @@ function updateTextOrientation(txtID as integer)
 	endCase
 	case 3
 		//SetTextSize(txtID, font.size)
-		SetTextPosition(txtID, 25, 50)
+		SetTextPosition(txtID, 25 - offset, 50)
 	endCase
 	case 4
 		//SetTextSize(txtID, font.size)
-		SetTextPosition(txtID, 75, 50)
+		SetTextPosition(txtID, 75 - offset, 50)
 	endCase
 	endSelect
 	

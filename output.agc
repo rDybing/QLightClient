@@ -36,7 +36,6 @@ function placeCountdownStart(h, m, s as integer, col as color_t)
 	setBackgroundColor(col)
 	clock = padClock(clock)
 	placeStartClock(clock)
-	placeBackButton()
 	
 endFunction
 
@@ -80,20 +79,18 @@ function clearCountDown()
 	
 endFunction
 
-//************************************************* Set Screen Orientation *********************************************
+//************************************************* Screen Orientation *************************************************
 
-function getScreenOrientation(txtID as integer)
+function getScreenTextOrientation(txtID as integer)
 	
 	newOrientation	as integer
 	newLandscape	as integer
 	newRotation		as integer
 	fDeviceX		as float
-	fDeviceY		as float	
+	fDeviceY		as float
 	
-	if not device.isComputer
-		newRotation = GetDirectionAngle()
-	endif
-	
+	newRotation = GetDirectionAngle()	
+		
 	if (newRotation > state.rotation + 10) or (newRotation < state.rotation - 10)
 		state.rotation = newRotation
 	endif
@@ -127,7 +124,25 @@ function getScreenOrientation(txtID as integer)
 		updateTextOrientation(txtID)
 	endif
 	
+endFunction
 
+function setScreenTextOrientation(txtID as integer)
+	
+	newOrientation	as integer
+	newLandscape	as integer
+	newRotation		as integer
+	fDeviceX		as float
+	fDeviceY		as float
+		
+	if newOrientation = 1 or newOrientation = 2
+		newLandscape = false
+	endif
+	if newOrientation = 3 or newOrientation = 4
+		newLandscape = true
+	endif
+	state.landscape = newLandscape
+	updateTextOrientation(txtID)
+	
 endFunction
 
 function placeBackButton()

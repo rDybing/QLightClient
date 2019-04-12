@@ -25,11 +25,15 @@ function countdownView(clock as clock_t)
 	time = setTimer(1000)
 		
 	repeat
-		testClockRaw(clock)
 		if GetPointerPressed()
 			quit = true
 		endif
-		getScreenOrientation(txt.clock)
+		testClockRaw(clock)
+		if device.isComputer
+			setScreenTextOrientation(txt.clock)
+		else
+			getScreenTextOrientation(txt.clock)
+		endif
 		if getTimer(time)
 			updateClockTime(clock)
 			getClockBackgroundChange(clock, backCol)

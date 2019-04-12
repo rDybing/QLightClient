@@ -94,7 +94,7 @@ function setDevice()
 		device.width = GetMaxDeviceWidth()
 		device.height = GetMaxDeviceHeight()
 		device.isComputer = true
-		state.orientation = 3
+		state.orientation = 1
 		state.landscape = true
 	else
 		device.width = GetDeviceWidth()
@@ -102,7 +102,7 @@ function setDevice()
 		device.isComputer = false
 		state.orientation = 1
 		state.landscape = false
-		getScreenOrientation(0)
+		//getScreenTextOrientation(0)
 	endif
 	
 	fDeviceX = device.width

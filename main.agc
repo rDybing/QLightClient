@@ -85,7 +85,7 @@ SetWindowAllowResize(0)
 SetScissor(0,0,0,0)
 SetOrientationAllowed(1, 0, 0, 0)
 SetSyncRate(30, 0)
-UseNewDefaultFonts(1)
+UseNewDefaultFonts(0)
 SetPrintSize(2.0)
 SetPrintColor(255, 255, 0)
 
@@ -99,9 +99,11 @@ getPrivateIP()
 main()
 
 function main ()
-	testClock()
+	
 	appJSON as string
+	
 	if not state.fatalError
+		testClock()
 		appJSON = app.toJSON()
 		repeat
 			print("In JSON")

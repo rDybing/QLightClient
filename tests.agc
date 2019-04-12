@@ -54,11 +54,12 @@ function testDevice()
 
 	print("device OS  : " + device.os)
 	print("model      : " + device.model)
+	print("is computer: " + str(device.isComputer))
 	print("rotation   : " + str(state.rotation))
 	print("orientation: " + str(state.orientation))
 	print("landscape  : " + str(state.landscape))
 	print("width      : " + str(device.width))
 	print("height     : " + str(device.height))
-	print("aspect	  : " + str(device.aspect))
+	print("aspect     : " + str(device.aspect))
 	
 endFunction
