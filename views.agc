@@ -16,7 +16,9 @@ function countdownView(clock as clock_t)
 	items		as integer
 	time		as timer_t
 	backCol		as color_t[2]
+	pulseIn		as integer
 	
+	pulseIn = false	
 	items = setClockItems(clock)	
 	setSecondsInClock(clock)
 	backCol = setClockBackgroundColors()
@@ -37,9 +39,13 @@ function countdownView(clock as clock_t)
 			getScreenTextOrientation(txt.clock)
 		endif
 		if getTimer(time)
-			updateClockTime(clock)
-			getClockBackgroundChange(clock, backCol)
-			updateClockText(clock, items)			
+			if clock.secCurrent = 0
+				pulseIn = setClockBackgroundPulse(pulseIn, backCol[2])
+			else
+				updateClockTime(clock)
+				getClockBackgroundChange(clock, backCol)
+				updateClockText(clock, items)			
+			endif
 		endif
 		updateClockBackground()
 		sync()

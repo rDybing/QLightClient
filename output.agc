@@ -63,6 +63,27 @@ function getClockBackgroundChange(c as clock_t, col as color_t[])
 	
 endFunction
 
+function setClockBackgroundPulse(pulseIn as integer, col as color_t)
+	
+	duration as integer
+	duration = 1
+	
+	if pulseIn
+		// go to red
+		if GetTweenSpriteExists(tween.back)
+			DeleteTween(tween.back)
+		endif
+		spriteFadeColor(tween.back, sprite.back, col, duration)	
+	else
+		// go to black
+		if GetTweenSpriteExists(tween.back)
+			DeleteTween(tween.back)
+		endif
+		spriteFadeColor(tween.back, sprite.back, color[1], duration)	
+	endif
+	
+endFunction not pulseIn
+
 function updateClockBackground()
 
 	if GetTweenSpriteExists(tween.back)
@@ -128,6 +149,8 @@ endFunction
 
 function setScreenTextOrientation(txtID as integer)
 	
+	// import newOrientation
+	
 	newOrientation	as integer
 	newLandscape	as integer
 		
@@ -137,6 +160,7 @@ function setScreenTextOrientation(txtID as integer)
 	if newOrientation = 3 or newOrientation = 4
 		newLandscape = true
 	endif
+	
 	state.landscape = newLandscape
 	updateTextOrientation(txtID)
 	

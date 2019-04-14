@@ -20,7 +20,7 @@ function updateClockTime(c ref as clock_t)
 	c.min = (c.secCurrent - (c.hour * 3600)) / 60
 	c.sec = c.secCurrent - (c.hour * 3600) - (c.min * 60)
 	
-endFunction c
+endFunction
 
 function setSecondsInClock(c ref as clock_t)
 	
