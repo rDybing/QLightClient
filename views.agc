@@ -7,6 +7,23 @@ Project: QLightClient
 Copyright 2019 Roy Dybing - all rights reserved
 
 ***********************************************************************************************************************/
+
+//************************************************* Cue Light Functions ************************************************
+
+function cueLightView()
+	
+	quit as integer
+	
+	repeat
+		// change to get quit-order from controller
+		if GetPointerPressed()
+			quit = true
+		endif
+		
+		sync()
+	until quit
+	
+endFunction
  
 //************************************************* Countdown Timer ****************************************************
 
@@ -27,16 +44,17 @@ function countdownView(clock as clock_t, prop as property_t)
 	time = setTimer(1000)
 		
 	repeat
+		// change to get quit-order from controller
 		if GetPointerPressed()
 			quit = true
 		endif
 		testClockRaw(clock)
 		if device.isComputer
-			// get if new orientation from server
+			// get if new orientation from controller
 			// if so:
-			setScreenTextOrientation(txt.clock)
+			setScreenTextOrientation(txt.clock, prop.orientation, prop.padVertical)
 		else
-			getScreenTextOrientation(txt.clock)
+			getScreenTextOrientation(txt.clock, prop.padVertical)
 		endif
 		if getTimer(time)
 			if clock.secCurrent = 0

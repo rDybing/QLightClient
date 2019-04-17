@@ -8,9 +8,12 @@ Copyright 2019 Roy Dybing - all rights reserved
 
 ***********************************************************************************************************************/
 
+//************************************************* Cue Light Functions ************************************************
+
+
 //************************************************* Countdown Functions ************************************************
 
-function placeStartClock(in as string, prop as property_t)
+function placeStartClock(in as string, prop ref as property_t)
 	
 	mt as txtProp_t
 	chars as integer
@@ -23,14 +26,16 @@ function placeStartClock(in as string, prop as property_t)
 	
 	if chars < 3
 		mt.size = 50 * prop.baseSize
+		prop.padVertical = -25
 	elseif chars < 6
 		mt.size = 27 * prop.baseSize
 	else
 		mt.size = 17 * prop.baseSize
+		prop.padVertical = 10
 	endif
 	
 	if device.isComputer
-		mt.size = mt.size * 2
+		mt.size = mt.size * 1.6
 	endif
 	
 	mt.startY = mt.startY - (mt.size / 2)
@@ -38,7 +43,7 @@ function placeStartClock(in as string, prop as property_t)
 	setFontProperties(color[0], prop.font, mt.size)
 	CreateText(txt.clock, in)
 	textDraw(txt.clock, mt)
-	updateTextOrientation(txt.clock)
+	updateTextOrientation(txt.clock, prop.padVertical)
 		
 endFunction
 
@@ -97,14 +102,15 @@ function updateClockText(in as clock_t, items as integer)
 	
 endFunction
 
-function updateTextOrientation(txtID as integer)
+function updateTextOrientation(txtID, pad as integer)
 	
-	offset as integer
-	angles as integer[4] = [180, 0, 180, 270, 90]
+	offset	as integer
+	angles	as integer[4] = [180, 0, 180, 270, 90]
+	
 	SetTextAngle(txtID, angles[state.orientation])
 	
 	if device.isComputer
-		offset = 15
+		offset = 10
 	else
 		offset = 0
 	endif
@@ -112,23 +118,23 @@ function updateTextOrientation(txtID as integer)
 	select state.orientation
 	case 0
 		//SetTextSize(txtID, font.size)
-		SetTextPosition(txtID, 50, 65 - offset)
+		SetTextPosition(txtID, 50, 65 - offset - (pad / 2))
 	endCase
 	case 1
 		//SetTextSize(txtID, font.size)
-		SetTextPosition(txtID, 50, 35 - offset)
+		SetTextPosition(txtID, 50, 35 - offset + (pad / 1.5))
 	endCase
 	case 2
 		//SetTextSize(txtID, font.size)
-		SetTextPosition(txtID, 50, 50)
+		SetTextPosition(txtID, 50, 65 - (pad / 1.5))
 	endCase
 	case 3
 		//SetTextSize(txtID, font.size)
-		SetTextPosition(txtID, 25 - offset, 50)
+		SetTextPosition(txtID, 25 + offset + (pad / 2), 50)
 	endCase
 	case 4
 		//SetTextSize(txtID, font.size)
-		SetTextPosition(txtID, 75 - offset, 50)
+		SetTextPosition(txtID, 75 - (offset * 1.5) - (pad / 2), 50)
 	endCase
 	endSelect
 	

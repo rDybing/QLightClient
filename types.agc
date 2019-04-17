@@ -80,6 +80,8 @@ endType
 type property_t
 	baseSize			as float
 	font				as integer
+	orientation			as integer
+	padVertical			as integer
 endType
 
 //************************************************* Media **************************************************************

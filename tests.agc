@@ -16,7 +16,7 @@ function testClock()
 	prop as property_t
 	
 	time.hour = 0
-	time.min = 1
+	time.min = 0
 	time.sec = 30
 	// note: 100% = start of countdown || 0% = end of countdown
 	time.yStartPercent = 90
@@ -24,6 +24,7 @@ function testClock()
 	time.rEndPercent = 5
 	prop.baseSize = 0.9
 	prop.font = media.fontC
+	prop.orientation = 4
 	countdownView(time, prop)
 	
 endFunction

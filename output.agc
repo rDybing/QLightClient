@@ -8,9 +8,11 @@ Copyright 2019 Roy Dybing - all rights reserved
 
 ***********************************************************************************************************************/
 
+//************************************************* Cue Light Functions ************************************************
+
 //************************************************* Countdown Functions ************************************************
 
-function placeCountdownStart(h, m, s as integer, col as color_t, prop as property_t)
+function placeCountdownStart(h, m, s as integer, col as color_t, prop ref as property_t)
 	
 	hour 	as string
 	min		as string
@@ -102,10 +104,9 @@ endFunction
 
 //************************************************* Screen Orientation *************************************************
 
-function getScreenTextOrientation(txtID as integer)
+function getScreenTextOrientation(txtID, padVertical as integer)
 	
 	newOrientation	as integer
-	newLandscape	as integer
 	newRotation		as integer
 	fDeviceX		as float
 	fDeviceY		as float
@@ -135,34 +136,29 @@ function getScreenTextOrientation(txtID as integer)
 	
 	if newOrientation <> state.orientation
 		if newOrientation = 1 or newOrientation = 2
-			newLandscape = false
+			state.landscape = false
 		endif
 		if newOrientation = 3 or newOrientation = 4
-			newLandscape = true
+			state.landscape = true
 		endif
 		state.orientation = newOrientation
-		state.landscape = newLandscape
-		updateTextOrientation(txtID)
+		updateTextOrientation(txtID, padVertical)
 	endif
 	
 endFunction
 
-function setScreenTextOrientation(txtID as integer)
-	
-	// import newOrientation
-	
-	newOrientation	as integer
-	newLandscape	as integer
+function setScreenTextOrientation(txtID, newOrientation, padVertical as integer)
 		
-	if newOrientation = 1 or newOrientation = 2
-		newLandscape = false
+	if newOrientation <> state.orientation
+		if newOrientation = 1 or newOrientation = 2
+			state.landscape = false
+		endif
+		if newOrientation = 3 or newOrientation = 4
+			state.landscape = true
+		endif
+		state.orientation = newOrientation
+		updateTextOrientation(txtID, padVertical)
 	endif
-	if newOrientation = 3 or newOrientation = 4
-		newLandscape = true
-	endif
-	
-	state.landscape = newLandscape
-	updateTextOrientation(txtID)
 	
 endFunction
 
