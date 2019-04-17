@@ -26,7 +26,7 @@ function placeStartClock(in as string, prop ref as property_t)
 	
 	if chars < 3
 		mt.size = 50 * prop.baseSize
-		prop.padVertical = -25
+		prop.padVertical = -20
 	elseif chars < 6
 		mt.size = 27 * prop.baseSize
 	else
@@ -126,7 +126,7 @@ function updateTextOrientation(txtID, pad as integer)
 	endCase
 	case 2
 		//SetTextSize(txtID, font.size)
-		SetTextPosition(txtID, 50, 65 - (pad / 1.5))
+		SetTextPosition(txtID, 50, 65 - (pad))
 	endCase
 	case 3
 		//SetTextSize(txtID, font.size)

@@ -24,7 +24,7 @@ function testClock()
 	time.rEndPercent = 5
 	prop.baseSize = 0.9
 	prop.font = media.fontC
-	prop.orientation = 4
+	prop.orientation = 1
 	countdownView(time, prop)
 	
 endFunction
@@ -34,9 +34,10 @@ endFunction
 function testGeneral(in as string)
 	
 	repeat
-		print("testData...")
+		print("......testData......")
+		print("--------------------")
 		print(in)
-		print("W: " + str(device.width) + " | H: " + str(device.height))
+		print("--------------------")
 		print("click to continue...")
 		sync()
 	until GetPointerPressed()
