@@ -13,6 +13,7 @@ Copyright 2019 Roy Dybing - all rights reserved
 function testClock()
 	
 	time as clock_t
+	prop as property_t
 	
 	time.hour = 0
 	time.min = 1
@@ -21,7 +22,9 @@ function testClock()
 	time.yStartPercent = 90
 	time.rStartPercent = 20
 	time.rEndPercent = 5
-	countdownView(time)
+	prop.baseSize = 0.9
+	prop.font = media.fontC
+	countdownView(time, prop)
 	
 endFunction
 

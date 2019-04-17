@@ -14,7 +14,8 @@ function loadMedia()
 		
 	loadFont(media.fontA, "Roboto-Regular.ttf")
 	loadFont(media.fontB, "Roboto-Medium.ttf")
-	loadFont(media.fontC, "Riffic-Bold.ttf")
+	loadFont(media.fontC, "UbuntuMono-B.ttf")
+	loadFont(media.fontD, "Riffic-Bold.ttf")
 	
 	LoadImage(media.back, "whiteDot.png")
 	LoadImage(media.bBack, "back_button.png")

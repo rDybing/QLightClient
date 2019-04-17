@@ -10,7 +10,7 @@ Copyright 2019 Roy Dybing - all rights reserved
 
 //************************************************* Countdown Functions ************************************************
 
-function placeCountdownStart(h, m, s as integer, col as color_t)
+function placeCountdownStart(h, m, s as integer, col as color_t, prop as property_t)
 	
 	hour 	as string
 	min		as string
@@ -35,7 +35,7 @@ function placeCountdownStart(h, m, s as integer, col as color_t)
 	
 	setBackgroundColor(col)
 	clock = padClock(clock)
-	placeStartClock(clock)
+	placeStartClock(clock, prop)
 	
 endFunction
 

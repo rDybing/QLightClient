@@ -77,12 +77,18 @@ type clock_t
 	rEndSec				as integer
 endType
 
+type property_t
+	baseSize			as float
+	font				as integer
+endType
+
 //************************************************* Media **************************************************************
 
 type media_t
 	fontA				as integer
 	fontB				as integer
 	fontC				as integer
+	fontD				as integer
 	back				as integer
 	logo				as integer
 	bBack				as integer

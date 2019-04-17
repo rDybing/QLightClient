@@ -10,7 +10,7 @@ Copyright 2019 Roy Dybing - all rights reserved
 
 //************************************************* Countdown Functions ************************************************
 
-function placeStartClock(in as string)
+function placeStartClock(in as string, prop as property_t)
 	
 	mt as txtProp_t
 	chars as integer
@@ -22,11 +22,11 @@ function placeStartClock(in as string)
 	chars = len(in)
 	
 	if chars < 3
-		mt.size = 50
+		mt.size = 50 * prop.baseSize
 	elseif chars < 6
-		mt.size = 27
+		mt.size = 27 * prop.baseSize
 	else
-		mt.size = 17
+		mt.size = 17 * prop.baseSize
 	endif
 	
 	if device.isComputer
@@ -35,7 +35,7 @@ function placeStartClock(in as string)
 	
 	mt.startY = mt.startY - (mt.size / 2)
 	
-	setFontProperties(color[0], media.FontB, mt.size)
+	setFontProperties(color[0], prop.font, mt.size)
 	CreateText(txt.clock, in)
 	textDraw(txt.clock, mt)
 	updateTextOrientation(txt.clock)

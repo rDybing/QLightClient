@@ -32,6 +32,7 @@ function initConstants()
 	media.fontA				= 1000
 	media.fontB				= 1001
 	media.fontC				= 1002
+	media.fontD				= 1003
 	media.back				= 1004
 	media.logo				= 1005
 	media.bBack				= 1010

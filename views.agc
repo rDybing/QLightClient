@@ -10,7 +10,7 @@ Copyright 2019 Roy Dybing - all rights reserved
  
 //************************************************* Countdown Timer ****************************************************
 
-function countdownView(clock as clock_t)
+function countdownView(clock as clock_t, prop as property_t)
 	
 	quit		as integer
 	items		as integer
@@ -23,7 +23,7 @@ function countdownView(clock as clock_t)
 	setSecondsInClock(clock)
 	backCol = setClockBackgroundColors()
 	
-	placeCountdownStart(clock.hour, clock.min, clock.sec, backCol[0])
+	placeCountdownStart(clock.hour, clock.min, clock.sec, backCol[0], prop)
 	time = setTimer(1000)
 		
 	repeat
