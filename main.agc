@@ -32,6 +32,7 @@ Contact: roy[dot]dybing[at]gmail[dot]com
 #include "output.agc"
 #include "text.agc"
 #include "input.agc"
+#include "network.agc"
 #include "fileIO.agc"
 #include "chores.agc"
 #include "errors.agc"
@@ -39,7 +40,9 @@ Contact: roy[dot]dybing[at]gmail[dot]com
 #include "constants.agc"
 #include "tests.agc"
 
-#constant version		= "v0.0.1"
+#constant version		= "v0"
+#constant apiVersion	= ".1"
+#constant patchVersion	= ".1"
 #constant appName		= "QLightClient"
 #constant false			= 0
 #constant true			= 1
@@ -54,10 +57,10 @@ global sprite		as sprite_t				// constant IDs
 global tween		as tween_t				// constant IDs
 global txt			as txt_t				// constant IDs
 global ml 			as menuLang_t[maxLocal]	// constant language strings
-global device 		as device_t				// constant after init
-global app			as appSettings_t		// constant after init
-global color		as color_t[9]			// constant after init
-global state		as globalState_t		// will change here and there
+global device 		as device_t				// constant device properties
+global app			as appSettings_t		// constant IP, api and key values
+global color		as color_t[9]			// constant color values
+global state		as globalState_t		// will change here, there and everywhere
 
 initConstants()
 initLang(ml)
@@ -111,4 +114,5 @@ function main ()
 			sync()
 		until GetPointerPressed()
 	endif
+	
 endFunction

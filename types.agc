@@ -63,6 +63,21 @@ type menuLang_t
 	lang				as string[1]	
 endType
 
+type property_t
+	baseSize			as float
+	font				as integer
+	orientation			as integer
+	padVertical			as integer
+endType
+
+//************************************************* Module Specific ****************************************************
+
+type cue_t
+	colorStep			as integer
+	fadeOn				as integer
+	fadeDuration		as integer
+endType
+
 type clock_t
 	hour				as integer
 	min					as integer
@@ -75,13 +90,6 @@ type clock_t
 	yStartSec			as integer
 	rStartSec			as integer
 	rEndSec				as integer
-endType
-
-type property_t
-	baseSize			as float
-	font				as integer
-	orientation			as integer
-	padVertical			as integer
 endType
 
 //************************************************* Media **************************************************************

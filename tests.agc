@@ -10,6 +10,15 @@ Copyright 2019 Roy Dybing - all rights reserved
 
 //************************************************* Module Tests *******************************************************
 
+function testCueLight()
+	
+	time as timer_t
+	steps as integer[2] = [0, 1, 2]
+	
+	time = setTimer(3000)
+	
+endFunction
+
 function testClock()
 	
 	time as clock_t

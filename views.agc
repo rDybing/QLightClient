@@ -12,13 +12,16 @@ Copyright 2019 Roy Dybing - all rights reserved
 
 function cueLightView()
 	
-	quit as integer
+	quit	as integer
+	cue		as cue_t
 	
 	repeat
 		// change to get quit-order from controller
 		if GetPointerPressed()
 			quit = true
 		endif
+		
+		getCueUpdate(cue)		
 		
 		sync()
 	until quit
