@@ -13,7 +13,10 @@ Copyright 2019 Roy Dybing - all rights reserved
 function cueLightView()
 	
 	quit	as integer
-	cue		as cue_t
+	cue		as cueLight_t
+	oldCue	as integer
+	
+	oldCue = nil
 	
 	repeat
 		// change to get quit-order from controller

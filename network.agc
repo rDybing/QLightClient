@@ -10,6 +10,6 @@ Copyright 2019 Roy Dybing - all rights reserved
 
 //************************************************* Cue Light Functions ************************************************
 
-function getCueUpdate(cue as cue_t)
+function getCueUpdate(cue as cueLight_t)
 	
 endFunction

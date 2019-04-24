@@ -72,10 +72,11 @@ endType
 
 //************************************************* Module Specific ****************************************************
 
-type cue_t
+type cueLight_t
 	colorStep			as integer
 	fadeOn				as integer
 	fadeDuration		as integer
+	response			as integer
 endType
 
 type clock_t
