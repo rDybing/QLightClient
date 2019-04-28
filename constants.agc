@@ -27,14 +27,17 @@ function initConstants()
 	sprite.logo				= 1098
 	sprite.back				= 1099
 	
-	tween.back				= 1000	
+	tween.back				= 1000
+	tween.text				= 1001
 	
 	media.fontA				= 1000
 	media.fontB				= 1001
 	media.fontC				= 1002
 	media.fontD				= 1003
-	media.back				= 1004
-	media.logo				= 1005
+	media.fontE				= 1004
+	media.fontF				= 1005
+	media.back				= 1006
+	media.logo				= 1007
 	media.bBack				= 1010
 	
 endFunction

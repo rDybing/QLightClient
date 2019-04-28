@@ -71,7 +71,7 @@ function countdownView(clock as clock_t, prop as property_t)
 		endif
 		if getTimer(time)
 			if clock.secCurrent = 0
-				pulseIn = setClockBackgroundPulse(pulseIn, backCol[2])
+				pulseIn = setClockBackgroundPulse(pulseIn, backCol[2], prop)
 			else
 				updateClockTime(clock)
 				getClockBackgroundChange(clock, backCol)

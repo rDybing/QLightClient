@@ -103,6 +103,8 @@ type media_t
 	fontB				as integer
 	fontC				as integer
 	fontD				as integer
+	fontE				as integer
+	fontF				as integer
 	back				as integer
 	logo				as integer
 	bBack				as integer
@@ -125,6 +127,7 @@ endType
 
 type tween_t
 	back				as integer
+	text				as integer
 endType
 
 type sound_t

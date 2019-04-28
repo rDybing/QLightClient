@@ -16,6 +16,8 @@ function loadMedia()
 	loadFont(media.fontB, "Roboto-Medium.ttf")
 	loadFont(media.fontC, "UbuntuMono-B.ttf")
 	loadFont(media.fontD, "Riffic-Bold.ttf")
+	loadFont(media.fontE, "Imperium-Hollow.ttf")
+	loadFont(media.fontF, "College-Halo.ttf")
 	
 	LoadImage(media.back, "whiteDot.png")
 	LoadImage(media.bBack, "back_button.png")

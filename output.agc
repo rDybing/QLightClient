@@ -74,19 +74,23 @@ function getClockBackgroundChange(c as clock_t, col as color_t[])
 	
 endFunction
 
-function setClockBackgroundPulse(pulseIn as integer, col as color_t)
+function setClockBackgroundPulse(pulseIn as integer, col as color_t, prop as property_t)
 	
 	duration as integer
 	duration = 1
 	
 	if pulseIn
-		// go to red
+		// go to red background
 		clearTweenSingle(tween.back)
-		setSpriteTweenColor(tween.back, sprite.back, col, duration)	
+		setSpriteTweenColor(tween.back, sprite.back, col, duration)
+		clearTweenSingle(tween.text)	
+		setTextTweenColor(tween.text, txt.clock, color[prop.fontColor], duration)
 	else
-		// go to black
+		// go to black background 
 		clearTweenSingle(tween.back)
 		setSpriteTweenColor(tween.back, sprite.back, color[1], duration)	
+		clearTweenSingle(tween.text)
+		setTextTweenColor(tween.text, txt.clock, col, duration)
 	endif
 	
 endFunction not pulseIn
@@ -96,6 +100,7 @@ function clearCountDown()
 	textClearSingle(txt.clock)
 	setBackgroundColorDefault()
 	clearTweenSingle(tween.back)
+	clearTweenSingle(tween.text)
 		
 endFunction
 
@@ -187,9 +192,21 @@ function setSpriteTweenColor(tweenID as integer, spriteID as integer, col as col
 
 endFunction
 
+function setTextTweenColor(tweenID as integer, textID as integer, col as color_t, duration as float)
+	
+	clearTweenSingle(tweenID)
+
+	CreateTweenText(tweenID, duration)
+	SetTweenTextRed(tweenID, GetTextColorRed(textID), col.r, TweenEaseIn1())
+	SetTweenTextGreen(tweenID, GetTextColorGreen(textID), col.g, TweenEaseIn1())
+	SetTweenTextBlue(tweenID, GetTextColorBlue(textID), col.b, TweenEaseIn1())
+	PlayTweenText(tweenID, textID, 0)
+
+endFunction
+
 function updateTweenBackground()
 
-	if GetTweenSpriteExists(tween.back)
+	if GetTweenExists(tween.back)
 		UpdateAllTweens(GetFrameTime())
 	endif
 	
@@ -197,7 +214,7 @@ endFunction
 
 function clearTweenSingle(in as integer)
 	
-	if GetTweenSpriteExists(in)
+	if GetTweenExists(in)
 		DeleteTween(in)
 	endif
 	
