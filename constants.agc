@@ -65,14 +65,14 @@ function initColor()
 	color[2].b = 24
 	color[2].a = 255
 	// Highlight Red
-	color[3].r = 219
-	color[3].g = 46
-	color[3].b = 16
+	color[3].r = 209
+	color[3].g = 5
+	color[3].b = 0
 	color[3].a = 255
 	// Highligh Yellow
-	color[4].r = 219
-	color[4].g = 160
-	color[4].b = 16
+	color[4].r = 231
+	color[4].g = 212
+	color[4].b = 31
 	color[4].a = 255
 	// Highlight Green
 	color[5].r = 44

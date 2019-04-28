@@ -40,7 +40,7 @@ function placeStartClock(in as string, prop ref as property_t)
 	
 	mt.startY = mt.startY - (mt.size / 2)
 	
-	setFontProperties(color[0], prop.font, mt.size)
+	setFontProperties(color[prop.fontColor], prop.fontAlpha, prop.font, mt.size)
 	CreateText(txt.clock, in)
 	textDraw(txt.clock, mt)
 	updateTextOrientation(txt.clock, prop.padVertical)
@@ -172,7 +172,7 @@ endFunction
 function textDraw(id as integer, mt as txtProp_t)
 
 	SetTextFont(id, font.id)
-	SetTextColor(id, font.r, font.g, font.b, 255)
+	SetTextColor(id, font.r, font.g, font.b, font.a)
 	SetTextSize(id, font.size)
 	SetTextPosition(id, mt.startX, mt.startY)
 	SetTextAlignment(id, mt.align)
@@ -181,11 +181,12 @@ function textDraw(id as integer, mt as txtProp_t)
 
 endFunction
 
-function setFontProperties(col as color_t, fnt as integer, size as float)
+function setFontProperties(col as color_t, alpha, fnt as integer, size as float)
 	
 	font.r = col.r
 	font.g = col.g
 	font.b = col.b
+	font.a = alpha
 	font.id = fnt
 	font.size = size
 

@@ -33,6 +33,8 @@ function testClock()
 	time.rEndPercent = 5
 	prop.baseSize = 0.9
 	prop.font = media.fontC
+	prop.fontColor = 1
+	prop.fontAlpha = 160
 	prop.orientation = 1
 	countdownView(time, prop)
 	

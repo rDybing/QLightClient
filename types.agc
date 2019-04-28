@@ -66,6 +66,8 @@ endType
 type property_t
 	baseSize			as float
 	font				as integer
+	fontColor			as integer
+	fontAlpha			as integer
 	orientation			as integer
 	padVertical			as integer
 endType
@@ -136,6 +138,7 @@ type font_t
 	r					as integer
 	g					as integer
 	b					as integer
+	a					as integer
 	size				as float
 	interval			as integer
 endType
