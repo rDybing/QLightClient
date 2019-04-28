@@ -8,6 +8,18 @@ Copyright 2019 Roy Dybing - all rights reserved
 
 ***********************************************************************************************************************/
 
+//************************************************* Cue Light Functions ************************************************
+
+function setCueBackgroundColors()
+	
+	bc as color_t[]
+	
+	bc.insert(color[5])	
+	bc.insert(color[4])
+	bc.insert(color[3])
+	
+endFunction bc
+
 //************************************************* Countdown Functions ************************************************
 
 function updateClockTime(c ref as clock_t)

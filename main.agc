@@ -69,6 +69,7 @@ loadMedia()
 setStartState()
 setDevice()
 
+SetErrorMode(2)
 SetRandomSeed(GetUnixTime())
 
 loadAppSettings()
@@ -82,7 +83,6 @@ if app.id = ""
 	saveAppSettings()
 endif
 
-SetErrorMode(2)
 SetWindowTitle("QLight Client")
 SetWindowAllowResize(0)
 SetScissor(0,0,0,0)
@@ -106,6 +106,7 @@ function main ()
 	appJSON as string
 	
 	if not state.fatalError
+		testCueLight()
 		testClock()
 		appJSON = app.toJSON()
 		repeat

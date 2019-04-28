@@ -14,9 +14,8 @@ function testCueLight()
 	
 	time as timer_t
 	cue as cueLight_t
-	steps as integer[2] = [0, 1, 2]
 	
-	time = setTimer(3000)
+	cueLightView()
 	
 endFunction
 

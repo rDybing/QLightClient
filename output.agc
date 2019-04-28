@@ -10,6 +10,19 @@ Copyright 2019 Roy Dybing - all rights reserved
 
 //************************************************* Cue Light Functions ************************************************
 
+function placeCueLightStart(col as color_t)
+	
+	setBackgroundColor(col)
+	
+endFunction
+
+function clearCueLight()
+	
+	setBackgroundColorDefault()
+	clearTweenSingle(tween.back)
+	
+endFunction
+
 //************************************************* Countdown Functions ************************************************
 
 function placeCountdownStart(h, m, s as integer, col as color_t, prop ref as property_t)
@@ -47,20 +60,16 @@ function getClockBackgroundChange(c as clock_t, col as color_t[])
 	
 	if c.secCurrent = c.yStartSec
 		duration = c.yStartSec - c.rStartSec
-		if GetTweenSpriteExists(tween.back)
-			DeleteTween(tween.back)
-		endif
-		spriteFadeColor(tween.back, sprite.back, col[1], duration)		
+		clearTweenSingle(tween.back)
+		spriteTweenColor(tween.back, sprite.back, col[1], duration)		
 	endif
 	if c.secCurrent = c.rStartSec
 		duration = c.rStartSec - c.rEndSec
-		if GetTweenSpriteExists(tween.back)
-			DeleteTween(tween.back)
-		endif
-		spriteFadeColor(tween.back, sprite.back, col[2], duration)	
+		clearTweenSingle(tween.back)
+		spriteTweenColor(tween.back, sprite.back, col[2], duration)	
 	endif
 	if c.secCurrent = 0
-		DeleteTween(tween.back)
+		clearTweenSingle(tween.back)
 	endif
 	
 endFunction
@@ -72,34 +81,22 @@ function setClockBackgroundPulse(pulseIn as integer, col as color_t)
 	
 	if pulseIn
 		// go to red
-		if GetTweenSpriteExists(tween.back)
-			DeleteTween(tween.back)
-		endif
-		spriteFadeColor(tween.back, sprite.back, col, duration)	
+		clearTweenSingle(tween.back)
+		spriteTweenColor(tween.back, sprite.back, col, duration)	
 	else
 		// go to black
-		if GetTweenSpriteExists(tween.back)
-			DeleteTween(tween.back)
-		endif
-		spriteFadeColor(tween.back, sprite.back, color[1], duration)	
+		clearTweenSingle(tween.back)
+		spriteTweenColor(tween.back, sprite.back, color[1], duration)	
 	endif
 	
 endFunction not pulseIn
-
-function updateClockBackground()
-
-	if GetTweenSpriteExists(tween.back)
-		UpdateAllTweens(GetFrameTime())
-	endif
-	
-endFunction
 
 function clearCountDown()
 	
 	textClearSingle(txt.clock)
 	setBackgroundColorDefault()
-	DeleteTween(tween.back)
-	
+	clearTweenSingle(tween.back)
+		
 endFunction
 
 //************************************************* Screen Orientation *************************************************
@@ -176,7 +173,35 @@ function placeBackButton()
 	
 endFunction
 
-//************************************************* Chores Functions ***************************************************
+//************************************************* Tweens Functions ***************************************************
+
+function spriteTweenColor(tweenID as integer, spriteID as integer, col as color_t, duration as float)
+
+        CreateTweenSprite(tweenID, duration)
+        SetTweenSpriteRed(tweenID, GetSpriteColorRed(spriteID), col.r, TweenEaseIn1())
+        SetTweenSpriteGreen(tweenID, GetSpriteColorGreen(spriteID), col.g, TweenEaseIn1())
+        SetTweenSpriteBlue(tweenID, GetSpriteColorBlue(spriteID), col.b, TweenEaseIn1())
+        PlayTweenSprite(tweenID, spriteID, 0)
+
+endFunction
+
+function updateTweenBackground()
+
+	if GetTweenSpriteExists(tween.back)
+		UpdateAllTweens(GetFrameTime())
+	endif
+	
+endFunction
+
+function clearTweenSingle(in as integer)
+	
+	if GetTweenSpriteExists(in)
+		DeleteTween(in)
+	endif
+	
+endFunction
+
+//************************************************* Sprites Functions ************************************************** 
 
 function imageSetup(sID	as integer, depth as integer, spr as spriteProp_t, iID as integer)
 
@@ -193,7 +218,7 @@ function imageSetup(sID	as integer, depth as integer, spr as spriteProp_t, iID a
 
 endFunction
 
-function spriteClearSingle(in as integer)
+function clearSpriteSingle(in as integer)
 	
 	if GetSpriteExists(in)
 		DeleteSprite(in)
@@ -201,10 +226,10 @@ function spriteClearSingle(in as integer)
 	
 endFunction
 
-function spriteClear(start as integer, stop as integer)
+function clearSprites(start as integer, stop as integer)
 	
 	for i = start to stop 
-		spriteClearSingle(i)
+		clearSpriteSingle(i)
 	next i
 	
 endFunction
@@ -213,16 +238,6 @@ function spriteColor(sprID as integer, col as integer)
 	
 	SetSpriteColor(sprID, color[col].r, color[col].g, color[col].b, color[col].a)
 	
-endFunction
-
-function spriteFadeColor(tweenID as integer, spriteID as integer, col as color_t, duration as float)
-
-        CreateTweenSprite(tweenID, duration)
-        SetTweenSpriteRed(tweenID, GetSpriteColorRed(spriteID), col.r, TweenEaseIn1())
-        SetTweenSpriteGreen(tweenID, GetSpriteColorGreen(spriteID), col.g, TweenEaseIn1())
-        SetTweenSpriteBlue(tweenID, GetSpriteColorBlue(spriteID), col.b, TweenEaseIn1())
-        PlayTweenSprite(tweenID, spriteID, 0)
-
 endFunction
 
 function setBackgroundColor(c as color_t)
@@ -234,7 +249,9 @@ function setBackgroundColor(c as color_t)
 	spr.width = 100
 	spr.height = 100
 	
-	imageSetup(sprite.back, layer.back, spr, media.back)
+	if not GetSpriteExists(sprite.back)
+		imageSetup(sprite.back, layer.back, spr, media.back)
+	endif
 	SetSpriteColor(sprite.back, c.r, c.g, c.b, c.a)
 	
 endFunction

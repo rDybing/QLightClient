@@ -14,9 +14,14 @@ function cueLightView()
 	
 	quit	as integer
 	cue		as cueLight_t
+	backCol	as color_t[2]
 	oldCue	as integer
+	newCue	as integer
 	
 	oldCue = nil
+
+	backCol = setCueBackgroundColors()
+	placeCueLightStart(backCol[0])	
 	
 	repeat
 		// change to get quit-order from controller
@@ -24,7 +29,11 @@ function cueLightView()
 			quit = true
 		endif
 		
-		getCueUpdate(cue)		
+		newCue = getCueUpdate(cue)
+		
+		if newCue <> oldCue
+			
+		endif		
 		
 		sync()
 	until quit
@@ -71,7 +80,7 @@ function countdownView(clock as clock_t, prop as property_t)
 				updateClockText(clock, items)			
 			endif
 		endif
-		updateClockBackground()
+		updateTweenBackground()
 		sync()
 	until quit
 	
