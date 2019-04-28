@@ -53,6 +53,18 @@ function testGeneral(in as string)
 	
 endFunction
 
+function testCueRaw(in as cueLight_t)
+	
+	print("colorStep  : " + str(in.colorStep))
+	print("fadeOn     : " + str(in.fadeOn))
+	print("fadeDur.   : " + str(in.fadeDuration))
+	print("resp.req   : " + str(in.responseReq))
+	print("resp.ack   : " + str(in.responseAck))
+	
+	testDevice()
+	
+endFunction
+
 function testClockRaw(in as clock_t)
 	
 	print("hours      : " + str(in.hour))

@@ -75,8 +75,9 @@ endType
 type cueLight_t
 	colorStep			as integer
 	fadeOn				as integer
-	fadeDuration		as integer
-	response			as integer
+	fadeDuration		as float
+	responseReq			as integer
+	responseAck			as integer
 endType
 
 type clock_t

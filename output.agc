@@ -61,12 +61,12 @@ function getClockBackgroundChange(c as clock_t, col as color_t[])
 	if c.secCurrent = c.yStartSec
 		duration = c.yStartSec - c.rStartSec
 		clearTweenSingle(tween.back)
-		spriteTweenColor(tween.back, sprite.back, col[1], duration)		
+		setSpriteTweenColor(tween.back, sprite.back, col[1], duration)		
 	endif
 	if c.secCurrent = c.rStartSec
 		duration = c.rStartSec - c.rEndSec
 		clearTweenSingle(tween.back)
-		spriteTweenColor(tween.back, sprite.back, col[2], duration)	
+		setSpriteTweenColor(tween.back, sprite.back, col[2], duration)	
 	endif
 	if c.secCurrent = 0
 		clearTweenSingle(tween.back)
@@ -82,11 +82,11 @@ function setClockBackgroundPulse(pulseIn as integer, col as color_t)
 	if pulseIn
 		// go to red
 		clearTweenSingle(tween.back)
-		spriteTweenColor(tween.back, sprite.back, col, duration)	
+		setSpriteTweenColor(tween.back, sprite.back, col, duration)	
 	else
 		// go to black
 		clearTweenSingle(tween.back)
-		spriteTweenColor(tween.back, sprite.back, color[1], duration)	
+		setSpriteTweenColor(tween.back, sprite.back, color[1], duration)	
 	endif
 	
 endFunction not pulseIn
@@ -175,13 +175,15 @@ endFunction
 
 //************************************************* Tweens Functions ***************************************************
 
-function spriteTweenColor(tweenID as integer, spriteID as integer, col as color_t, duration as float)
+function setSpriteTweenColor(tweenID as integer, spriteID as integer, col as color_t, duration as float)
+	
+	clearTweenSingle(tweenID)
 
-        CreateTweenSprite(tweenID, duration)
-        SetTweenSpriteRed(tweenID, GetSpriteColorRed(spriteID), col.r, TweenEaseIn1())
-        SetTweenSpriteGreen(tweenID, GetSpriteColorGreen(spriteID), col.g, TweenEaseIn1())
-        SetTweenSpriteBlue(tweenID, GetSpriteColorBlue(spriteID), col.b, TweenEaseIn1())
-        PlayTweenSprite(tweenID, spriteID, 0)
+	CreateTweenSprite(tweenID, duration)
+	SetTweenSpriteRed(tweenID, GetSpriteColorRed(spriteID), col.r, TweenEaseIn1())
+	SetTweenSpriteGreen(tweenID, GetSpriteColorGreen(spriteID), col.g, TweenEaseIn1())
+	SetTweenSpriteBlue(tweenID, GetSpriteColorBlue(spriteID), col.b, TweenEaseIn1())
+	PlayTweenSprite(tweenID, spriteID, 0)
 
 endFunction
 

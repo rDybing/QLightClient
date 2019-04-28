@@ -15,11 +15,7 @@ function cueLightView()
 	quit	as integer
 	cue		as cueLight_t
 	backCol	as color_t[2]
-	oldCue	as integer
-	newCue	as integer
 	
-	oldCue = nil
-
 	backCol = setCueBackgroundColors()
 	placeCueLightStart(backCol[0])	
 	
@@ -28,13 +24,15 @@ function cueLightView()
 		if GetPointerPressed()
 			quit = true
 		endif
-		
-		newCue = getCueUpdate(cue)
-		
-		if newCue <> oldCue
-			
+		testCueRaw(cue)
+		if getCueUpdate(cue)
+			if cue.fadeOn
+				setSpriteTweenColor(tween.back, sprite.back, backCol[cue.colorStep], cue.fadeDuration)
+			else
+				setBackgroundColor(backCol[cue.colorStep])
+			endif
 		endif		
-		
+		updateTweenBackground()
 		sync()
 	until quit
 	
