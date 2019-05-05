@@ -23,7 +23,8 @@ function initConstants()
 	txt.ver					= 1000
 	txt.clock				= 1100
 	
-	sprite.bBack			= 1010	
+	sprite.bBack			= 1010
+	sprite.frame			= 1097	
 	sprite.logo				= 1098
 	sprite.back				= 1099
 	
@@ -38,8 +39,10 @@ function initConstants()
 	media.fontF				= 1005
 	media.fontG				= 1006
 	media.back				= 1007
-	media.logo				= 1008
-	media.bBack				= 1010
+	media.framePC			= 1008
+	media.framePhone		= 1009
+	media.logo				= 1010
+	media.bBack				= 1011
 	
 endFunction
 

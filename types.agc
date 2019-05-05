@@ -107,6 +107,8 @@ type media_t
 	fontF				as integer
 	fontG				as integer
 	back				as integer
+	framePC				as integer
+	framePhone			as integer
 	logo				as integer
 	bBack				as integer
 endType
@@ -122,6 +124,7 @@ endType
 
 type sprite_t
 	back				as integer
+	frame				as integer
 	logo				as integer
 	bBack				as integer
 endType

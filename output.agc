@@ -104,6 +104,25 @@ function clearCountDown()
 		
 endFunction
 
+//************************************************* Static Assets ******************************************************
+
+function placeFrame()
+	
+	spr as spriteProp_t
+	
+	spr.posX = 0
+	spr.posY = 0
+	spr.width = 100
+	spr.height = 100
+	
+	if device.isComputer
+		imageSetup(sprite.frame, layer.front, spr, media.framePC)
+	else
+		imageSetup(sprite.frame, layer.front, spr, media.framePhone)
+	endif
+	
+endFunction
+
 //************************************************* Screen Orientation *************************************************
 
 function getScreenTextOrientation(txtID, padVertical as integer)

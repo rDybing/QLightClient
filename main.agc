@@ -105,6 +105,8 @@ function main ()
 	
 	appJSON as string
 	
+	placeFrame()
+	
 	if not state.fatalError
 		testCueLight()
 		testClock()
