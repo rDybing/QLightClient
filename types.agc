@@ -105,6 +105,7 @@ type media_t
 	fontD				as integer
 	fontE				as integer
 	fontF				as integer
+	fontG				as integer
 	back				as integer
 	logo				as integer
 	bBack				as integer

@@ -36,8 +36,9 @@ function initConstants()
 	media.fontD				= 1003
 	media.fontE				= 1004
 	media.fontF				= 1005
-	media.back				= 1006
-	media.logo				= 1007
+	media.fontG				= 1006
+	media.back				= 1007
+	media.logo				= 1008
 	media.bBack				= 1010
 	
 endFunction
@@ -67,20 +68,20 @@ function initColor()
 	color[2].g = 29
 	color[2].b = 24
 	color[2].a = 255
-	// Highlight Red
-	color[3].r = 209
-	color[3].g = 5
-	color[3].b = 0
+	// Balanced Red
+	color[3].r = 214
+	color[3].g = 88
+	color[3].b = 65
 	color[3].a = 255
-	// Highligh Yellow
-	color[4].r = 231
-	color[4].g = 212
-	color[4].b = 31
+	// Balanced Yellow
+	color[4].r = 214
+	color[4].g = 162
+	color[4].b = 65
 	color[4].a = 255
-	// Highlight Green
-	color[5].r = 44
-	color[5].g = 163
-	color[5].b = 0
+	// Balanced Green
+	color[5].r = 65
+	color[5].g = 214
+	color[5].b = 157
 	color[5].a = 255
 	// Highlight Blue
 	color[6].r = 96
@@ -97,10 +98,10 @@ function initColor()
 	color[8].g = 209
 	color[8].b = 170
 	color[8].a = 255
-	// Dark Purple
-	color[9].r = 43
-	color[9].g = 36
-	color[9].b = 87
+	// Balanced Purple
+	color[9].r = 112
+	color[9].g = 65
+	color[9].b = 214
 	color[9].a = 255
 	
 endFunction
