@@ -40,10 +40,6 @@ Contact: roy[dot]dybing[at]gmail[dot]com
 #include "constants.agc"
 #include "tests.agc"
 
-#constant version		= "v0"
-#constant apiVersion	= ".1"
-#constant patchVersion	= ".1"
-#constant appName		= "QLightClient"
 #constant false			= 0
 #constant true			= 1
 #constant nil			= -1
@@ -61,6 +57,7 @@ global device 		as device_t				// constant device properties
 global app			as appSettings_t		// constant IP, api and key values
 global color		as color_t[9]			// constant color values
 global state		as globalState_t		// will change here, there and everywhere
+global version		as version_t			// constant version info
 
 initConstants()
 initLang(ml)
@@ -106,6 +103,7 @@ function main ()
 	appJSON as string
 	
 	placeFrame()
+	placeVersionText()
 	
 	if not state.fatalError
 		testCueLight()

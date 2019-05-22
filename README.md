@@ -1,8 +1,8 @@
-#QLightClient
+# QLightClient
 
-###Client app for Android and iOS
+### Client app for Android and iOS
 
-####Copyright 2019 Roy Dybing  - all rights reserved.
+#### Copyright 2019 Roy Dybing  - all rights reserved.
 
 Source is open to provide insight into working app, mainly to ensure any and all that this app do not collect any data
 of use or user or device it is installed upon - except as explicitly noted below:
@@ -26,15 +26,15 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#####Todo:
+##### Todo:
 
 - LAN Client Networking
 - HTTPS API Clinet Networking
 
-#####WiP:
+##### WiP:
 
 - Cue Light view
 
-#####Done:
+##### Done:
 
 - Countdown view

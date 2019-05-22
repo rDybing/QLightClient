@@ -11,8 +11,14 @@ Copyright 2019 Roy Dybing - all rights reserved
 //************************************************* Control ************************************************************
  
 function initConstants()
+	
+	version.name			= "QLight Client"
+	version.major			= 0
+	version.minor			= 1
+	version.patch			= 0
 
-	layer.front				= 0
+	layer.top				= 0
+	layer.front				= 1
 	layer.A					= 10
 	layer.B					= 20
 	layer.C					= 30
@@ -20,7 +26,7 @@ function initConstants()
 		
 	sound.click				= 1000
 		
-	txt.ver					= 1000
+	txt.version				= 1000
 	txt.clock				= 1100
 	
 	sprite.bBack			= 1010

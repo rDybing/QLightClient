@@ -140,6 +140,28 @@ function updateTextOrientation(txtID, pad as integer)
 	
 endFunction
 
+//************************************************* Static Text ********************************************************
+
+function placeVersionText()
+	
+	mt as txtProp_t
+	prop as property_t
+	
+	mt.startX = 99.5
+	mt.startY = 97.5
+	mt.align = 2
+	mt.size = 1.5
+	prop.font = media.fontC
+	prop.fontAlpha = 192
+	prop.fontColor = 0
+	
+	setFontProperties(color[prop.fontColor], prop.fontAlpha, prop.font, mt.size)
+	CreateText(txt.version, "v"+ str(version.major) + "." + str(version.minor) + "." + str(version.patch))
+	textDraw(txt.version, mt)
+	SetTextDepth(txt.version, layer.top)
+	
+endFunction
+
 //************************************************* Chores *************************************************************
 
 function textFade(startTxt as integer, stopTxt as integer, dir as string)

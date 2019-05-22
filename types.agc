@@ -10,6 +10,13 @@ Copyright 2019 Roy Dybing - all rights reserved
 
 //************************************************* Control ************************************************************
 
+type version_t
+	name				as string
+	major				as integer
+	minor				as integer
+	patch				as integer
+endType
+
 type appSettings_t
 	id					as string
 	apiIp				as string
@@ -165,13 +172,14 @@ type txtProp_t
 endType
 
 type txt_t
-	ver					as integer
+	version				as integer
 	clock				as integer
 endType
 
 //************************************************* Composition ********************************************************
 
 type layer_t
+	top					as integer
 	front				as integer
 	A					as integer
 	B					as integer
