@@ -15,7 +15,10 @@ function cueLightView()
 	quit		as integer
 	cue			as cueLight_t
 	backCol		as color_t[2]
+	time		as timer_t
+	pulseIn		as integer = false
 	
+	time = setTimer(1000)
 	backCol = setCueBackgroundColors()
 	placeCueLightStart(backCol[0])	
 	
@@ -25,26 +28,37 @@ function cueLightView()
 			quit = true
 		endif
 		testCueRaw(cue)
+		// if new message from server
 		if getCueUpdate(cue)
 			// set background
 			if cue.fadeOn
-				setSpriteTweenColor(tween.back, sprite.back, backCol[cue.colorStep], cue.fadeDuration)
+				setSpriteTweenColor(tween.back, sprite.back, backCol[cue.colorStep], cue.fadeDuration, 3)
 			else
 				setBackgroundColor(backCol[cue.colorStep])
 			endif
 			// set readybutton
 			if cue.responseUpd
 				if cue.responseReq
-					placeReadyButton()
+					placeReadyButton(backCol[2])
 				endif
 				if cue.responseAck
 					clearSpriteSingle(sprite.bReady)
 				endif
 			endif
-		endif	
+		endif
+		// get if ready button is pressed
+		if cue.responseReq
+			// pulse
+			if getTimer(time)
+				pulseIn = setButtonPulse(pulseIn, tween.ready, sprite.bReady, backCol[1], backCol[2])
+			endif
+			updateTweenSpriteReady()
+		endif
 		updateTweenBackground()
 		sync()
 	until quit
+	
+	clearCueLight()
 	
 endFunction
  

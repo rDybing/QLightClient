@@ -37,6 +37,7 @@ function initConstants()
 	
 	tween.back				= 1000
 	tween.text				= 1001
+	tween.ready				= 1002
 	
 	media.fontA				= 1000
 	media.fontB				= 1001

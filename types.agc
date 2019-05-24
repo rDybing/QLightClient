@@ -142,6 +142,7 @@ endType
 type tween_t
 	back				as integer
 	text				as integer
+	ready				as integer
 endType
 
 type sound_t

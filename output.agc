@@ -16,7 +16,7 @@ function placeCueLightStart(col as color_t)
 	
 endFunction
 
-function placeReadyButton()
+function placeReadyButton(col as color_t)
 	
 	spr as spriteProp_t
 	
@@ -27,11 +27,30 @@ function placeReadyButton()
 	
 	imageSetup(sprite.bReady, layer.front, spr, media.bReady)
 	SetSpritePosition(sprite.bReady, spr.posX, 50 - (getSpriteHeight(sprite.bReady) / 2))
+	SetSpriteColor(sprite.bReady, col.r, col.g, col.b, 255)	
 	
 endFunction
 
+function setButtonPulse(pulseIn as integer, tweenID as integer, spriteID as integer, colA as color_t, colB as color_t)
+	
+	duration as integer
+	duration = 1
+	
+	if pulseIn
+		// go to color 1
+		clearTweenSingle(tweenID)
+		setSpriteTweenColor(tweenID, spriteID, colA, duration, 5)
+	else
+		// go to color 2
+		clearTweenSingle(tweenID)
+		setSpriteTweenColor(tweenID, spriteID, colB, duration, 5)	
+	endif
+	
+endFunction not pulseIn
+
 function clearCueLight()
 	
+	clearSpriteSingle(sprite.bReady)
 	setBackgroundColorDefault()
 	clearTweenSingle(tween.back)
 	
@@ -75,12 +94,12 @@ function getClockBackgroundChange(c as clock_t, col as color_t[])
 	if c.secCurrent = c.yStartSec
 		duration = c.yStartSec - c.rStartSec
 		clearTweenSingle(tween.back)
-		setSpriteTweenColor(tween.back, sprite.back, col[1], duration)		
+		setSpriteTweenColor(tween.back, sprite.back, col[1], duration, 3)		
 	endif
 	if c.secCurrent = c.rStartSec
 		duration = c.rStartSec - c.rEndSec
 		clearTweenSingle(tween.back)
-		setSpriteTweenColor(tween.back, sprite.back, col[2], duration)	
+		setSpriteTweenColor(tween.back, sprite.back, col[2], duration, 3)	
 	endif
 	if c.secCurrent = 0
 		clearTweenSingle(tween.back)
@@ -96,13 +115,13 @@ function setClockBackgroundPulse(pulseIn as integer, col as color_t, prop as pro
 	if pulseIn
 		// go to red background
 		clearTweenSingle(tween.back)
-		setSpriteTweenColor(tween.back, sprite.back, col, duration)
+		setSpriteTweenColor(tween.back, sprite.back, col, duration, 3)
 		clearTweenSingle(tween.text)	
 		setTextTweenColor(tween.text, txt.clock, color[prop.fontColor], duration)
 	else
 		// go to black background 
 		clearTweenSingle(tween.back)
-		setSpriteTweenColor(tween.back, sprite.back, color[1], duration)	
+		setSpriteTweenColor(tween.back, sprite.back, color[1], duration, 3)	
 		clearTweenSingle(tween.text)
 		setTextTweenColor(tween.text, txt.clock, col, duration)
 	endif
@@ -213,14 +232,27 @@ endFunction
 
 //************************************************* Tweens Functions ***************************************************
 
-function setSpriteTweenColor(tweenID as integer, spriteID as integer, col as color_t, duration as float)
+function setSpriteTweenColor(tweenID as integer, spriteID as integer, col as color_t, duration as float, mode as integer)
+	
+	/* 
+	** Tween Modes **
+	0: TweenLinear()
+	1: TweenSmooth1()
+	2: TweenSmooth2()
+	3: TweenEaseIn1()
+	4: TweenEaseIn2()
+	5: TweenEaseOut1()
+	6: TweenEaseOut2()
+	7: TweenBounce()
+	8: TweenOvershoot()
+	*/
 	
 	clearTweenSingle(tweenID)
 
 	CreateTweenSprite(tweenID, duration)
-	SetTweenSpriteRed(tweenID, GetSpriteColorRed(spriteID), col.r, TweenEaseIn1())
-	SetTweenSpriteGreen(tweenID, GetSpriteColorGreen(spriteID), col.g, TweenEaseIn1())
-	SetTweenSpriteBlue(tweenID, GetSpriteColorBlue(spriteID), col.b, TweenEaseIn1())
+	SetTweenSpriteRed(tweenID, GetSpriteColorRed(spriteID), col.r, mode)
+	SetTweenSpriteGreen(tweenID, GetSpriteColorGreen(spriteID), col.g, mode)
+	SetTweenSpriteBlue(tweenID, GetSpriteColorBlue(spriteID), col.b, mode)
 	PlayTweenSprite(tweenID, spriteID, 0)
 
 endFunction
@@ -240,7 +272,15 @@ endFunction
 function updateTweenBackground()
 
 	if GetTweenExists(tween.back)
-		UpdateAllTweens(GetFrameTime())
+		UpdateTweenSprite(tween.back, sprite.back, GetFrameTime())
+	endif
+	
+endFunction
+
+function updateTweenSpriteReady()
+
+	if GetTweenExists(tween.ready)
+		UpdateTweenSprite(tween.ready, sprite.bReady, GetFrameTime())
 	endif
 	
 endFunction

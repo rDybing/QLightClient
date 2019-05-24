@@ -135,5 +135,6 @@ function testDevice()
 	print("width      : " + str(device.width))
 	print("height     : " + str(device.height))
 	print("aspect     : " + str(device.aspect))
+	print("appID      : " + app.id)
 	
 endFunction
