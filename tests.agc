@@ -44,6 +44,8 @@ function testCueUpdate(cue ref as cueLight_t)
 	
 	out as integer = false
 	
+	cue.responseUpd = false
+	
 	// simple keyboard press for testing purposes
 	if GetRawKeyReleased(49)		// 1: Green
 		cue.colorStep = 0
@@ -60,10 +62,14 @@ function testCueUpdate(cue ref as cueLight_t)
 	if GetRawKeyReleased(52)		// 4: Ready Activate
 		cue.responseReq = true
 		cue.responseAck = false
+		cue.responseUpd = true
+		out = true
 	endIf
-	if GetRawKeyReleased(53)		// 5: Ready Acknowledge
+	if GetRawKeyReleased(53)		// 5: Ready Acknowledged
 		cue.responseReq = false
 		cue.responseAck = true
+		cue.responseUpd = true
+		out = true
 	endIf
 	if GetRawKeyReleased(54)		// 6: Set fade on 1/2 second
 		cue.fadeOn = true
@@ -86,7 +92,7 @@ function testGeneral(in as string)
 		print("--------------------")
 		print("click to continue...")
 		sync()
-	until GetPointerPressed()
+	until GetRawKeyReleased(escKey)
 	
 endFunction
 
@@ -97,6 +103,7 @@ function testCueRaw(in as cueLight_t)
 	print("fadeDur.   : " + str(in.fadeDuration))
 	print("resp.req   : " + str(in.responseReq))
 	print("resp.ack   : " + str(in.responseAck))
+	print("resp.upd   : " + str(in.responseUpd))
 	
 	testDevice()
 	

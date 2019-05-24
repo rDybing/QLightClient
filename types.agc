@@ -87,6 +87,7 @@ type cueLight_t
 	fadeDuration		as float
 	responseReq			as integer
 	responseAck			as integer
+	responseUpd			as integer
 endType
 
 type clock_t
@@ -118,6 +119,7 @@ type media_t
 	framePhone			as integer
 	logo				as integer
 	bBack				as integer
+	bReady				as integer
 endType
 
 type spriteProp_t
@@ -134,6 +136,7 @@ type sprite_t
 	frame				as integer
 	logo				as integer
 	bBack				as integer
+	bReady				as integer
 endType
 
 type tween_t

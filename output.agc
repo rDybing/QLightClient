@@ -16,6 +16,20 @@ function placeCueLightStart(col as color_t)
 	
 endFunction
 
+function placeReadyButton()
+	
+	spr as spriteProp_t
+	
+	spr.width = 50
+	spr.height = -1
+	spr.posX = spr.width / 2
+	spr.posY = 50
+	
+	imageSetup(sprite.bReady, layer.front, spr, media.bReady)
+	SetSpritePosition(sprite.bReady, spr.posX, 50 - (getSpriteHeight(sprite.bReady) / 2))
+	
+endFunction
+
 function clearCueLight()
 	
 	setBackgroundColorDefault()

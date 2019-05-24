@@ -44,6 +44,7 @@ Contact: roy[dot]dybing[at]gmail[dot]com
 #constant true			= 1
 #constant nil			= -1
 #constant maxLocal		= 0
+#constant escKey		= 27
 
 global media		as media_t				// constant IDs
 global font			as font_t				// constant IDs
@@ -113,7 +114,7 @@ function main ()
 			print("In JSON")
 			print(appJSON)
 			sync()
-		until GetPointerPressed()
+		until GetRawKeyReleased(escKey)
 	endif
 	
 endFunction

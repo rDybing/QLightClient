@@ -12,26 +12,36 @@ Copyright 2019 Roy Dybing - all rights reserved
 
 function cueLightView()
 	
-	quit	as integer
-	cue		as cueLight_t
-	backCol	as color_t[2]
+	quit		as integer
+	cue			as cueLight_t
+	backCol		as color_t[2]
 	
 	backCol = setCueBackgroundColors()
 	placeCueLightStart(backCol[0])	
 	
 	repeat
 		// change to get quit-order from controller
-		if GetPointerPressed()
+		if GetRawKeyReleased(escKey)
 			quit = true
 		endif
 		testCueRaw(cue)
 		if getCueUpdate(cue)
+			// set background
 			if cue.fadeOn
 				setSpriteTweenColor(tween.back, sprite.back, backCol[cue.colorStep], cue.fadeDuration)
 			else
 				setBackgroundColor(backCol[cue.colorStep])
 			endif
-		endif		
+			// set readybutton
+			if cue.responseUpd
+				if cue.responseReq
+					placeReadyButton()
+				endif
+				if cue.responseAck
+					clearSpriteSingle(sprite.bReady)
+				endif
+			endif
+		endif	
 		updateTweenBackground()
 		sync()
 	until quit
@@ -58,7 +68,7 @@ function countdownView(clock as clock_t, prop as property_t)
 		
 	repeat
 		// change to get quit-order from controller
-		if GetPointerPressed()
+		if GetRawKeyReleased(escKey)
 			quit = true
 		endif
 		testClockRaw(clock)
