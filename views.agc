@@ -46,9 +46,15 @@ function cueLightView()
 				endif
 			endif
 		endif
-		// get if ready button is pressed
+		// if ready button is active
 		if cue.responseReq
-			// pulse
+			// get if ready button is pressed
+			if getButton(sprite.bReady)
+				cue.responseReq = false
+				cue.responseAck = true
+				clearSpriteSingle(sprite.bReady)
+			endif
+			// pulse once a second
 			if getTimer(time)
 				pulseIn = setButtonPulse(pulseIn, tween.ready, sprite.bReady, backCol[1], backCol[2])
 			endif
