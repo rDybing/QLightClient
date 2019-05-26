@@ -277,6 +277,14 @@ function updateTweenBackground()
 	
 endFunction
 
+function updateTweenString(textID as integer)
+
+	if GetTweenExists(tween.text)
+		UpdateTweenText(tween.text, textID, GetFrameTime())
+	endif
+	
+endFunction
+
 function updateTweenSpriteReady()
 
 	if GetTweenExists(tween.ready)

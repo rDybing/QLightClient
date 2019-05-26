@@ -109,6 +109,7 @@ function countdownView(clock as clock_t, prop as property_t)
 			endif
 		endif
 		updateTweenBackground()
+		updateTweenString(txt.clock)
 		sync()
 	until quit
 	
