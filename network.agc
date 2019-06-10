@@ -16,3 +16,12 @@ function getCueUpdate(cue ref as cueLight_t)
 	out = testCueUpdate(cue)
 		
 endFunction out
+
+//************************************************* Countdown Functions ************************************************
+
+function getOrientationChange(prop ref as property_t)
+	
+	out as integer
+	out = testClockUpdate(prop)
+	
+endFunction out

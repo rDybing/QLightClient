@@ -88,6 +88,7 @@ type cueLight_t
 	responseReq			as integer
 	responseAck			as integer
 	responseUpd			as integer
+	orientation			as integer
 endType
 
 type clock_t

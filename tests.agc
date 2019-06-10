@@ -40,6 +40,21 @@ function testClock()
 	
 endFunction
 
+function testClockUpdate(prop ref as property_t)
+	
+	out as integer = false
+	
+	// simple keyboard press for testing purposes
+	if GetRawKeyReleased(48)		// 0: Change orientation
+		inc prop.orientation
+		if prop.orientation > 4
+			prop.orientation = 1
+		endif
+		out = true
+	endif
+	
+endFunction out
+
 function testCueUpdate(cue ref as cueLight_t)
 	
 	out as integer = false
@@ -47,6 +62,13 @@ function testCueUpdate(cue ref as cueLight_t)
 	cue.responseUpd = false
 	
 	// simple keyboard press for testing purposes
+	if GetRawKeyReleased(48)		// 0: Change orientation
+		inc cue.orientation
+		if cue.orientation > 4
+			cue.orientation = 1
+		endif
+		out = true
+	endif
 	if GetRawKeyReleased(49)		// 1: Green
 		cue.colorStep = 0
 		out = true

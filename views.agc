@@ -95,7 +95,9 @@ function countdownView(clock as clock_t, prop as property_t)
 		if device.isComputer
 			// get if new orientation from controller
 			// if so:
-			setScreenTextOrientation(txt.clock, prop.orientation, prop.padVertical)
+			if getOrientationChange(prop)
+				setScreenTextOrientation(txt.clock, prop.orientation, prop.padVertical)
+			endif
 		else
 			getScreenTextOrientation(txt.clock, prop.padVertical)
 		endif

@@ -102,7 +102,7 @@ main()
 function main ()
 	
 	appJSON as string
-	
+		
 	placeFrame()
 	placeVersionText()
 	
