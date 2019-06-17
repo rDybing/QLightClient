@@ -50,6 +50,7 @@ type globalState_t
 	rotation			as integer
 	orientation			as integer
 	landscape			as integer
+	language			as integer
 endType
 
 type timer_t
@@ -68,15 +69,6 @@ endType
 type menuLang_t
 	item				as string 
 	lang				as string[1]	
-endType
-
-type property_t
-	baseSize			as float
-	font				as integer
-	fontColor			as integer
-	fontAlpha			as integer
-	orientation			as integer
-	padVertical			as integer
 endType
 
 //************************************************* Module Specific ****************************************************
@@ -105,6 +97,16 @@ type clock_t
 	rEndSec				as integer
 endType
 
+// text control in countdown
+type property_t
+	baseSize			as float
+	font				as integer
+	fontColor			as integer
+	fontAlpha			as integer
+	orientation			as integer
+	padVertical			as integer
+endType
+
 //************************************************* Media **************************************************************
 
 type media_t
@@ -119,8 +121,10 @@ type media_t
 	framePC				as integer
 	framePhone			as integer
 	logo				as integer
+	dot					as integer
 	bBack				as integer
 	bReady				as integer
+	bMenu				as integer
 endType
 
 type spriteProp_t
@@ -138,6 +142,9 @@ type sprite_t
 	logo				as integer
 	bBack				as integer
 	bReady				as integer
+	bMenu				as integer
+	bModeClient			as integer
+	bModeCtrl			as integer
 endType
 
 type tween_t
@@ -179,6 +186,10 @@ endType
 type txt_t
 	version				as integer
 	clock				as integer
+	bModeClient			as integer
+	bModeCtrl			as integer
+	modeSelect			as integer
+	appID				as integer
 endType
 
 //************************************************* Composition ********************************************************

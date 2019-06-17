@@ -8,6 +8,25 @@ Copyright 2019 Roy Dybing - all rights reserved
 
 ***********************************************************************************************************************/
 
+//************************************************* Menu Functions *****************************************************
+
+function modeSelectView()
+	
+	quit as integer = false
+	
+	clearCueLight()
+	clearFrame()
+	setBackgroundColor(color[10])
+	placeMenuButton(color[0])
+	placeMenuText()
+	placeModeButtons(color[11])	
+	
+	repeat
+		sync()
+	until quit
+	
+endFunction
+
 //************************************************* Cue Light Functions ************************************************
 
 function cueLightView()

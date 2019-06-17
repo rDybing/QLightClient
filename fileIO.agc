@@ -23,8 +23,10 @@ function loadMedia()
 	LoadImage(media.back, "whiteDot.png")
 	LoadImage(media.framePc, "frame_trans_pc.png")
 	LoadImage(media.framePhone, "frame_trans_phone.png")
+	LoadImage(media.dot, "whiteDot.png")
 	LoadImage(media.bBack, "btnBack.png")
 	LoadImage(media.bReady, "btnReady.png")
+	LoadImage(media.bMenu, "btnMenu.png")
 	
 endFunction
  

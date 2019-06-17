@@ -8,6 +8,43 @@ Copyright 2019 Roy Dybing - all rights reserved
 
 ***********************************************************************************************************************/
 
+//************************************************* Menu Functions *****************************************************
+
+function placeMenuText()
+	
+	mt as txtProp_t
+		
+	mt.startX = 50
+	mt.startY = 17
+	mt.align = 1
+	mt.size = 7
+	
+	setFontProperties(color[0], 255, media.fontA, mt.size)
+	CreateText(txt.modeSelect, getLangString("selectMode", state.language))
+	textDraw(txt.modeSelect, mt)
+	
+	mt.startY = 50
+	
+	CreateText(txt.appID, "AppID: " + '\n' + app.id)
+	textDraw(txt.appID, mt)
+	
+endFunction
+
+function placeButtonText(txtId as integer, txtStr as string, spr as spriteProp_t, col as color_t)
+	
+	mt as txtProp_t
+		
+	mt.startX = spr.posX + (spr.width / 2)
+	mt.startY = spr.posY
+	mt.align = 1
+	mt.size = spr.height - 1
+		
+	setFontProperties(col, 255, media.fontA, mt.size)
+	CreateText(txtId, txtStr)
+	textDraw(txtId, mt)
+	
+endFunction
+
 //************************************************* Cue Light Functions ************************************************
 
 

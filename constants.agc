@@ -12,6 +12,8 @@ Copyright 2019 Roy Dybing - all rights reserved
  
 function initConstants()
 	
+	state.language 			= 1
+	
 	version.name			= "QLight Client"
 	version.major			= 0
 	version.minor			= 1
@@ -27,13 +29,21 @@ function initConstants()
 	sound.click				= 1000
 		
 	txt.version				= 1000
+	txt.bModeClient			= 1001
+	txt.bModeCtrl			= 1002
+	txt.modeSelect			= 1010
+	txt.appID				= 1011
 	txt.clock				= 1100
 	
 	sprite.logo				= 1010
-	sprite.bBack			= 1011
-	sprite.bReady			= 1012
+	sprite.bBack			= 1012
+	sprite.bReady			= 1013
+	sprite.bMenu			= 1014
+	sprite.bModeClient		= 1015
+	sprite.bModeCtrl		= 1016
 	sprite.frame			= 1097	
 	sprite.back				= 1099
+	
 	
 	tween.back				= 1000
 	tween.text				= 1001
@@ -50,8 +60,10 @@ function initConstants()
 	media.framePC			= 1008
 	media.framePhone		= 1009
 	media.logo				= 1010
-	media.bBack				= 1011
-	media.bReady			= 1012
+	media.dot				= 1011
+	media.bBack				= 1012
+	media.bReady			= 1013
+	media.bMenu				= 1014
 	
 endFunction
 
@@ -60,6 +72,18 @@ function initLang(ml ref as menuLang_t[])
 	ml[0].item = "version"
 	ml[0].lang[0] = "Versjon:"
 	ml[0].lang[1] = "Version:"
+	ml[1].item = "bClient"
+	ml[1].lang[0] = "Klient"
+	ml[1].lang[1] = "Client"
+	ml[2].item = "bCtrl"
+	ml[2].lang[0] = "Kontroller"
+	ml[2].lang[1] = "Controller"
+	ml[3].item = "Ready"
+	ml[3].lang[0] = "Klar"
+	ml[3].lang[1] = "Ready"
+	ml[3].item = "selectMode"
+	ml[3].lang[0] = "Velg Modus"
+	ml[3].lang[1] = "Select Mode"
 	
 endFunction
 
@@ -115,5 +139,15 @@ function initColor()
 	color[9].g = 65
 	color[9].b = 214
 	color[9].a = 255
+	// Material Background
+	color[10].r = 18
+	color[10].g = 18
+	color[10].b = 18
+	color[10].a = 255
+	// Material Buttons
+	color[11].r = 255
+	color[11].g = 255
+	color[11].b = 255
+	color[11].a = 16
 	
 endFunction

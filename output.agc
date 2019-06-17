@@ -8,6 +8,50 @@ Copyright 2019 Roy Dybing - all rights reserved
 
 ***********************************************************************************************************************/
 
+//************************************************* Menu Functions *****************************************************
+
+function placeMenuButton(col as color_t)
+	
+	spr as spriteProp_t
+	
+	spr.width = 8
+	spr.height = -1
+	spr.posX =  95 - (spr.width / 2)
+	spr.posY = 2
+	
+	imageSetup(sprite.bMenu, layer.front, spr, media.bMenu)
+	SetSpritePosition(sprite.bMenu, spr.posX, spr.posY)
+	SetSpriteColor(sprite.bMenu, col.r, col.g, col.b, 255)	
+	
+endFunction
+
+function placeModeButtons(col as color_t)
+	
+	spr as spriteProp_t
+	
+	spr.width = 70
+	spr.height = 10
+	spr.posX =  15
+	spr.posY = 25
+	
+	
+		
+	imageSetup(sprite.bModeClient, layer.front, spr, media.dot)
+	SetSpritePosition(sprite.bModeClient, spr.posX, spr.posY)
+	SetSpriteColor(sprite.bModeClient, col.r, col.g, col.b, col.a)
+	
+	placeButtonText(txt.bModeClient, getLangString("bClient", state.language), spr, color[0])
+	
+	spr.posY = spr.posY + spr.height + 2
+	
+	imageSetup(sprite.bModeCtrl, layer.front, spr, media.dot)
+	SetSpritePosition(sprite.bModeCtrl, spr.posX, spr.posY)
+	SetSpriteColor(sprite.bModeCtrl, col.r, col.g, col.b, col.a)
+	
+	placeButtonText(txt.bModeCtrl, getLangString("bCtrl", state.language), spr, color[0])
+	
+endFunction
+
 //************************************************* Cue Light Functions ************************************************
 
 function placeCueLightStart(col as color_t)
@@ -154,6 +198,12 @@ function placeFrame()
 		imageSetup(sprite.frame, layer.front, spr, media.framePhone)
 	endif
 	
+endFunction
+
+function clearFrame()
+	
+	clearSpriteSingle(sprite.frame)
+
 endFunction
 
 //************************************************* Screen Orientation *************************************************
@@ -358,6 +408,8 @@ endFunction
 
 function setBackgroundColorDefault()
 
-	SetSpriteColor(sprite.back, color[9].r, color[9].g, color[9].b, color[9].a)
-
+	if GetSpriteExists(sprite.back)
+		SetSpriteColor(sprite.back, color[9].r, color[9].g, color[9].b, color[9].a)
+	endif
+	
 endFunction
