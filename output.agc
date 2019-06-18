@@ -10,14 +10,29 @@ Copyright 2019 Roy Dybing - all rights reserved
 
 //************************************************* Menu Functions *****************************************************
 
+function placeLogo()
+	
+	spr as spriteProp_t
+	
+	spr.width = 15
+	spr.height = -1
+	spr.posX =  0.5
+	spr.posY = 0.5
+	
+	imageSetup(sprite.logo, layer.front, spr, media.logo)
+	SetSpritePosition(sprite.logo, spr.posX, spr.posY)
+	SetSpriteColor(sprite.logo, 255, 255, 255, 255)	
+	
+endFunction
+
 function placeMenuButton(col as color_t)
 	
 	spr as spriteProp_t
 	
-	spr.width = 8
+	spr.width = 12
 	spr.height = -1
 	spr.posX =  95 - (spr.width / 2)
-	spr.posY = 2
+	spr.posY = 0.5
 	
 	imageSetup(sprite.bMenu, layer.front, spr, media.bMenu)
 	SetSpritePosition(sprite.bMenu, spr.posX, spr.posY)
@@ -32,7 +47,7 @@ function placeModeButtons(col as color_t)
 	spr.width = 70
 	spr.height = 10
 	spr.posX =  15
-	spr.posY = 25
+	spr.posY = 30
 	
 	
 		

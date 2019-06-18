@@ -15,7 +15,7 @@ function placeMenuText()
 	mt as txtProp_t
 		
 	mt.startX = 50
-	mt.startY = 17
+	mt.startY = 21
 	mt.align = 1
 	mt.size = 7
 	
@@ -23,7 +23,7 @@ function placeMenuText()
 	CreateText(txt.modeSelect, getLangString("selectMode", state.language))
 	textDraw(txt.modeSelect, mt)
 	
-	mt.startY = 50
+	mt.startY = 55
 	
 	CreateText(txt.appID, "AppID: " + '\n' + app.id)
 	textDraw(txt.appID, mt)
@@ -35,9 +35,9 @@ function placeButtonText(txtId as integer, txtStr as string, spr as spriteProp_t
 	mt as txtProp_t
 		
 	mt.startX = spr.posX + (spr.width / 2)
-	mt.startY = spr.posY
+	mt.startY = spr.posY + 0.5
 	mt.align = 1
-	mt.size = spr.height - 1
+	mt.size = spr.height - 2
 		
 	setFontProperties(col, 255, media.fontA, mt.size)
 	CreateText(txtId, txtStr)
