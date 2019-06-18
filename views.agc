@@ -13,6 +13,10 @@ Copyright 2019 Roy Dybing - all rights reserved
 function modeSelectView()
 	
 	quit as integer = false
+	keyTimer as timer_t
+	mouse as mouse_t
+	
+	state.buttonHit = false
 	
 	clearCueLight()
 	clearFrame()
@@ -23,10 +27,44 @@ function modeSelectView()
 	placeModeButtons(color[11])	
 	
 	repeat
+		mouse = updateMouse()
+		
+		if mouse.hit
+			mouse = getMouseHit(mouse)
+			spriteID = mouse.spriteID
+			select spriteID
+			case sprite.bMenu
+				
+			endCase
+			case sprite.bModeClient
+				keyTimer = keyPressed(sprite.bModeClient)
+			endCase
+			case sprite.bModeCtrl
+				keyTimer = keyPressed(sprite.bModeCtrl)
+			endCase
+			endSelect
+		endif	
+		
+		if getTimer(keyTimer) and state.buttonHit
+			state.buttonHit = false
+			SetSpriteColorAlpha(spriteID, color[11].a)
+		endif
+		
 		sync()
 	until quit
 	
 endFunction
+
+function keyPressed(spriteID)
+
+	keyTimer as timer_t
+
+	state.buttonHit = true
+	SetSpriteColorAlpha(spriteID, 32)
+	PlaySound(sound.click)
+	keyTimer = setTimer(75)
+	
+endFunction keyTimer
 
 //************************************************* Cue Light Functions ************************************************
 

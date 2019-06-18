@@ -11,13 +11,15 @@ Copyright 2019 Roy Dybing - all rights reserved
 //************************************************* Media Load/Save ****************************************************
 
 function loadMedia()
+	
+	LoadSound(sound.click, "keyClick.wav")
 		
-	loadFont(media.fontA, "Roboto-Regular.ttf")
-	loadFont(media.fontB, "Roboto-Medium.ttf")
-	loadFont(media.fontC, "UbuntuMono-B.ttf")
-	loadFont(media.fontD, "Riffic-Bold.ttf")
-	loadFont(media.fontE, "Imperium-Hollow.ttf")
-	loadFont(media.fontF, "College-Halo.ttf")
+	LoadFont(media.fontA, "Roboto-Regular.ttf")
+	LoadFont(media.fontB, "Roboto-Medium.ttf")
+	LoadFont(media.fontC, "UbuntuMono-B.ttf")
+	LoadFont(media.fontD, "Riffic-Bold.ttf")
+	LoadFont(media.fontE, "Imperium-Hollow.ttf")
+	LoadFont(media.fontF, "College-Halo.ttf")
 	LoadFont(media.fontG, "Aurebesh-Bold.ttf")
 	
 	LoadImage(media.back, "whiteDot.png")

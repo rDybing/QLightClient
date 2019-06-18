@@ -14,7 +14,7 @@ function getButton(sprID as integer)
 
 	m	as mouse_t
 	out	as integer
-
+	
 	m = getMouseHit(updateMouse())
 	
 	if m.hit and m.spriteID = sprID
@@ -30,7 +30,7 @@ function updateMouse()
 	m.x = GetPointerX()
 	m.y = GetPointerY()
 	m.hit = GetPointerPressed()
-
+	
 endFunction m
 
 function getMouseHit(m as mouse_t)

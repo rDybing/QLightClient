@@ -14,7 +14,7 @@ function placeLogo()
 	
 	spr as spriteProp_t
 	
-	spr.width = 15
+	spr.width = 14
 	spr.height = -1
 	spr.posX =  0.5
 	spr.posY = 0.5
@@ -318,6 +318,7 @@ function setSpriteTweenColor(tweenID as integer, spriteID as integer, col as col
 	SetTweenSpriteRed(tweenID, GetSpriteColorRed(spriteID), col.r, mode)
 	SetTweenSpriteGreen(tweenID, GetSpriteColorGreen(spriteID), col.g, mode)
 	SetTweenSpriteBlue(tweenID, GetSpriteColorBlue(spriteID), col.b, mode)
+	SetTweenSpriteAlpha(tweenID, GetSpriteColorAlpha(spriteID), col.a, mode)
 	PlayTweenSprite(tweenID, spriteID, 0)
 
 endFunction

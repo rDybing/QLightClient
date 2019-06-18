@@ -26,7 +26,7 @@ function initConstants()
 	layer.C					= 30
 	layer.back				= 999
 		
-	sound.click				= 1000
+	sound.click				= 1
 		
 	txt.version				= 1000
 	txt.bModeClient			= 1001
@@ -48,6 +48,7 @@ function initConstants()
 	tween.back				= 1000
 	tween.text				= 1001
 	tween.ready				= 1002
+	tween.button			= 1003
 	
 	media.fontA				= 1000
 	media.fontB				= 1001

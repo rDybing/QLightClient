@@ -51,6 +51,7 @@ type globalState_t
 	orientation			as integer
 	landscape			as integer
 	language			as integer
+	buttonHit			as integer
 endType
 
 type timer_t
@@ -151,6 +152,7 @@ type tween_t
 	back				as integer
 	text				as integer
 	ready				as integer
+	button				as integer
 endType
 
 type sound_t
