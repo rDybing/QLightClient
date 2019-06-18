@@ -71,6 +71,7 @@ SetErrorMode(2)
 SetRandomSeed(GetUnixTime())
 
 loadAppSettings()
+setLanguage()
 
 if app.id = "ERROR"
 	noSettingsFileError()
@@ -91,9 +92,6 @@ SetPrintSize(2.0)
 SetPrintColor(255, 255, 0)
 
 /*
-initWaitSprite()
-setLogo()
-showVersion()
 getPrivateIP()
 */
 

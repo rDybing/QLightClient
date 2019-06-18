@@ -124,6 +124,35 @@ function setDevice()
 
 endFunction
 
+function setLanguage()
+
+	lang as string
+	
+	lang = GetDeviceLanguage()
+	
+	if lang <> app.language
+		lang = app.language
+	endif  
+	
+	//testGeneral(lang)
+
+	select lang
+	case "en"		// english
+		state.language = 1
+	endCase
+	case "nb"		// norwegian (bokmål)
+		state.language = 0
+	endCase
+	case "nn"		// norwegian (nynorsk)
+		state.language = 0
+	endCase
+	case default	// default english
+		state.language = 1
+	endCase
+	endSelect
+
+endFunction
+
 //************************************************* First Run After Install ********************************************
 
 function createAppID()

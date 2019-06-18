@@ -61,7 +61,7 @@ function keyPressed(spriteID)
 
 	state.buttonHit = true
 	SetSpriteColorAlpha(spriteID, 32)
-	PlaySound(sound.click)
+	PlaySound(sound.click, 50)
 	keyTimer = setTimer(75)
 	
 endFunction keyTimer

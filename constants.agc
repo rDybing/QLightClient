@@ -12,8 +12,6 @@ Copyright 2019 Roy Dybing - all rights reserved
  
 function initConstants()
 	
-	state.language 			= 0
-	
 	version.name			= "QLight Client"
 	version.major			= 0
 	version.minor			= 1

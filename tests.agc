@@ -114,7 +114,7 @@ function testGeneral(in as string)
 		print("--------------------")
 		print("click to continue...")
 		sync()
-	until GetRawKeyReleased(escKey)
+	until GetRawKeyReleased(escKey) or GetPointerPressed()
 	
 endFunction
 
@@ -158,5 +158,6 @@ function testDevice()
 	print("height     : " + str(device.height))
 	print("aspect     : " + str(device.aspect))
 	print("appID      : " + app.id)
+	print("language   : " + app.language)
 	
 endFunction

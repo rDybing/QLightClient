@@ -23,6 +23,7 @@ type appSettings_t
 	apiPort				as string
 	apiId				as string
 	apiKey				as string
+	language			as string
 endType
 
 type mouse_t
