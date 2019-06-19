@@ -142,11 +142,14 @@ type sprite_t
 	back				as integer
 	frame				as integer
 	logo				as integer
+	dropBack			as integer
 	bBack				as integer
 	bReady				as integer
 	bMenu				as integer
 	bModeClient			as integer
 	bModeCtrl			as integer
+	bLang				as integer
+	bName				as integer
 endType
 
 type tween_t
@@ -178,12 +181,11 @@ type txtProp_t
 	offset 				as integer
 	align 				as integer
 	hOffset				as float
-	mainItems			as integer
-	menuItems			as integer
 	size				as float
 	active				as integer
 	maxLines			as integer
-	lang				as integer
+	layer				as integer
+	//lang				as integer
 endType
 
 type txt_t
@@ -193,6 +195,8 @@ type txt_t
 	bModeCtrl			as integer
 	modeSelect			as integer
 	appID				as integer
+	bLang				as integer
+	bName				as integer	
 endType
 
 //************************************************* Composition ********************************************************

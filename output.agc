@@ -19,8 +19,8 @@ function placeLogo()
 	spr.posX =  0.5
 	spr.posY = 0.5
 	
-	imageSetup(sprite.logo, layer.front, spr, media.logo)
-	SetSpritePosition(sprite.logo, spr.posX, spr.posY)
+	imageSetup(sprite.logo, layer.B, spr, media.logo)
+	//SetSpritePosition(sprite.logo, spr.posX, spr.posY)
 	SetSpriteColor(sprite.logo, 255, 255, 255, 255)	
 	
 endFunction
@@ -35,7 +35,7 @@ function placeMenuButton(col as color_t)
 	spr.posY = 0.5
 	
 	imageSetup(sprite.bMenu, layer.front, spr, media.bMenu)
-	SetSpritePosition(sprite.bMenu, spr.posX, spr.posY)
+	//SetSpritePosition(sprite.bMenu, spr.posX, spr.posY)
 	SetSpriteColor(sprite.bMenu, col.r, col.g, col.b, 255)	
 	
 endFunction
@@ -49,21 +49,65 @@ function placeModeButtons(col as color_t)
 	spr.posX =  15
 	spr.posY = 30
 	
-	
-		
-	imageSetup(sprite.bModeClient, layer.front, spr, media.dot)
-	SetSpritePosition(sprite.bModeClient, spr.posX, spr.posY)
+	imageSetup(sprite.bModeClient, layer.C, spr, media.dot)
+	//SetSpritePosition(sprite.bModeClient, spr.posX, spr.posY)
 	SetSpriteColor(sprite.bModeClient, col.r, col.g, col.b, col.a)
 	
-	placeButtonText(txt.bModeClient, getLangString("bClient", state.language), spr, color[0])
+	placeButtonText(txt.bModeClient, getLangString("bClient", state.language), layer.B, spr, color[0])
 	
 	spr.posY = spr.posY + spr.height + 2
 	
-	imageSetup(sprite.bModeCtrl, layer.front, spr, media.dot)
-	SetSpritePosition(sprite.bModeCtrl, spr.posX, spr.posY)
+	imageSetup(sprite.bModeCtrl, layer.C, spr, media.dot)
+	//SetSpritePosition(sprite.bModeCtrl, spr.posX, spr.posY)
 	SetSpriteColor(sprite.bModeCtrl, col.r, col.g, col.b, col.a)
 	
-	placeButtonText(txt.bModeCtrl, getLangString("bCtrl", state.language), spr, color[0])
+	placeButtonText(txt.bModeCtrl, getLangString("bCtrl", state.language), layer.B, spr, color[0])
+	
+endFunction
+
+function placeDropDownMenu(options as string[])
+	
+	spriteID as integer[]
+	spr as spriteProp_t
+	col as color_t
+	col = color[12]
+	
+	spr.width = 80
+	spr.height = 8 * (options.length + 1)
+	spr.posX =  20
+	spr.posY = 8
+	
+	imageSetup(sprite.dropBack, layer.A, spr, media.dot)
+	SetSpriteColor(sprite.dropBack, col.r, col.g, col.b, col.a)
+	
+	spr.width = 70
+	spr.height = 10
+	spr.posX = 25
+	spr.posY = spr.posY + 1
+	
+	col = color[11]
+	
+	imageSetup(sprite.bLang, layer.front, spr, media.dot)
+	SetSpriteColor(sprite.bLang, col.r, col.g, col.b, 32)	
+	spriteID.insert(sprite.bLang)
+	
+	placeButtonText(txt.bLang, getLangString(options[0], state.language), layer.top, spr, color[0])
+	
+	spr.posY = spr.posY + spr.height + 2
+	
+	imageSetup(sprite.bName, layer.front, spr, media.dot)
+	SetSpriteColor(sprite.bName, col.r, col.g, col.b, 32)
+	spriteID.insert(sprite.bName)
+	
+	placeButtonText(txt.bName, getLangString(options[1], state.language), layer.top, spr, color[0])
+
+endFunction spriteID
+
+function clearDropDownMenu(spriteID as integer[])
+	
+	clearSpriteSingle(sprite.dropBack)
+	clearSprites(spriteID[0], spriteID[spriteID.length])
+	textClear(txt.bLang, txt.bName)
 	
 endFunction
 

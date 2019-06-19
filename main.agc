@@ -43,7 +43,7 @@ Contact: roy[dot]dybing[at]gmail[dot]com
 #constant false			= 0
 #constant true			= 1
 #constant nil			= -1
-#constant maxLocal		= 4
+#constant maxLocal		= 6
 #constant escKey		= 27
 
 global media		as media_t				// constant IDs
@@ -56,7 +56,7 @@ global txt			as txt_t				// constant IDs
 global ml 			as menuLang_t[maxLocal]	// constant language strings
 global device 		as device_t				// constant device properties
 global app			as appSettings_t		// constant IP, api and key values
-global color		as color_t[11]			// constant color values
+global color		as color_t[12]			// constant color values
 global state		as globalState_t		// will change here, there and everywhere
 global version		as version_t			// constant version info
 

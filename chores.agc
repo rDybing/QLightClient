@@ -130,7 +130,7 @@ function setLanguage()
 	
 	lang = GetDeviceLanguage()
 	
-	if lang <> app.language
+	if lang <> app.language and app.language <> ""
 		lang = app.language
 	endif  
 	

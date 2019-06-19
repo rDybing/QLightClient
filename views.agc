@@ -12,9 +12,10 @@ Copyright 2019 Roy Dybing - all rights reserved
 
 function modeSelectView()
 	
-	quit as integer = false
-	keyTimer as timer_t
-	mouse as mouse_t
+	quit		as integer = false
+	keyTimer	as timer_t
+	mouse		as mouse_t
+	spriteID	as integer
 	
 	state.buttonHit = false
 	
@@ -27,14 +28,13 @@ function modeSelectView()
 	placeModeButtons(color[11])	
 	
 	repeat
-		mouse = updateMouse()
-		
+		mouse = updateMouse()		
 		if mouse.hit
 			mouse = getMouseHit(mouse)
 			spriteID = mouse.spriteID
 			select spriteID
 			case sprite.bMenu
-				
+				dropDownView()
 			endCase
 			case sprite.bModeClient
 				keyTimer = keyPressed(sprite.bModeClient)
@@ -50,6 +50,39 @@ function modeSelectView()
 			SetSpriteColorAlpha(spriteID, color[11].a)
 		endif
 		
+		sync()
+	until quit
+	
+endFunction
+
+function dropDownView()
+	
+	quit		as integer = false
+	mouse		as mouse_t
+	options		as string[2] = ["setLang", "setName"]
+	spriteIDs	as integer[2]
+	spriteID	as integer
+	
+	spriteIDs = placeDropDownMenu(options)
+	
+	sync()
+	
+	repeat 
+		mouse = updateMouse()
+		if mouse.hit
+			mouse = getMouseHit(mouse)
+			spriteID = mouse.spriteID
+			select spriteID
+			case sprite.bMenu
+				clearDropDownMenu(spriteIDs)
+				quit = true
+			endCase
+			case spriteIDs[0]
+			endCase
+			case spriteIDs[1]
+			endCase
+			endSelect
+		endif	
 		sync()
 	until quit
 	

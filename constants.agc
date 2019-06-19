@@ -31,14 +31,19 @@ function initConstants()
 	txt.bModeCtrl			= 1002
 	txt.modeSelect			= 1010
 	txt.appID				= 1011
+	txt.bLang				= 1012
+	txt.bName				= 1013
 	txt.clock				= 1100
 	
 	sprite.logo				= 1010
+	sprite.dropBack			= 1011
 	sprite.bBack			= 1012
 	sprite.bReady			= 1013
 	sprite.bMenu			= 1014
 	sprite.bModeClient		= 1015
 	sprite.bModeCtrl		= 1016
+	sprite.bLang			= 1017
+	sprite.bName			= 1018
 	sprite.frame			= 1097	
 	sprite.back				= 1099
 	
@@ -83,6 +88,12 @@ function initLang(ml ref as menuLang_t[])
 	ml[3].item = "selectMode"
 	ml[3].lang[0] = "Velg Modus"
 	ml[3].lang[1] = "Select Mode"
+	ml[4].item = "setLang"
+	ml[4].lang[0] = "Velg Språk"
+	ml[4].lang[1] = "Set Language"
+	ml[5].item = "setName"
+	ml[5].lang[0] = "Gi Navn"
+	ml[5].lang[1] = "Set Name"
 	
 endFunction
 
@@ -148,5 +159,10 @@ function initColor()
 	color[11].g = 255
 	color[11].b = 255
 	color[11].a = 16
+	// Material Background
+	color[12].r = 27
+	color[12].g = 27
+	color[12].b = 27
+	color[12].a = 255
 	
 endFunction

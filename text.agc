@@ -18,6 +18,7 @@ function placeMenuText()
 	mt.startY = 21
 	mt.align = 1
 	mt.size = 7
+	mt.layer = layer.B
 	
 	setFontProperties(color[0], 255, media.fontA, mt.size)
 	CreateText(txt.modeSelect, getLangString("selectMode", state.language))
@@ -30,7 +31,7 @@ function placeMenuText()
 	
 endFunction
 
-function placeButtonText(txtId as integer, txtStr as string, spr as spriteProp_t, col as color_t)
+function placeButtonText(txtId as integer, txtStr as string, layer as integer, spr as spriteProp_t, col as color_t)
 	
 	mt as txtProp_t
 		
@@ -38,6 +39,7 @@ function placeButtonText(txtId as integer, txtStr as string, spr as spriteProp_t
 	mt.startY = spr.posY + 0.5
 	mt.align = 1
 	mt.size = spr.height - 2
+	mt.layer = layer
 		
 	setFontProperties(col, 255, media.fontA, mt.size)
 	CreateText(txtId, txtStr)
@@ -58,6 +60,7 @@ function placeStartClock(in as string, prop ref as property_t)
 	mt.startX = 50
 	mt.startY = 50
 	mt.align = 1
+	mt.layer = layer.front
 	
 	chars = len(in)
 	
@@ -188,6 +191,7 @@ function placeVersionText()
 	mt.startY = 97.5
 	mt.align = 2
 	mt.size = 1.5
+	mt.layer = layer.top
 	prop.font = media.fontC
 	prop.fontAlpha = 192
 	prop.fontColor = 0
@@ -195,7 +199,6 @@ function placeVersionText()
 	setFontProperties(color[prop.fontColor], prop.fontAlpha, prop.font, mt.size)
 	CreateText(txt.version, "v"+ str(version.major) + "." + str(version.minor) + "." + str(version.patch))
 	textDraw(txt.version, mt)
-	SetTextDepth(txt.version, layer.top)
 	
 endFunction
 
@@ -235,7 +238,7 @@ function textDraw(id as integer, mt as txtProp_t)
 	SetTextSize(id, font.size)
 	SetTextPosition(id, mt.startX, mt.startY)
 	SetTextAlignment(id, mt.align)
-	SetTextDepth(id, layer.front)
+	SetTextDepth(id, mt.layer)
 	SetTextVisible(id, 1)
 
 endFunction
@@ -282,11 +285,8 @@ function initTxtProp(mt ref as txtProp_t)
 	mt.offset = 4
 	mt.align = 1
 	mt.hOffset = 200
-	mt.mainItems = 0
-	mt.menuItems = 0
 	mt.size = 4
 	mt.maxLines = 21
-	mt.lang = 0
 	
 endFunction
 
