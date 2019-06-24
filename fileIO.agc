@@ -30,6 +30,8 @@ function loadMedia()
 	LoadImage(media.bBack, "btnBack.png")
 	LoadImage(media.bReady, "btnReady.png")
 	LoadImage(media.bMenu, "btnMenu.png")
+	LoadImage(media.bLeft, "btnLeft.png")
+	LoadImage(media.bRight, "btnRight.png")
 	
 endFunction
  

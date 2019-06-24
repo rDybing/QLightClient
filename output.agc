@@ -72,9 +72,9 @@ function placeDropDownMenu(options as string[])
 	col as color_t
 	col = color[12]
 	
-	spr.width = 80
+	spr.width = 74
 	spr.height = 8 * (options.length + 1)
-	spr.posX =  20
+	spr.posX =  26
 	spr.posY = 8
 	
 	imageSetup(sprite.dropBack, layer.A, spr, media.dot)
@@ -82,7 +82,7 @@ function placeDropDownMenu(options as string[])
 	
 	spr.width = 70
 	spr.height = 10
-	spr.posX = 25
+	spr.posX = 28
 	spr.posY = spr.posY + 1
 	
 	col = color[11]
@@ -103,11 +103,24 @@ function placeDropDownMenu(options as string[])
 
 endFunction spriteID
 
+function expandDropDownMenu(ddHeight as float)
+	
+	SetSpriteSize(sprite.dropBack, GetSpriteWidth(sprite.dropBack), ddHeight)
+	
+endFunction
+
+function shrinkDropDownMenu(ddHeight as float)
+	
+	SetSpriteSize(sprite.dropBack, GetSpriteWidth(sprite.dropBack), ddHeight)
+	
+endFunction
+
 function clearDropDownMenu(spriteID as integer[])
 	
 	clearSpriteSingle(sprite.dropBack)
 	clearSprites(spriteID[0], spriteID[spriteID.length])
 	textClear(txt.bLang, txt.bName)
+	click()
 	
 endFunction
 
@@ -471,5 +484,13 @@ function setBackgroundColorDefault()
 	if GetSpriteExists(sprite.back)
 		SetSpriteColor(sprite.back, color[9].r, color[9].g, color[9].b, color[9].a)
 	endif
+	
+endFunction
+
+//************************************************* Audio Functions ****************************************************
+
+function click()
+	
+	PlaySound(sound.click, 50)
 	
 endFunction

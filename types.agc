@@ -127,6 +127,8 @@ type media_t
 	bBack				as integer
 	bReady				as integer
 	bMenu				as integer
+	bLeft				as integer
+	bRight				as integer
 endType
 
 type spriteProp_t
@@ -150,6 +152,8 @@ type sprite_t
 	bModeCtrl			as integer
 	bLang				as integer
 	bName				as integer
+	bLeft				as integer
+	bRight				as integer
 endType
 
 type tween_t

@@ -60,12 +60,15 @@ function dropDownView()
 	quit		as integer = false
 	mouse		as mouse_t
 	options		as string[2] = ["setLang", "setName"]
+	active		as integer[2] = [false, false]
 	spriteIDs	as integer[2]
 	spriteID	as integer
+	ddHeight 	as float
 	
 	spriteIDs = placeDropDownMenu(options)
-	
+	ddHeight = GetSpriteHeight(sprite.dropBack)
 	sync()
+	click()
 	
 	repeat 
 		mouse = updateMouse()
@@ -78,8 +81,22 @@ function dropDownView()
 				quit = true
 			endCase
 			case spriteIDs[0]
+				if active[0]
+					shrinkDropDownMenu(ddHeight)
+					active[0] = false
+				else
+					expandDropDownMenu(ddHeight + 8)
+					active[0] = true
+				endif
 			endCase
 			case spriteIDs[1]
+				if active[1]
+					shrinkDropDownMenu(ddHeight)
+					active[1] = false
+				else
+					expandDropDownMenu(ddHeight + 8)
+					active[1] = true
+				endif
 			endCase
 			endSelect
 		endif	
@@ -94,7 +111,7 @@ function keyPressed(spriteID)
 
 	state.buttonHit = true
 	SetSpriteColorAlpha(spriteID, 32)
-	PlaySound(sound.click, 50)
+	click()
 	keyTimer = setTimer(75)
 	
 endFunction keyTimer

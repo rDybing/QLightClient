@@ -44,6 +44,8 @@ function initConstants()
 	sprite.bModeCtrl		= 1016
 	sprite.bLang			= 1017
 	sprite.bName			= 1018
+	sprite.bLeft			= 1019
+	sprite.bRight			= 1020
 	sprite.frame			= 1097	
 	sprite.back				= 1099
 	
@@ -68,6 +70,8 @@ function initConstants()
 	media.bBack				= 1012
 	media.bReady			= 1013
 	media.bMenu				= 1014
+	media.bLeft				= 1015
+	media.bRight			= 1016
 	
 endFunction
 
