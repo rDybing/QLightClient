@@ -115,6 +115,39 @@ function shrinkDropDownMenu(ddHeight as float)
 	
 endFunction
 
+function moveButtonDown(spriteID as integer, textID as integer)
+	
+	posX	as integer
+	posY	as integer
+	txtX	as integer
+	offset	as integer = 12
+	
+	posX = GetSpriteX(spriteID)
+	txtX = getTextX(textID)
+	posY = GetSpriteY(spriteID)
+	
+	if GetSpriteExists(spriteID)
+		SetSpritePosition(spriteID, posX, posY + offset)
+		SetTextPosition(textID, txtX, posY + offset + 0.5)
+	endIf
+	
+endFunction posY
+
+function moveButtonUp(spriteID as integer, textID as integer, posY as integer)
+	
+	posX as integer
+	txtX as integer
+	
+	posX = GetSpriteX(spriteID)
+	txtX = getTextX(textID)
+	
+	if GetSpriteExists(spriteID)
+		SetSpritePosition(spriteID, posX, posY)
+		SetTextPosition(textID, txtX, posY + 0.5)
+	endIf
+	
+endFunction
+
 function clearDropDownMenu(spriteID as integer[])
 	
 	clearSpriteSingle(sprite.dropBack)

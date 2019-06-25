@@ -64,6 +64,7 @@ function dropDownView()
 	spriteIDs	as integer[2]
 	spriteID	as integer
 	ddHeight 	as float
+	posY		as integer
 	
 	spriteIDs = placeDropDownMenu(options)
 	ddHeight = GetSpriteHeight(sprite.dropBack)
@@ -83,9 +84,13 @@ function dropDownView()
 			case spriteIDs[0]
 				if active[0]
 					shrinkDropDownMenu(ddHeight)
+					moveButtonUp(spriteIDs[1], txt.bName, posY)
+					//clearSelectLanguage()
 					active[0] = false
 				else
-					expandDropDownMenu(ddHeight + 8)
+					expandDropDownMenu(ddHeight + 12)
+					posY = moveButtonDown(spriteIDs[1], txt.bName)
+					//placeSelectLanguage()
 					active[0] = true
 				endif
 			endCase
@@ -94,7 +99,7 @@ function dropDownView()
 					shrinkDropDownMenu(ddHeight)
 					active[1] = false
 				else
-					expandDropDownMenu(ddHeight + 8)
+					expandDropDownMenu(ddHeight + 12)
 					active[1] = true
 				endif
 			endCase
