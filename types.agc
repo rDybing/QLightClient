@@ -73,6 +73,18 @@ type menuLang_t
 	lang				as string[1]	
 endType
 
+type button_t
+	active				as integer
+	sprID				as integer
+	txtID				as integer
+	sprX				as float
+	sprY				as float
+	sprW				as float
+	sprH				as float
+	txtX				as float
+	txtY				as float
+endType
+
 //************************************************* Module Specific ****************************************************
 
 type cueLight_t
@@ -129,6 +141,9 @@ type media_t
 	bMenu				as integer
 	bLeft				as integer
 	bRight				as integer
+	bCheck				as integer
+	flagNO				as integer
+	flagUK				as integer
 endType
 
 type spriteProp_t
@@ -154,6 +169,9 @@ type sprite_t
 	bName				as integer
 	bLeft				as integer
 	bRight				as integer
+	bCheck				as integer
+	flagNO				as integer
+	flagUK				as integer
 endType
 
 type tween_t

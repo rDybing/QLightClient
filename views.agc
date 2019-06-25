@@ -16,6 +16,7 @@ function modeSelectView()
 	keyTimer	as timer_t
 	mouse		as mouse_t
 	spriteID	as integer
+	button		as button_t[]
 	
 	state.buttonHit = false
 	
@@ -25,7 +26,7 @@ function modeSelectView()
 	placeLogo()
 	placeMenuButton(color[0])
 	placeMenuText()
-	placeModeButtons(color[11])	
+	button = placeModeButtons(color[11])	
 	
 	repeat
 		mouse = updateMouse()		
@@ -60,13 +61,12 @@ function dropDownView()
 	quit		as integer = false
 	mouse		as mouse_t
 	options		as string[2] = ["setLang", "setName"]
-	active		as integer[2] = [false, false]
-	spriteIDs	as integer[2]
+	button		as button_t[2]
 	spriteID	as integer
 	ddHeight 	as float
-	posY		as integer
+	offset		as integer = 12
 	
-	spriteIDs = placeDropDownMenu(options)
+	button = placeDropDownMenu(options)
 	ddHeight = GetSpriteHeight(sprite.dropBack)
 	sync()
 	click()
@@ -78,29 +78,29 @@ function dropDownView()
 			spriteID = mouse.spriteID
 			select spriteID
 			case sprite.bMenu
-				clearDropDownMenu(spriteIDs)
+				clearDropDownMenu(button)
 				quit = true
 			endCase
-			case spriteIDs[0]
-				if active[0]
+			case button[0].sprID
+				if button[0].active
 					shrinkDropDownMenu(ddHeight)
-					moveButtonUp(spriteIDs[1], txt.bName, posY)
+					moveButtonUp(button[1])
 					//clearSelectLanguage()
-					active[0] = false
+					button[0].active = false
 				else
-					expandDropDownMenu(ddHeight + 12)
-					posY = moveButtonDown(spriteIDs[1], txt.bName)
+					expandDropDownMenu(ddHeight + offset)
+					moveButtonDown(button[1], offset)
 					//placeSelectLanguage()
-					active[0] = true
+					button[0].active = true
 				endif
 			endCase
-			case spriteIDs[1]
-				if active[1]
+			case button[1].sprID
+				if button[1].active
 					shrinkDropDownMenu(ddHeight)
-					active[1] = false
+					button[1].active = false
 				else
-					expandDropDownMenu(ddHeight + 12)
-					active[1] = true
+					expandDropDownMenu(ddHeight + offset)
+					button[1].active = true
 				endif
 			endCase
 			endSelect

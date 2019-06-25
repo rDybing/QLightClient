@@ -254,7 +254,7 @@ function setFontProperties(col as color_t, alpha, fnt as integer, size as float)
 
 endFunction
 
-function textClearSingle(in as integer)
+function clearTextSingle(in as integer)
 
 	if getTextExists(in)
 		deleteText(in)
@@ -262,10 +262,10 @@ function textClearSingle(in as integer)
 
 endFunction
 
-function textClear(start as integer, stop as integer)
+function clearText(start as integer, stop as integer)
 
 	for i = start to stop
-		textClearSingle(i)
+		clearTextSingle(i)
 	next i
 
 endFunction

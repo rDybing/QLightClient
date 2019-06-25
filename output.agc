@@ -43,31 +43,30 @@ endFunction
 function placeModeButtons(col as color_t)
 	
 	spr as spriteProp_t
+	btn as button_t[2]
 	
 	spr.width = 70
 	spr.height = 10
 	spr.posX =  15
 	spr.posY = 30
 	
+	// Button Client
 	imageSetup(sprite.bModeClient, layer.C, spr, media.dot)
-	//SetSpritePosition(sprite.bModeClient, spr.posX, spr.posY)
-	SetSpriteColor(sprite.bModeClient, col.r, col.g, col.b, col.a)
-	
+	SetSpriteColor(sprite.bModeClient, col.r, col.g, col.b, col.a)	
 	placeButtonText(txt.bModeClient, getLangString("bClient", state.language), layer.B, spr, color[0])
-	
+	btn[0] = buttonTransfer(spr, sprite.bModeClient, txt.bModeClient)
+	// Button Controller
 	spr.posY = spr.posY + spr.height + 2
-	
 	imageSetup(sprite.bModeCtrl, layer.C, spr, media.dot)
-	//SetSpritePosition(sprite.bModeCtrl, spr.posX, spr.posY)
 	SetSpriteColor(sprite.bModeCtrl, col.r, col.g, col.b, col.a)
-	
 	placeButtonText(txt.bModeCtrl, getLangString("bCtrl", state.language), layer.B, spr, color[0])
+	btn[1] = buttonTransfer(spr, sprite.bModeCtrl, txt.bModeCtrl)
 	
-endFunction
+endFunction btn
 
 function placeDropDownMenu(options as string[])
 	
-	spriteID as integer[]
+	btn as button_t[2]
 	spr as spriteProp_t
 	col as color_t
 	col = color[12]
@@ -86,22 +85,19 @@ function placeDropDownMenu(options as string[])
 	spr.posY = spr.posY + 1
 	
 	col = color[11]
-	
+	// Button Set Language
 	imageSetup(sprite.bLang, layer.front, spr, media.dot)
-	SetSpriteColor(sprite.bLang, col.r, col.g, col.b, 32)	
-	spriteID.insert(sprite.bLang)
-	
+	SetSpriteColor(sprite.bLang, col.r, col.g, col.b, 32)
 	placeButtonText(txt.bLang, getLangString(options[0], state.language), layer.top, spr, color[0])
-	
+	btn[0] = buttonTransfer(spr, sprite.bLang, txt.bLang)
+	// Button Set Client Name
 	spr.posY = spr.posY + spr.height + 2
-	
 	imageSetup(sprite.bName, layer.front, spr, media.dot)
 	SetSpriteColor(sprite.bName, col.r, col.g, col.b, 32)
-	spriteID.insert(sprite.bName)
-	
 	placeButtonText(txt.bName, getLangString(options[1], state.language), layer.top, spr, color[0])
-
-endFunction spriteID
+	btn[1] = buttonTransfer(spr, sprite.bName, txt.bName)
+	
+endFunction btn
 
 function expandDropDownMenu(ddHeight as float)
 	
@@ -115,44 +111,31 @@ function shrinkDropDownMenu(ddHeight as float)
 	
 endFunction
 
-function moveButtonDown(spriteID as integer, textID as integer)
-	
-	posX	as integer
-	posY	as integer
-	txtX	as integer
-	offset	as integer = 12
-	
-	posX = GetSpriteX(spriteID)
-	txtX = getTextX(textID)
-	posY = GetSpriteY(spriteID)
-	
-	if GetSpriteExists(spriteID)
-		SetSpritePosition(spriteID, posX, posY + offset)
-		SetTextPosition(textID, txtX, posY + offset + 0.5)
-	endIf
-	
-endFunction posY
-
-function moveButtonUp(spriteID as integer, textID as integer, posY as integer)
-	
-	posX as integer
-	txtX as integer
-	
-	posX = GetSpriteX(spriteID)
-	txtX = getTextX(textID)
-	
-	if GetSpriteExists(spriteID)
-		SetSpritePosition(spriteID, posX, posY)
-		SetTextPosition(textID, txtX, posY + 0.5)
+function moveButtonDown(btn as button_t, offset as integer)
+		
+	if GetSpriteExists(btn.sprID)
+		SetSpritePosition(btn.sprID, btn.sprX, btn.sprY + offset)
+		SetTextPosition(btn.txtID, btn.txtX, btn.txtY + offset)
 	endIf
 	
 endFunction
 
-function clearDropDownMenu(spriteID as integer[])
+function moveButtonUp(btn as button_t)
+		
+	if GetSpriteExists(btn.sprID)
+		SetSpritePosition(btn.sprID, btn.sprX, btn.sprY)
+		SetTextPosition(btn.txtID, btn.txtX, btn.txtY)
+	endIf
+	
+endFunction
+
+function clearDropDownMenu(btn as button_t[])
 	
 	clearSpriteSingle(sprite.dropBack)
-	clearSprites(spriteID[0], spriteID[spriteID.length])
-	textClear(txt.bLang, txt.bName)
+	for i = 0 to btn.length
+		clearSpriteSingle(btn[i].sprID)
+		clearTextSingle(btn[i].txtID)
+	next i
 	click()
 	
 endFunction
@@ -279,7 +262,7 @@ endFunction not pulseIn
 
 function clearCountDown()
 	
-	textClearSingle(txt.clock)
+	clearTextSingle(txt.clock)
 	setBackgroundColorDefault()
 	clearTweenSingle(tween.back)
 	clearTweenSingle(tween.text)

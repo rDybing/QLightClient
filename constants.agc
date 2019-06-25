@@ -46,6 +46,9 @@ function initConstants()
 	sprite.bName			= 1018
 	sprite.bLeft			= 1019
 	sprite.bRight			= 1020
+	sprite.bCheck			= 1021
+	sprite.flagNO			= 1080
+	sprite.flagUK			= 1081
 	sprite.frame			= 1097	
 	sprite.back				= 1099
 	
@@ -72,6 +75,9 @@ function initConstants()
 	media.bMenu				= 1014
 	media.bLeft				= 1015
 	media.bRight			= 1016
+	media.bCheck			= 1017
+	media.flagNO			= 1080
+	media.flagUK			= 1081
 	
 endFunction
 

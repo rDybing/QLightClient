@@ -8,6 +8,22 @@ Copyright 2019 Roy Dybing - all rights reserved
 
 ***********************************************************************************************************************/
 
+function buttonTransfer(spr as spriteProp_t, sprID as integer, txtID as integer)
+	
+	btn as button_t
+	
+	btn.active = false
+	btn.sprID = sprID
+	btn.txtID = txtID
+	btn.sprX = spr.posX 
+	btn.sprY = spr.posY
+	btn.sprW = spr.width
+	btn.sprH = spr.height
+	btn.txtX = getTextX(txtID)
+	btn.txtY = getTextY(txtID)
+	
+endFunction btn
+
 //************************************************* Cue Light Functions ************************************************
 
 function setCueBackgroundColors()
