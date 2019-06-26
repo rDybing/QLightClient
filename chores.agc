@@ -24,6 +24,22 @@ function buttonTransfer(spr as spriteProp_t, sprID as integer, txtID as integer)
 	
 endFunction btn
 
+function buttonTransferNoText(spr as spriteProp_t, sprID as integer)
+	
+	btn as button_t
+	
+	btn.active = false
+	btn.sprID = sprID
+	btn.txtID = nil
+	btn.sprX = spr.posX 
+	btn.sprY = spr.posY
+	btn.sprW = spr.width
+	btn.sprH = spr.height
+	btn.txtX = nil
+	btn.txtY = nil
+	
+endFunction btn
+
 //************************************************* Cue Light Functions ************************************************
 
 function setCueBackgroundColors()
@@ -166,6 +182,9 @@ function setLanguage()
 		state.language = 1
 	endCase
 	endSelect
+
+	//Override for testing:
+	//state.language = 1
 
 endFunction
 

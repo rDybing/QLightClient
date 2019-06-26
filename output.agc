@@ -130,13 +130,55 @@ function moveButtonUp(btn as button_t)
 endFunction
 
 function clearDropDownMenu(btn as button_t[])
-	
+		
 	clearSpriteSingle(sprite.dropBack)
 	for i = 0 to btn.length
 		clearSpriteSingle(btn[i].sprID)
 		clearTextSingle(btn[i].txtID)
 	next i
 	click()
+	
+endFunction
+
+function placeSelectLanguage(posY as float)
+
+	btn as button_t[3]
+	spr as spriteProp_t
+	col as color_t
+	col = color[11]
+	languages as integer[]
+	languages.insert(media.flagNO)
+	languages.insert(media.flagUK)
+
+	spr.width = 16
+	spr.height = 10
+	spr.posX = 28
+	spr.posY = posY
+	
+	// Button Prev Language
+	imageSetup(sprite.bLeft, layer.front, spr, media.bLeft)
+	btn[0] = buttonTransferNoText(spr, sprite.bLeft)
+	// Sprite Flag
+	spr.posX = spr.posX + spr.width + 1
+	spriteSetup(sprite.flag, layer.front, spr, languages)
+	SetSpriteFrame(sprite.flag, state.language + 1)
+	// Button Next Language
+	spr.posX = spr.posX + spr.width + 1
+	imageSetup(sprite.bRight, layer.front, spr, media.bRight)
+	btn[1] = buttonTransferNoText(spr, sprite.bRight)
+	// Button Accept
+	spr.posX = spr.posX + spr.width + 1
+	imageSetup(sprite.bCheck, layer.front, spr, media.bCheck)
+	btn[2] = buttonTransferNoText(spr, sprite.bCheck)
+	
+endFunction btn
+
+function clearSelectLanguage(btn as button_t[])
+	
+	clearSpriteSingle(sprite.flag)
+	for i = 0 to btn.length
+		clearSpriteSingle(btn[i].sprID)
+	next i
 	
 endFunction
 
@@ -454,6 +496,25 @@ function imageSetup(sID	as integer, depth as integer, spr as spriteProp_t, iID a
 	setSpriteColorAlpha(sID, 255)
 	setSpriteDepth(sID, depth)
 	setSpriteVisible(sID, 1)
+
+endFunction
+
+function spriteSetup(sID as integer, depth as integer, spr as spriteProp_t, imageID as integer[])
+	
+	if GetSpriteExists(sID) = true
+		DeleteSprite(sID)
+	endif
+
+	createSprite(sID, imageID[0])
+	for i = 0 to imageID.length
+		AddSpriteAnimationFrame(sID, imageID[i])
+	next i
+	setSpritePosition(sID, spr.posX, spr.posY)
+	setSpriteColorAlpha(sID, 255)
+	setSpriteDepth(sID, depth)
+	setSpriteFrame(sID, 1)
+	setSpriteVisible(sID, 1)
+	setSpriteSize(sID, spr.width, spr.height)
 
 endFunction
 

@@ -62,6 +62,7 @@ function dropDownView()
 	mouse		as mouse_t
 	options		as string[2] = ["setLang", "setName"]
 	button		as button_t[2]
+	langBtn		as button_t[3]
 	spriteID	as integer
 	ddHeight 	as float
 	offset		as integer = 12
@@ -79,18 +80,19 @@ function dropDownView()
 			select spriteID
 			case sprite.bMenu
 				clearDropDownMenu(button)
+				clearSelectLanguage(langBtn)
 				quit = true
 			endCase
 			case button[0].sprID
 				if button[0].active
 					shrinkDropDownMenu(ddHeight)
 					moveButtonUp(button[1])
-					//clearSelectLanguage()
+					clearSelectLanguage(langBtn)
 					button[0].active = false
-				else
+				elseif button[0].active = false and button[1].active = false
 					expandDropDownMenu(ddHeight + offset)
 					moveButtonDown(button[1], offset)
-					//placeSelectLanguage()
+					langBtn = placeSelectLanguage(button[1].sprY)
 					button[0].active = true
 				endif
 			endCase
@@ -98,12 +100,18 @@ function dropDownView()
 				if button[1].active
 					shrinkDropDownMenu(ddHeight)
 					button[1].active = false
-				else
+				elseif button[1].active = false and button[0].active = false
 					expandDropDownMenu(ddHeight + offset)
 					button[1].active = true
 				endif
 			endCase
 			endSelect
+			if button[0].active
+				
+			endif
+			if button[1].active
+				
+			endif
 		endif	
 		sync()
 	until quit

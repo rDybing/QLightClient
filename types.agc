@@ -170,8 +170,7 @@ type sprite_t
 	bLeft				as integer
 	bRight				as integer
 	bCheck				as integer
-	flagNO				as integer
-	flagUK				as integer
+	flag				as integer
 endType
 
 type tween_t

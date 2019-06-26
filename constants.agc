@@ -47,8 +47,7 @@ function initConstants()
 	sprite.bLeft			= 1019
 	sprite.bRight			= 1020
 	sprite.bCheck			= 1021
-	sprite.flagNO			= 1080
-	sprite.flagUK			= 1081
+	sprite.flag				= 1080
 	sprite.frame			= 1097	
 	sprite.back				= 1099
 	
