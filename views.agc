@@ -75,6 +75,7 @@ function dropDownView()
 	options		as string[2] = ["setLang", "setName"]
 	button		as button_t[2]
 	langBtn		as button_t[3]
+	nameBtn		as button_t
 	spriteID	as integer
 	ddHeight 	as float
 	offset		as integer = 12
@@ -91,14 +92,14 @@ function dropDownView()
 		if mouse.hit
 			mouse = getMouseHit(mouse)
 			spriteID = mouse.spriteID
-			quit = handleMainDropDown(spriteID, button, langBtn, ddHeight, offset, quit)
+			quit = handleMainDropDown(spriteID, button, langBtn, nameBtn, ddHeight, offset, quit)
 			// Change Language
 			if button[0].active
 				tempLang = handleChangeLanguage(spriteID, langBtn, tempLang)				
 			endif
 			// Change Client Name
 			if button[1].active
-				handleChangeClientName()
+				handleChangeClientName(spriteID, nameBtn)
 			endif
 		endif
 		//testDevice()	
@@ -109,7 +110,8 @@ endFunction
 
 function handleMainDropDown(spriteID as integer, 
 	button		ref as button_t[], 
-	langBtn		ref as button_t[], 
+	langBtn		ref as button_t[],
+	nameBtn		ref as button_t, 
 	ddHeight	as float, 
 	offset		as integer, 
 	quit		as integer)
@@ -119,6 +121,7 @@ function handleMainDropDown(spriteID as integer,
 	case sprite.bMenu
 		clearDropDownMenu(button)
 		clearSelectLanguage(langBtn)
+		clearTextInput(nameBtn.sprID)
 		quit = true
 		click()
 	endCase
@@ -141,11 +144,11 @@ function handleMainDropDown(spriteID as integer,
 	case button[1].sprID
 		if button[1].active
 			resizeDropDownMenu(ddHeight)
-			clearTextInput()
+			clearTextInput(nameBtn.sprID)
 			button[1].active = false
 		elseif button[1].active = false and button[0].active = false
 			resizeDropDownMenu(ddHeight + offset)
-			placeSetClientName()
+			nameBtn = placeSetClientName()
 			button[1].active = true
 		endif
 		click()
@@ -194,7 +197,13 @@ function handleChangeLanguage(spriteID as integer, langBtn ref as button_t[], te
 				
 endFunction tempLang
 
-function handleChangeClientName()
+function handleChangeClientName(spriteID as integer, nameBtn ref as button_t)
+	
+	if spriteID = nameBtn.sprID
+		click()
+		app.name = getEditBoxInput()
+		saveAppSettings()
+	endif
 	
 endFunction
 

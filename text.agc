@@ -157,23 +157,18 @@ function updateTextOrientation(txtID, pad as integer)
 	
 	select state.orientation
 	case 0
-		//SetTextSize(txtID, font.size)
 		SetTextPosition(txtID, 50, 65 - offset - (pad / 2))
 	endCase
 	case 1
-		//SetTextSize(txtID, font.size)
 		SetTextPosition(txtID, 50, 35 - offset + (pad / 1.5))
 	endCase
 	case 2
-		//SetTextSize(txtID, font.size)
 		SetTextPosition(txtID, 50, 65 - (pad))
 	endCase
 	case 3
-		//SetTextSize(txtID, font.size)
 		SetTextPosition(txtID, 25 + offset + (pad / 2), 50)
 	endCase
 	case 4
-		//SetTextSize(txtID, font.size)
 		SetTextPosition(txtID, 75 - (offset * 1.5) - (pad / 2), 50)
 	endCase
 	endSelect
@@ -230,7 +225,7 @@ function placeTextInput(mt as txtProp_t, in as string, maxChars as integer)
 	
 endFunction
 
-function clearTextInput()
+function clearTextInput(spriteID as integer)
 	
 	if GetEditBoxExists(txt.editBox)
 		DeleteEditBox(txt.editBox)
@@ -240,7 +235,7 @@ function clearTextInput()
 		clearTextSingle(txt.editBox)
 	endif
 	
-	clearSpriteSingle(sprite.bCheck)
+	clearSpriteSingle(spriteID)
 
 endFunction
 

@@ -20,7 +20,6 @@ function placeLogo()
 	spr.posY = 0.5
 	
 	imageSetup(sprite.logo, layer.B, spr, media.logo)
-	//SetSpritePosition(sprite.logo, spr.posX, spr.posY)
 	SetSpriteColor(sprite.logo, 255, 255, 255, 255)	
 	
 endFunction
@@ -35,7 +34,6 @@ function placeMenuButton(col as color_t)
 	spr.posY = 0.5
 	
 	imageSetup(sprite.bMenu, layer.front, spr, media.bMenu)
-	//SetSpritePosition(sprite.bMenu, spr.posX, spr.posY)
 	SetSpriteColor(sprite.bMenu, col.r, col.g, col.b, 255)	
 	
 endFunction
@@ -219,15 +217,17 @@ function placeSetClientName()
 	spr.width = 16
 	spr.height = 10
 	
-	placeTextInput(mt, "", 10)
+	placeTextInput(mt, app.name, 10)
 	// Button Accept
 	imageSetup(sprite.bCheck, layer.front, spr, media.bCheck)
 	btn = buttonTransfer(spr, sprite.bCheck, nil)
-	SetSpriteColor(sprite.bCheck, color[3].r, color[3].g, color[3].b, 128)
+	SetSpriteColor(sprite.bCheck, color[5].r, color[5].g, color[5].b, 255)
 	
 	SetEditBoxFocus(txt.editBox, 1)
 	
 endFunction btn
+
+
 
 //************************************************* Cue Light Functions ************************************************
 
@@ -461,8 +461,7 @@ endFunction
 
 function setSpriteTweenColor(tweenID as integer, spriteID as integer, col as color_t, duration as float, mode as integer)
 	
-	/* 
-	** Tween Modes **
+	/* Tween Modes
 	0: TweenLinear()
 	1: TweenSmooth1()
 	2: TweenSmooth2()
@@ -471,8 +470,7 @@ function setSpriteTweenColor(tweenID as integer, spriteID as integer, col as col
 	5: TweenEaseOut1()
 	6: TweenEaseOut2()
 	7: TweenBounce()
-	8: TweenOvershoot()
-	*/
+	8: TweenOvershoot()	*/
 	
 	clearTweenSingle(tweenID)
 

@@ -8,6 +8,18 @@ Copyright 2019 Roy Dybing - all rights reserved
 
 ***********************************************************************************************************************/
 
+function getEditBoxInput()
+
+	out as string
+
+	out = GetEditBoxText(txt.editBox)
+	if len(out) > 10
+		out = left(out, 10)
+		SetEditBoxText(txt.editBox, out)
+	endif
+	
+endFunction out
+
 //************************************************* Mouse Actions ******************************************************
 
 function getButton(sprID as integer)

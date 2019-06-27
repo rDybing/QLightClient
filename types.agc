@@ -24,6 +24,7 @@ type appSettings_t
 	apiId				as string
 	apiKey				as string
 	language			as string
+	name				as string
 endType
 
 type mouse_t
