@@ -79,7 +79,8 @@ function dropDownView()
 	spriteID	as integer
 	ddHeight 	as float
 	offset		as integer = 12
-	tempLang	as integer	
+	tempLang	as integer
+	nameSet		as integer = false	
 	
 	tempLang = state.language
 	button = placeDropDownMenu(options)
@@ -99,7 +100,13 @@ function dropDownView()
 			endif
 			// Change Client Name
 			if button[1].active
-				handleChangeClientName(spriteID, nameBtn)
+				nameSet = handleChangeClientName(spriteID, nameBtn)
+				if nameSet
+					clearTextInput(nameBtn.sprID)
+					resizeDropDownMenu(ddHeight)
+					nameSet = false
+					button[1].active = false
+				endif
 			endif
 		endif
 		//testDevice()	
@@ -199,13 +206,16 @@ endFunction tempLang
 
 function handleChangeClientName(spriteID as integer, nameBtn ref as button_t)
 	
+	out as integer = false
+	
 	if spriteID = nameBtn.sprID
 		click()
 		app.name = getEditBoxInput()
 		saveAppSettings()
+		out = true
 	endif
 	
-endFunction
+endFunction out
 
 //************************************************* Cue Light Functions ************************************************
 
