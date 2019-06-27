@@ -204,7 +204,7 @@ endFunction
 
 //************************************************* Chores *************************************************************
 
-function changeLanguageAllActiveStrings()
+function changeLanguageAllActive()
 	
 	loc as locale_t[]
 	loc = getLocaleIDs()

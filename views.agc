@@ -8,7 +8,7 @@ Copyright 2019 Roy Dybing - all rights reserved
 
 ***********************************************************************************************************************/
 
-//************************************************* Menu Functions *****************************************************
+//************************************************* Main Menu Functions ************************************************
 
 function modeSelectView()
 	
@@ -56,6 +56,19 @@ function modeSelectView()
 	
 endFunction
 
+function keyPressed(spriteID)
+
+	keyTimer as timer_t
+
+	state.buttonHit = true
+	SetSpriteColorAlpha(spriteID, 32)
+	click()
+	keyTimer = setTimer(75)
+	
+endFunction keyTimer
+
+//************************************************* Main Menu Drop Down Functions **************************************
+
 function dropDownView()
 	
 	quit		as integer = false
@@ -68,7 +81,7 @@ function dropDownView()
 	offset		as integer = 12
 	tempLang	as integer	
 	
-	tempLAng = state.language
+	tempLang = state.language
 	button = placeDropDownMenu(options)
 	ddHeight = GetSpriteHeight(sprite.dropBack)
 	sync()
@@ -79,76 +92,14 @@ function dropDownView()
 		if mouse.hit
 			mouse = getMouseHit(mouse)
 			spriteID = mouse.spriteID
-			select spriteID
-			case sprite.bMenu
-				clearDropDownMenu(button)
-				clearSelectLanguage(langBtn)
-				quit = true
-			endCase
-			case button[0].sprID
-				if button[0].active
-					shrinkDropDownMenu(ddHeight)
-					moveButton(button[1], 0)
-					clearSelectLanguage(langBtn)
-					button[0].active = false
-				elseif button[0].active = false and button[1].active = false
-					expandDropDownMenu(ddHeight + offset)
-					moveButton(button[1], offset)
-					langBtn = placeSelectLanguage(button[1].sprY)
-					button[0].active = true
-				endif
-				click()
-			endCase
-			case button[1].sprID
-				if button[1].active
-					shrinkDropDownMenu(ddHeight)
-					button[1].active = false
-				elseif button[1].active = false and button[0].active = false
-					expandDropDownMenu(ddHeight + offset)
-					button[1].active = true
-				endif
-				click()
-			endCase
-			endSelect
+			quit = handleMainDropDown(spriteID, button, langBtn, ddHeight, offset, quit)
+			// Change Language
 			if button[0].active
-				select spriteID
-				// Left / Previous
-				case langBtn[0].sprID
-					if tempLang > 0
-						dec tempLang
-					else
-						tempLang = ml[0].lang.length
-					endif
-					click()
-					updateFlagSprite(tempLang)
-					updateCheckSprite(tempLang)
-				endCase
-				// Right / Next
-				case langBtn[1].sprID
-					if tempLang < ml[0].lang.length
-						inc tempLang
-					else
-						tempLang = 0
-					endif
-					click()
-					updateFlagSprite(tempLang)
-					updateCheckSprite(tempLang)
-				endCase
-				// Check / Accept
-				case langBtn[2].sprID
-					if tempLang <> state.language
-						click()
-						state.language = tempLang
-						app.language = getLangCode(tempLang)
-						changeLanguageAllActiveStrings()
-						saveAppSettings()
-						updateCheckSprite(tempLang)
-					endif
-				endCase
-				endSelect
+				tempLang = handleChangeLanguage(spriteID, langBtn, tempLang)				
 			endif
+			// Change Client Name
 			if button[1].active
-				
+				handleChangeClientName()
 			endif
 		endif
 		//testDevice()	
@@ -157,16 +108,93 @@ function dropDownView()
 	
 endFunction
 
-function keyPressed(spriteID)
-
-	keyTimer as timer_t
-
-	state.buttonHit = true
-	SetSpriteColorAlpha(spriteID, 32)
-	click()
-	keyTimer = setTimer(75)
+function handleMainDropDown(spriteID as integer, 
+	button		ref as button_t[], 
+	langBtn		ref as button_t[], 
+	ddHeight	as float, 
+	offset		as integer, 
+	quit		as integer)
 	
-endFunction keyTimer
+	select spriteID
+	// Settings Drop Down Menu
+	case sprite.bMenu
+		clearDropDownMenu(button)
+		clearSelectLanguage(langBtn)
+		quit = true
+	endCase
+	// Change Language
+	case button[0].sprID
+		if button[0].active
+			shrinkDropDownMenu(ddHeight)
+			moveButton(button[1], 0)
+			clearSelectLanguage(langBtn)
+			button[0].active = false
+		elseif button[0].active = false and button[1].active = false
+			expandDropDownMenu(ddHeight + offset)
+			moveButton(button[1], offset)
+			langBtn = placeSelectLanguage(button[1].sprY)
+			button[0].active = true
+		endif
+		click()
+	endCase
+	// Change Client Name
+	case button[1].sprID
+		if button[1].active
+			shrinkDropDownMenu(ddHeight)
+			button[1].active = false
+		elseif button[1].active = false and button[0].active = false
+			expandDropDownMenu(ddHeight + offset)
+			button[1].active = true
+		endif
+		click()
+	endCase
+	endSelect
+	
+endFunction quit
+
+function handleChangeLanguage(spriteID as integer, langBtn ref as button_t[], tempLang as integer)
+	
+	select spriteID
+	// Left / Previous
+	case langBtn[0].sprID
+		if tempLang > 0
+			dec tempLang
+		else
+			tempLang = ml[0].lang.length
+		endif
+		click()
+		updateFlagSprite(tempLang)
+		updateCheckSprite(tempLang)
+	endCase
+	// Right / Next
+	case langBtn[1].sprID
+		if tempLang < ml[0].lang.length
+			inc tempLang
+		else
+			tempLang = 0
+		endif
+		click()
+		updateFlagSprite(tempLang)
+		updateCheckSprite(tempLang)
+	endCase
+	// Check / Accept
+	case langBtn[2].sprID
+		if tempLang <> state.language
+			click()
+			state.language = tempLang
+			app.language = getLangCode(tempLang)
+			changeLanguageAllActive()
+			saveAppSettings()
+			updateCheckSprite(tempLang)
+		endif
+	endCase
+	endSelect
+				
+endFunction tempLang
+
+function handleChangeClientName()
+	
+endFunction
 
 //************************************************* Cue Light Functions ************************************************
 
