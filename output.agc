@@ -64,6 +64,18 @@ function placeModeButtons(col as color_t)
 	
 endFunction btn
 
+function highlightButton(spriteID as integer, highlight as integer)
+	
+	if highlight
+		SetSpriteColorAlpha(spriteID, 32)
+	else
+		SetSpriteColorAlpha(spriteID, color[11].a)
+	endif
+	
+endFunction
+
+//************************************************* Main Menu Drop Down Functions **************************************
+
 function placeDropDownMenu(options as string[])
 	
 	btn as button_t[2]
@@ -99,15 +111,16 @@ function placeDropDownMenu(options as string[])
 	
 endFunction btn
 
-function expandDropDownMenu(ddHeight as float)
+function getDropDownMenuSize()
 	
-	SetSpriteSize(sprite.dropBack, GetSpriteWidth(sprite.dropBack), ddHeight)
-	
-endFunction
+	out as float
+	out = GetSpriteHeight(sprite.dropBack)
 
-function shrinkDropDownMenu(ddHeight as float)
+endFunction out
+
+function resizeDropDownMenu(size as float)
 	
-	SetSpriteSize(sprite.dropBack, GetSpriteWidth(sprite.dropBack), ddHeight)
+	SetSpriteSize(sprite.dropBack, GetSpriteWidth(sprite.dropBack), size)
 	
 endFunction
 
@@ -127,7 +140,6 @@ function clearDropDownMenu(btn as button_t[])
 		clearSpriteSingle(btn[i].sprID)
 		clearTextSingle(btn[i].txtID)
 	next i
-	click()
 	
 endFunction
 

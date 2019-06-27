@@ -45,12 +45,11 @@ function modeSelectView()
 			endCase
 			endSelect
 		endif	
-		
+		// reset button highlight
 		if getTimer(keyTimer) and state.buttonHit
 			state.buttonHit = false
-			SetSpriteColorAlpha(spriteID, color[11].a)
+			highlightButton(spriteID, state.buttonHit)
 		endif
-		
 		sync()
 	until quit
 	
@@ -61,7 +60,7 @@ function keyPressed(spriteID)
 	keyTimer as timer_t
 
 	state.buttonHit = true
-	SetSpriteColorAlpha(spriteID, 32)
+	highlightButton(spriteID, state.buttonHit)
 	click()
 	keyTimer = setTimer(75)
 	
@@ -83,7 +82,7 @@ function dropDownView()
 	
 	tempLang = state.language
 	button = placeDropDownMenu(options)
-	ddHeight = GetSpriteHeight(sprite.dropBack)
+	ddHeight = getDropDownMenuSize()
 	sync()
 	click()
 	
@@ -121,16 +120,17 @@ function handleMainDropDown(spriteID as integer,
 		clearDropDownMenu(button)
 		clearSelectLanguage(langBtn)
 		quit = true
+		click()
 	endCase
 	// Change Language
 	case button[0].sprID
 		if button[0].active
-			shrinkDropDownMenu(ddHeight)
+			resizeDropDownMenu(ddHeight)
 			moveButton(button[1], 0)
 			clearSelectLanguage(langBtn)
 			button[0].active = false
 		elseif button[0].active = false and button[1].active = false
-			expandDropDownMenu(ddHeight + offset)
+			resizeDropDownMenu(ddHeight + offset)
 			moveButton(button[1], offset)
 			langBtn = placeSelectLanguage(button[1].sprY)
 			button[0].active = true
@@ -140,10 +140,10 @@ function handleMainDropDown(spriteID as integer,
 	// Change Client Name
 	case button[1].sprID
 		if button[1].active
-			shrinkDropDownMenu(ddHeight)
+			resizeDropDownMenu(ddHeight)
 			button[1].active = false
 		elseif button[1].active = false and button[0].active = false
-			expandDropDownMenu(ddHeight + offset)
+			resizeDropDownMenu(ddHeight + offset)
 			button[1].active = true
 		endif
 		click()
