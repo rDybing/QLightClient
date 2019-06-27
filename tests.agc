@@ -158,6 +158,7 @@ function testDevice()
 	print("height     : " + str(device.height))
 	print("aspect     : " + str(device.aspect))
 	print("appID      : " + app.id)
-	print("language   : " + app.language)
+	print("langCode   : " + app.language)
+	print("langID     : " + str(state.language))
 	
 endFunction

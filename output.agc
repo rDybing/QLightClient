@@ -111,20 +111,11 @@ function shrinkDropDownMenu(ddHeight as float)
 	
 endFunction
 
-function moveButtonDown(btn as button_t, offset as integer)
+function moveButton(btn as button_t, offset as integer)
 		
 	if GetSpriteExists(btn.sprID)
 		SetSpritePosition(btn.sprID, btn.sprX, btn.sprY + offset)
 		SetTextPosition(btn.txtID, btn.txtX, btn.txtY + offset)
-	endIf
-	
-endFunction
-
-function moveButtonUp(btn as button_t)
-		
-	if GetSpriteExists(btn.sprID)
-		SetSpritePosition(btn.sprID, btn.sprX, btn.sprY)
-		SetTextPosition(btn.txtID, btn.txtX, btn.txtY)
 	endIf
 	
 endFunction
@@ -157,7 +148,7 @@ function placeSelectLanguage(posY as float)
 	
 	// Button Prev Language
 	imageSetup(sprite.bLeft, layer.front, spr, media.bLeft)
-	btn[0] = buttonTransferNoText(spr, sprite.bLeft)
+	btn[0] = buttonTransfer(spr, sprite.bLeft, nil)
 	// Sprite Flag
 	spr.posX = spr.posX + spr.width + 1
 	spriteSetup(sprite.flag, layer.front, spr, languages)
@@ -165,11 +156,11 @@ function placeSelectLanguage(posY as float)
 	// Button Next Language
 	spr.posX = spr.posX + spr.width + 1
 	imageSetup(sprite.bRight, layer.front, spr, media.bRight)
-	btn[1] = buttonTransferNoText(spr, sprite.bRight)
+	btn[1] = buttonTransfer(spr, sprite.bRight, nil)
 	// Button Accept
 	spr.posX = spr.posX + spr.width + 1
 	imageSetup(sprite.bCheck, layer.front, spr, media.bCheck)
-	btn[2] = buttonTransferNoText(spr, sprite.bCheck)
+	btn[2] = buttonTransfer(spr, sprite.bCheck, nil)
 	SetSpriteColor(sprite.bCheck, color[3].r, color[3].g, color[3].b, 128)
 	
 endFunction btn
@@ -586,6 +577,6 @@ endFunction
 
 function click()
 	
-	PlaySound(sound.click, 50)
+	PlaySound(sound.click, 30)
 	
 endFunction

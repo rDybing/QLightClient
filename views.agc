@@ -88,12 +88,12 @@ function dropDownView()
 			case button[0].sprID
 				if button[0].active
 					shrinkDropDownMenu(ddHeight)
-					moveButtonUp(button[1])
+					moveButton(button[1], 0)
 					clearSelectLanguage(langBtn)
 					button[0].active = false
 				elseif button[0].active = false and button[1].active = false
 					expandDropDownMenu(ddHeight + offset)
-					moveButtonDown(button[1], offset)
+					moveButton(button[1], offset)
 					langBtn = placeSelectLanguage(button[1].sprY)
 					button[0].active = true
 				endif
@@ -150,7 +150,8 @@ function dropDownView()
 			if button[1].active
 				
 			endif
-		endif	
+		endif
+		//testDevice()	
 		sync()
 	until quit
 	

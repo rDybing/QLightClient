@@ -53,6 +53,7 @@ function loadAppSettings()
 	else
 		app.id = "ERROR"
 	endif
+	//testGeneral(app.toJSON())
 
 endFunction
 

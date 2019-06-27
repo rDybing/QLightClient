@@ -16,29 +16,19 @@ function buttonTransfer(spr as spriteProp_t, sprID as integer, txtID as integer)
 	
 	btn.active = false
 	btn.sprID = sprID
+	btn.sprX = spr.posX 
+	btn.sprY = spr.posY
+	btn.sprW = spr.width
+	btn.sprH = spr.height
 	btn.txtID = txtID
-	btn.sprX = spr.posX 
-	btn.sprY = spr.posY
-	btn.sprW = spr.width
-	btn.sprH = spr.height
-	btn.txtX = getTextX(txtID)
-	btn.txtY = getTextY(txtID)
 	
-endFunction btn
-
-function buttonTransferNoText(spr as spriteProp_t, sprID as integer)
-	
-	btn as button_t
-	
-	btn.active = false
-	btn.sprID = sprID
-	btn.txtID = nil
-	btn.sprX = spr.posX 
-	btn.sprY = spr.posY
-	btn.sprW = spr.width
-	btn.sprH = spr.height
-	btn.txtX = nil
-	btn.txtY = nil
+	if txtID <> nil
+		btn.txtX = getTextX(txtID)
+		btn.txtY = getTextY(txtID)
+	else
+		btn.txtX = nil
+		btn.txtY = nil
+	endif
 	
 endFunction btn
 

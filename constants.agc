@@ -51,7 +51,6 @@ function initConstants()
 	sprite.frame			= 1097	
 	sprite.back				= 1099
 	
-	
 	tween.back				= 1000
 	tween.text				= 1001
 	tween.ready				= 1002
