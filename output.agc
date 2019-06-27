@@ -170,8 +170,26 @@ function placeSelectLanguage(posY as float)
 	spr.posX = spr.posX + spr.width + 1
 	imageSetup(sprite.bCheck, layer.front, spr, media.bCheck)
 	btn[2] = buttonTransferNoText(spr, sprite.bCheck)
+	SetSpriteColor(sprite.bCheck, color[3].r, color[3].g, color[3].b, 128)
 	
 endFunction btn
+
+function updateFlagSprite(in as integer)
+	
+	inc in
+	setSpriteFrame(sprite.flag, in)
+	
+endFunction
+
+function updateCheckSprite(in as integer)
+	
+	if in = state.language
+		SetSpriteColor(sprite.bCheck, color[3].r, color[3].g, color[3].b, 128)
+	else
+		SetSpriteColor(sprite.bCheck, color[5].r, color[5].g, color[5].b, 255)
+	endif
+	
+endFunction
 
 function clearSelectLanguage(btn as button_t[])
 	

@@ -66,7 +66,9 @@ function dropDownView()
 	spriteID	as integer
 	ddHeight 	as float
 	offset		as integer = 12
+	tempLang	as integer	
 	
+	tempLAng = state.language
 	button = placeDropDownMenu(options)
 	ddHeight = GetSpriteHeight(sprite.dropBack)
 	sync()
@@ -95,6 +97,7 @@ function dropDownView()
 					langBtn = placeSelectLanguage(button[1].sprY)
 					button[0].active = true
 				endif
+				click()
 			endCase
 			case button[1].sprID
 				if button[1].active
@@ -104,10 +107,45 @@ function dropDownView()
 					expandDropDownMenu(ddHeight + offset)
 					button[1].active = true
 				endif
+				click()
 			endCase
 			endSelect
 			if button[0].active
-				
+				select spriteID
+				// Left / Previous
+				case langBtn[0].sprID
+					if tempLang > 0
+						dec tempLang
+					else
+						tempLang = ml[0].lang.length
+					endif
+					click()
+					updateFlagSprite(tempLang)
+					updateCheckSprite(tempLang)
+				endCase
+				// Right / Next
+				case langBtn[1].sprID
+					if tempLang < ml[0].lang.length
+						inc tempLang
+					else
+						tempLang = 0
+					endif
+					click()
+					updateFlagSprite(tempLang)
+					updateCheckSprite(tempLang)
+				endCase
+				// Check / Accept
+				case langBtn[2].sprID
+					if tempLang <> state.language
+						click()
+						state.language = tempLang
+						app.language = getLangCode(tempLang)
+						changeLanguageAllActiveStrings()
+						saveAppSettings()
+						updateCheckSprite(tempLang)
+					endif
+				endCase
+				endSelect
 			endif
 			if button[1].active
 				

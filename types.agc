@@ -206,7 +206,6 @@ type txtProp_t
 	active				as integer
 	maxLines			as integer
 	layer				as integer
-	//lang				as integer
 endType
 
 type txt_t
@@ -218,6 +217,11 @@ type txt_t
 	appID				as integer
 	bLang				as integer
 	bName				as integer	
+endType
+
+type locale_t
+	ID					as integer
+	item				as string
 endType
 
 //************************************************* Composition ********************************************************

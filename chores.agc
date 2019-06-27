@@ -8,6 +8,8 @@ Copyright 2019 Roy Dybing - all rights reserved
 
 ***********************************************************************************************************************/
 
+//************************************************* Button Functions ***************************************************
+
 function buttonTransfer(spr as spriteProp_t, sprID as integer, txtID as integer)
 	
 	btn as button_t
@@ -187,6 +189,24 @@ function setLanguage()
 	//state.language = 1
 
 endFunction
+
+function getLangCode(in as integer)
+	
+	out as String
+	
+	select in
+	case 0
+		out = "nb"
+	endCase
+	case 1
+		out = "en"
+	endCase
+	case default
+		out = "en"
+	endCase
+	endSelect
+	
+endFunction out
 
 //************************************************* First Run After Install ********************************************
 

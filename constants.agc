@@ -106,6 +106,23 @@ function initLang(ml ref as menuLang_t[])
 	
 endFunction
 
+function getLocaleIDs()
+		
+	loc as locale_t[5]
+	
+	loc[0].ID = txt.bModeClient
+	loc[0].item = "bClient"
+	loc[1].ID = txt.bModeCtrl
+	loc[1].item = "bCtrl"
+	loc[2].ID = txt.modeSelect
+	loc[2].item = "selectMode"
+	loc[3].ID = txt.bLang
+	loc[3].item = "setLang"
+	loc[4].ID = txt.bName
+	loc[4].item = "setName"
+	
+endFunction loc
+
 function initColor()
 	
 	// Off-White

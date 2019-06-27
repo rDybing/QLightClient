@@ -204,6 +204,19 @@ endFunction
 
 //************************************************* Chores *************************************************************
 
+function changeLanguageAllActiveStrings()
+	
+	loc as locale_t[]
+	loc = getLocaleIDs()
+	
+	for i = 0 to loc.length
+		if GetTextExists(loc[i].ID)
+			SetTextString(loc[i].ID, getLangString(loc[i].item, state.language))
+		endif
+	next i
+	
+endFunction
+
 function textFade(startTxt as integer, stopTxt as integer, dir as string)
 	
 	incr as integer
