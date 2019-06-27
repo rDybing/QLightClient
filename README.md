@@ -29,12 +29,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ##### Todo:
 
 - LAN Client Networking
-- HTTPS API Clinet Networking
+- HTTPS API Client Networking
 
 ##### WiP:
 
-- Cue Light view
+- Menu Views
 
 ##### Done:
 
+- Cue Light view
 - Countdown view
