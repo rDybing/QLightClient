@@ -210,6 +210,7 @@ endType
 
 type txt_t
 	version				as integer
+	editBox				as integer
 	clock				as integer
 	bModeClient			as integer
 	bModeCtrl			as integer

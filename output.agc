@@ -203,6 +203,32 @@ function clearSelectLanguage(btn as button_t[])
 	
 endFunction
 
+function placeSetClientName()
+	
+	btn as button_t
+	mt	as txtProp_t
+	spr as spriteProp_t
+	
+	mt.startX = getSpriteX(sprite.bName)
+	mt.startY = getSpriteY(sprite.bName) + GetSpriteHeight(sprite.bName) + 2
+	mt.size = 7
+	mt.align = 1
+	
+	spr.posX = 80
+	spr.posY = mt.startY - 2
+	spr.width = 16
+	spr.height = 10
+	
+	placeTextInput(mt, "", 10)
+	// Button Accept
+	imageSetup(sprite.bCheck, layer.front, spr, media.bCheck)
+	btn = buttonTransfer(spr, sprite.bCheck, nil)
+	SetSpriteColor(sprite.bCheck, color[3].r, color[3].g, color[3].b, 128)
+	
+	SetEditBoxFocus(txt.editBox, 1)
+	
+endFunction btn
+
 //************************************************* Cue Light Functions ************************************************
 
 function placeCueLightStart(col as color_t)

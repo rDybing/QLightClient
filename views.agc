@@ -141,9 +141,11 @@ function handleMainDropDown(spriteID as integer,
 	case button[1].sprID
 		if button[1].active
 			resizeDropDownMenu(ddHeight)
+			clearTextInput()
 			button[1].active = false
 		elseif button[1].active = false and button[0].active = false
 			resizeDropDownMenu(ddHeight + offset)
+			placeSetClientName()
 			button[1].active = true
 		endif
 		click()

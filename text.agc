@@ -202,6 +202,48 @@ function placeVersionText()
 	
 endFunction
 
+//************************************************* Text Input *********************************************************
+
+function placeTextInput(mt as txtProp_t, in as string, maxChars as integer)
+	
+	height as float 
+	width as float
+	height = mt.size + 0.5
+	width = (maxChars * mt.size) / 1.4
+	
+	createEditBox(txt.editBox)
+    setEditBoxSize(txt.editBox, width, height)
+    setEditBoxPosition(txt.editBox, mt.startX, mt.startY)
+    setEditBoxMultiLine(txt.editBox, 0)
+    setEditBoxFont(txt.editBox, media.fontA)
+    setEditBoxTextColor(txt.editBox, 0, 0, 0)
+    setEditBoxBackgroundColor(txt.editBox, color[0].r, color[0].g, color[0].b, 255)
+    setEditBoxBorderSize(txt.editBox, 0.1)
+    setEditBoxBorderColor(txt.editBox, 0, 0, 0, 255)
+    setEditBoxCursorColor(txt.editBox, 0, 0, 0)
+    setEditBoxText(txt.editBox, in)
+    setEditBoxTextSize(txt.editBox, mt.size)
+    SetEditBoxMaxChars(txt.editBox, maxChars) 
+    setEditBoxCursorWidth(txt.editBox, 1)
+    setEditBoxDepth(txt.editBox, layer.top)
+    setEditBoxVisible(txt.editBox, 1)
+	
+endFunction
+
+function clearTextInput()
+	
+	if GetEditBoxExists(txt.editBox)
+		DeleteEditBox(txt.editBox)
+	endIf
+	
+	if GetTextExists(txt.editBox)
+		clearTextSingle(txt.editBox)
+	endif
+	
+	clearSpriteSingle(sprite.bCheck)
+
+endFunction
+
 //************************************************* Chores *************************************************************
 
 function changeLanguageAllActive()

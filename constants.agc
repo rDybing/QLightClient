@@ -27,8 +27,9 @@ function initConstants()
 	sound.click				= 1
 		
 	txt.version				= 1000
-	txt.bModeClient			= 1001
-	txt.bModeCtrl			= 1002
+	txt.editBox				= 1001
+	txt.bModeClient			= 1008
+	txt.bModeCtrl			= 1009
 	txt.modeSelect			= 1010
 	txt.appID				= 1011
 	txt.bLang				= 1012
