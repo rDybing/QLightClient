@@ -17,6 +17,7 @@ function modeSelectView()
 	mouse		as mouse_t
 	spriteID	as integer
 	button		as button_t[]
+	modeSelect	as string = ""
 	
 	state.buttonHit = false
 	
@@ -39,9 +40,11 @@ function modeSelectView()
 			endCase
 			case sprite.bModeClient
 				keyTimer = keyPressed(sprite.bModeClient)
+				modeSelect = "client"
 			endCase
 			case sprite.bModeCtrl
 				keyTimer = keyPressed(sprite.bModeCtrl)
+				modeSelect = "ctrl"
 			endCase
 			endSelect
 		endif	
@@ -49,6 +52,7 @@ function modeSelectView()
 		if getTimer(keyTimer) and state.buttonHit
 			state.buttonHit = false
 			highlightButton(spriteID, state.buttonHit)
+			modeSwitch(modeSelect, button)
 		endif
 		sync()
 	until quit
@@ -226,16 +230,33 @@ function cueLightView()
 	backCol		as color_t[2]
 	time		as timer_t
 	pulseIn		as integer = false
+	mouse		as mouse_t
 	
 	time = setTimer(1000)
 	backCol = setCueBackgroundColors()
-	placeCueLightStart(backCol[0])	
+	placeCueLightStart(backCol[0])
+	
+	if not device.isComputer
+		placeBackButton()
+	endif	
 	
 	repeat
 		// change to get quit-order from controller
 		if GetRawKeyReleased(escKey)
 			quit = true
 		endif
+		
+		// back button for non-Computer clients
+		if not device.isComputer
+			mouse = updateMouse()
+			if mouse.hit
+				mouse = getMouseHit(mouse)
+				if mouse.spriteID = sprite.bBack
+					quit = true
+				endif
+			endif
+		endif
+		
 		testCueRaw(cue)
 		// if new message from server
 		if getCueUpdate(cue)

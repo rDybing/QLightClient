@@ -119,6 +119,19 @@ function main ()
 	
 endFunction
 
+function modeSwitch(mode as string, btn as button_t[])
+	
+	select mode
+	case "client"
+		clearMainMenu(btn)
+		modeClient()
+	endCase
+	case "ctrl"
+	endCase
+	endSelect
+	
+endFunction
+
 function modeClient()
 	placeFrame()	
 	testCueLight()

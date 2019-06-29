@@ -72,6 +72,21 @@ function highlightButton(spriteID as integer, highlight as integer)
 	
 endFunction
 
+function clearMainMenu(btn as button_t[])
+	
+	clearSpriteSingle(sprite.logo)
+	clearSpriteSingle(sprite.bMenu)
+	
+	for i = 0 to btn.length
+		clearSpriteSingle(btn[i].sprID)
+		clearTextSingle(btn[i].txtID)
+	next i
+	
+	clearTextSingle(txt.modeSelect)
+	clearTextSingle(txt.appID)
+	
+endFunction
+
 //************************************************* Main Menu Drop Down Functions **************************************
 
 function placeDropDownMenu(options as string[])
@@ -269,9 +284,24 @@ function setButtonPulse(pulseIn as integer, tweenID as integer, spriteID as inte
 	
 endFunction not pulseIn
 
+function placeBackButton()
+	
+	spr as spriteProp_t
+	
+	spr.posX = 93
+	spr.posY = 0.5
+	spr.width = 6
+	spr.height = -1
+	
+	imageSetup(sprite.bBack, layer.top, spr, media.bBack)
+	SetSpriteColor(sprite.bBack, color[0].r, color[0].g, color[0].b, 192)
+	
+endFunction
+
 function clearCueLight()
 	
 	clearSpriteSingle(sprite.bReady)
+	clearSpriteSingle(sprite.bBack)
 	setBackgroundColorDefault()
 	clearTweenSingle(tween.back)
 	
@@ -440,20 +470,6 @@ function setScreenTextOrientation(txtID, newOrientation, padVertical as integer)
 		state.orientation = newOrientation
 		updateTextOrientation(txtID, padVertical)
 	endif
-	
-endFunction
-
-function placeBackButton()
-	
-	spr as spriteProp_t
-	
-	spr.posX = 30
-	spr.posY = 30
-	spr.width = 10
-	spr.height = -1
-	
-	imageSetup(sprite.bBack, layer.C, spr, media.bBack)
-	SetSpriteColor(sprite.bBack, color[8].r, color[8].g, color[8].b, color[8].a)
 	
 endFunction
 
