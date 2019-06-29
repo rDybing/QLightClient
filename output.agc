@@ -381,6 +381,7 @@ endFunction not pulseIn
 
 function clearCountDown()
 	
+	clearSpriteSingle(sprite.bBack)
 	clearTextSingle(txt.clock)
 	setBackgroundColorDefault()
 	clearTweenSingle(tween.back)
