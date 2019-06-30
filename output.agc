@@ -301,7 +301,6 @@ endFunction
 function clearCueLight()
 	
 	clearSpriteSingle(sprite.bReady)
-	clearSpriteSingle(sprite.bBack)
 	setBackgroundColorDefault()
 	clearTweenSingle(tween.back)
 	
@@ -381,7 +380,6 @@ endFunction not pulseIn
 
 function clearCountDown()
 	
-	clearSpriteSingle(sprite.bBack)
 	clearTextSingle(txt.clock)
 	setBackgroundColorDefault()
 	clearTweenSingle(tween.back)

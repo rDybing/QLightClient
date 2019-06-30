@@ -235,28 +235,13 @@ function cueLightView()
 	time = setTimer(1000)
 	backCol = setCueBackgroundColors()
 	placeCueLightStart(backCol[0])
-	
-	if not device.isComputer
-		placeBackButton()
-	endif	
-	
+		
 	repeat
 		// change to get quit-order from controller
 		if GetRawKeyReleased(escKey)
 			quit = true
 		endif
-		
-		// back button for non-Computer clients
-		if not device.isComputer
-			mouse = updateMouse()
-			if mouse.hit
-				mouse = getMouseHit(mouse)
-				if mouse.spriteID = sprite.bBack
-					quit = true
-				endif
-			endif
-		endif
-		
+				
 		testCueRaw(cue)
 		// if new message from server
 		if getCueUpdate(cue)
@@ -316,11 +301,7 @@ function countdownView(clock as clock_t, prop as property_t)
 	
 	placeCountdownStart(clock.hour, clock.min, clock.sec, backCol[0], prop)
 	time = setTimer(1000)
-	
-	if not device.isComputer
-		placeBackButton()
-	endif	
-		
+			
 	repeat
 		// change to get quit-order from controller
 		if GetRawKeyReleased(escKey)
@@ -334,13 +315,6 @@ function countdownView(clock as clock_t, prop as property_t)
 				setScreenTextOrientation(txt.clock, prop.orientation, prop.padVertical)
 			endif
 		else
-			mouse = updateMouse()
-			if mouse.hit
-				mouse = getMouseHit(mouse)
-				if mouse.spriteID = sprite.bBack
-					quit = true
-				endif
-			endif
 			getScreenTextOrientation(txt.clock, prop.padVertical)
 		endif
 		if getTimer(time)
