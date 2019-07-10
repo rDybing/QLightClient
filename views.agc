@@ -73,10 +73,11 @@ function controlView()
 	mouse		as mouse_t
 	spriteID	as integer
 	button		as button_t[]
+	modeSelect	as string
 	
 	setBackgroundColor(color[10])
 	placeLogo()
-	button = placeControlButtons(color[11])
+	button = placeControlButtons()
 	
 	repeat
 		if GetRawKeyReleased(escKey)
@@ -87,26 +88,60 @@ function controlView()
 		if mouse.hit
 			mouse = getMouseHit(mouse)
 			spriteID = mouse.spriteID
-			/*
 			select spriteID
-			case sprite.bMenu
-				dropDownView()
+			case sprite.bCtrlWait
+				state.buttonHit = true
+				modeSelect = "wait"
 			endCase
-			case sprite.bModeClient
-				keyTimer = keyPressed(sprite.bModeClient)
-				modeSelect = "client"
+			case sprite.bCtrlReady
+				state.buttonHit = true
+				modeSelect = "ready"
 			endCase
-			case sprite.bModeCtrl
-				keyTimer = keyPressed(sprite.bModeCtrl)
-				modeSelect = "ctrl"
+			case sprite.bCtrlAction
+				state.buttonHit = true
+				modeSelect = "action"
+			endCase
+			case sprite.bCtrlTimer
+				state.buttonHit = true
+				modeSelect = "timer"
 			endCase
 			endSelect
-			*/
+		endif
+		
+		if state.buttonHit
+			click()
+			state.buttonHit = false
+			changeButtonHighlight(modeSelect)
+			networkEmitter(modeSelect)
 		endif
 		sync()
 	until quit
 	
 	clearControl(button)
+	
+endFunction
+
+function changeButtonHighlight(in as string)
+	
+	select in
+	case "wait"
+		highlightColorButton(sprite.bCtrlWait, true)
+		highlightColorButton(sprite.bCtrlReady, false)
+		highlightColorButton(sprite.bCtrlAction, false)
+	endCase
+	case "ready"
+		highlightColorButton(sprite.bCtrlWait, false)
+		highlightColorButton(sprite.bCtrlReady, true)
+		highlightColorButton(sprite.bCtrlAction, false)
+	endCase
+	case "action"
+		highlightColorButton(sprite.bCtrlWait, false)
+		highlightColorButton(sprite.bCtrlReady, false)
+		highlightColorButton(sprite.bCtrlAction, true)
+	endCase
+	case "timer"
+	endCase
+	endSelect
 	
 endFunction
 

@@ -101,7 +101,7 @@ endFunction
 
 //************************************************* Controller Functions ***********************************************
 
-function placeControlButtons(col as color_t)
+function placeControlButtons()
 	
 	spr as spriteProp_t
 	btn as button_t[4]
@@ -113,29 +113,39 @@ function placeControlButtons(col as color_t)
 	
 	// Button Red
 	imageSetup(sprite.bCtrlWait, layer.C, spr, media.dot)
-	SetSpriteColor(sprite.bCtrlWait, col.r, col.g, col.b, col.a)	
+	SetSpriteColor(sprite.bCtrlWait, color[3].r, color[3].g, color[3].b, 255)	
 	placeButtonText(txt.bCtrlWait, getLangString("wait", state.language), layer.B, spr, color[0])
 	btn[0] = buttonTransfer(spr, sprite.bCtrlWait, txt.bCtrlWait)
 	// Button Yellow
 	spr.posY = spr.posY + spr.height + 2
 	imageSetup(sprite.bCtrlReady, layer.C, spr, media.dot)
-	SetSpriteColor(sprite.bCtrlReady, col.r, col.g, col.b, col.a)
+	SetSpriteColor(sprite.bCtrlReady, color[4].r, color[4].g, color[4].b, 128)
 	placeButtonText(txt.bCtrlReady, getLangString("ready", state.language), layer.B, spr, color[0])
 	btn[1] = buttonTransfer(spr, sprite.bCtrlReady, txt.bCtrlReady)
 	// Button Green
 	spr.posY = spr.posY + spr.height + 2
 	imageSetup(sprite.bCtrlAction, layer.C, spr, media.dot)
-	SetSpriteColor(sprite.bCtrlAction, col.r, col.g, col.b, col.a)	
+	SetSpriteColor(sprite.bCtrlAction, color[5].r, color[5].g, color[5].b, 128)	
 	placeButtonText(txt.bCtrlAction, getLangString("action", state.language), layer.B, spr, color[0])
 	btn[2] = buttonTransfer(spr, sprite.bCtrlAction, txt.bCtrlAction)
 	// Button Timer
 	spr.posY = spr.posY + spr.height + 2
 	imageSetup(sprite.bCtrlTimer, layer.C, spr, media.dot)
-	SetSpriteColor(sprite.bCtrlTimer, col.r, col.g, col.b, col.a)
+	SetSpriteColor(sprite.bCtrlTimer, color[11].r, color[11].g, color[11].b, color[11].a)
 	placeButtonText(txt.bCtrlTimer, getLangString("timer", state.language), layer.B, spr, color[0])
 	btn[3] = buttonTransfer(spr, sprite.bCtrlTimer, txt.bCtrlTimer)
 	
 endFunction btn
+
+function highlightColorButton(spriteID as integer, highlight as integer)
+	
+	if highlight
+		SetSpriteColorAlpha(spriteID, 256)
+	else
+		SetSpriteColorAlpha(spriteID, 128)
+	endif
+	
+endFunction
 
 function clearControl(btn as button_t[])
 	

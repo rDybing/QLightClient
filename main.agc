@@ -105,10 +105,10 @@ function main()
 		
 	if not state.fatalError
 		if device.isComputer
-			modeClient()
+			networkListener()
 		else
 			if restore
-				modeClient()
+				networkListener()
 			else
 				mainMenuView()
 			endif
@@ -129,7 +129,7 @@ function modeSwitch(mode as string, btn as button_t[])
 	select mode
 	case "client"
 		clearMainMenu(btn)
-		modeClient()
+		networkListener()
 	endCase
 	case "ctrl"
 		clearMainMenu(btn)
@@ -137,9 +137,4 @@ function modeSwitch(mode as string, btn as button_t[])
 	endCase
 	endSelect
 	
-endFunction
-
-function modeClient()	
-	testCueLight()
-	testClock()
 endFunction

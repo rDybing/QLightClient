@@ -128,9 +128,9 @@ function getLocaleIDs()
 	loc as locale_t[5]
 	
 	loc[0].ID = txt.bModeClient
-	loc[0].item = "bClient"
+	loc[0].item = "client"
 	loc[1].ID = txt.bModeCtrl
-	loc[1].item = "bCtrl"
+	loc[1].item = "ctrl"
 	loc[2].ID = txt.modeSelect
 	loc[2].item = "selectMode"
 	loc[3].ID = txt.bLang
@@ -158,9 +158,10 @@ function initColor()
 	color[2].b = 24
 	color[2].a = 255
 	// Balanced Red
-	color[3].r = 214
-	color[3].g = 88
-	color[3].b = 65
+	color[3].r = 225
+	color[3].g = 55
+	//color[3].g = 88
+	color[3].b = 55
 	color[3].a = 255
 	// Balanced Yellow
 	color[4].r = 214
@@ -168,9 +169,10 @@ function initColor()
 	color[4].b = 65
 	color[4].a = 255
 	// Balanced Green
-	color[5].r = 65
-	color[5].g = 214
-	color[5].b = 157
+	color[5].r = 35
+	color[5].g = 204
+	color[5].b = 65
+	//color[5].b = 157
 	color[5].a = 255
 	// Highlight Blue
 	color[6].r = 96
