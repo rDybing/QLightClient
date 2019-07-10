@@ -166,6 +166,10 @@ type sprite_t
 	bMenu				as integer
 	bModeClient			as integer
 	bModeCtrl			as integer
+	bCtrlWait			as integer
+	bCtrlReady			as integer
+	bCtrlAction			as integer
+	bCtrlTimer			as integer
 	bLang				as integer
 	bName				as integer
 	bLeft				as integer
@@ -215,6 +219,10 @@ type txt_t
 	clock				as integer
 	bModeClient			as integer
 	bModeCtrl			as integer
+	bCtrlWait			as integer
+	bCtrlReady			as integer
+	bCtrlAction			as integer
+	bCtrlTimer			as integer
 	modeSelect			as integer
 	appID				as integer
 	bLang				as integer

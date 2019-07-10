@@ -43,7 +43,7 @@ Contact: roy[dot]dybing[at]gmail[dot]com
 #constant false			= 0
 #constant true			= 1
 #constant nil			= -1
-#constant maxLocal		= 6
+#constant maxLocal		= 10
 #constant escKey		= 27
 
 global media		as media_t				// constant IDs
@@ -127,6 +127,8 @@ function modeSwitch(mode as string, btn as button_t[])
 		modeClient()
 	endCase
 	case "ctrl"
+		clearMainMenu(btn)
+		modeController()
 	endCase
 	endSelect
 	
@@ -139,5 +141,5 @@ function modeClient()
 endFunction
 
 function modeController()
-
+	controlView()	
 endFunction

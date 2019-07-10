@@ -51,13 +51,13 @@ function placeModeButtons(col as color_t)
 	// Button Client
 	imageSetup(sprite.bModeClient, layer.C, spr, media.dot)
 	SetSpriteColor(sprite.bModeClient, col.r, col.g, col.b, col.a)	
-	placeButtonText(txt.bModeClient, getLangString("bClient", state.language), layer.B, spr, color[0])
+	placeButtonText(txt.bModeClient, getLangString("client", state.language), layer.B, spr, color[0])
 	btn[0] = buttonTransfer(spr, sprite.bModeClient, txt.bModeClient)
 	// Button Controller
 	spr.posY = spr.posY + spr.height + 2
 	imageSetup(sprite.bModeCtrl, layer.C, spr, media.dot)
 	SetSpriteColor(sprite.bModeCtrl, col.r, col.g, col.b, col.a)
-	placeButtonText(txt.bModeCtrl, getLangString("bCtrl", state.language), layer.B, spr, color[0])
+	placeButtonText(txt.bModeCtrl, getLangString("ctrl", state.language), layer.B, spr, color[0])
 	btn[1] = buttonTransfer(spr, sprite.bModeCtrl, txt.bModeCtrl)
 	
 endFunction btn
@@ -85,6 +85,55 @@ function clearMainMenu(btn as button_t[])
 	clearTextSingle(txt.modeSelect)
 	clearTextSingle(txt.appID)
 	
+endFunction
+
+//************************************************* Controller Functions ***********************************************
+
+function placeControlButtons(col as color_t)
+	
+	spr as spriteProp_t
+	btn as button_t[4]
+	
+	spr.width = 70
+	spr.height = 10
+	spr.posX =  15
+	spr.posY = 18
+	
+	// Button Red
+	imageSetup(sprite.bCtrlWait, layer.C, spr, media.dot)
+	SetSpriteColor(sprite.bCtrlWait, col.r, col.g, col.b, col.a)	
+	placeButtonText(txt.bCtrlWait, getLangString("wait", state.language), layer.B, spr, color[0])
+	btn[0] = buttonTransfer(spr, sprite.bCtrlWait, txt.bCtrlWait)
+	// Button Yellow
+	spr.posY = spr.posY + spr.height + 2
+	imageSetup(sprite.bCtrlReady, layer.C, spr, media.dot)
+	SetSpriteColor(sprite.bCtrlReady, col.r, col.g, col.b, col.a)
+	placeButtonText(txt.bCtrlReady, getLangString("ready", state.language), layer.B, spr, color[0])
+	btn[1] = buttonTransfer(spr, sprite.bCtrlReady, txt.bCtrlReady)
+	// Button Green
+	spr.posY = spr.posY + spr.height + 2
+	imageSetup(sprite.bCtrlAction, layer.C, spr, media.dot)
+	SetSpriteColor(sprite.bCtrlAction, col.r, col.g, col.b, col.a)	
+	placeButtonText(txt.bCtrlAction, getLangString("action", state.language), layer.B, spr, color[0])
+	btn[2] = buttonTransfer(spr, sprite.bCtrlAction, txt.bCtrlAction)
+	// Button Timer
+	spr.posY = spr.posY + spr.height + 2
+	imageSetup(sprite.bCtrlTimer, layer.C, spr, media.dot)
+	SetSpriteColor(sprite.bCtrlTimer, col.r, col.g, col.b, col.a)
+	placeButtonText(txt.bCtrlTimer, getLangString("timer", state.language), layer.B, spr, color[0])
+	btn[3] = buttonTransfer(spr, sprite.bCtrlTimer, txt.bCtrlTimer)
+	
+endFunction btn
+
+function clearControl(btn as button_t[])
+	
+	clearSpriteSingle(sprite.logo)
+	
+	for i = 0 to btn.length
+		clearSpriteSingle(btn[i].sprID)
+		clearTextSingle(btn[i].txtID)
+	next i
+			
 endFunction
 
 //************************************************* Main Menu Drop Down Functions **************************************

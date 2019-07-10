@@ -30,10 +30,14 @@ function initConstants()
 	txt.editBox				= 1001
 	txt.bModeClient			= 1008
 	txt.bModeCtrl			= 1009
-	txt.modeSelect			= 1010
-	txt.appID				= 1011
-	txt.bLang				= 1012
-	txt.bName				= 1013
+	txt.bCtrlWait			= 1010
+	txt.bCtrlReady			= 1011
+	txt.bCtrlAction			= 1012
+	txt.bCtrlTimer			= 1013
+	txt.modeSelect			= 1014
+	txt.appID				= 1015
+	txt.bLang				= 1016
+	txt.bName				= 1017
 	txt.clock				= 1100
 	
 	sprite.logo				= 1010
@@ -43,11 +47,15 @@ function initConstants()
 	sprite.bMenu			= 1014
 	sprite.bModeClient		= 1015
 	sprite.bModeCtrl		= 1016
-	sprite.bLang			= 1017
-	sprite.bName			= 1018
-	sprite.bLeft			= 1019
-	sprite.bRight			= 1020
-	sprite.bCheck			= 1021
+	sprite.bCtrlWait		= 1017
+	sprite.bCtrlReady		= 1018
+	sprite.bCtrlAction		= 1019
+	sprite.bCtrlTimer		= 1020
+	sprite.bLang			= 1021
+	sprite.bName			= 1022
+	sprite.bLeft			= 1023
+	sprite.bRight			= 1024
+	sprite.bCheck			= 1025
 	sprite.flag				= 1080
 	sprite.frame			= 1097	
 	sprite.back				= 1099
@@ -85,15 +93,12 @@ function initLang(ml ref as menuLang_t[])
 	ml[0].item = "version"
 	ml[0].lang[0] = "Versjon:"
 	ml[0].lang[1] = "Version:"
-	ml[1].item = "bClient"
+	ml[1].item = "client"
 	ml[1].lang[0] = "Klient"
 	ml[1].lang[1] = "Client"
-	ml[2].item = "bCtrl"
+	ml[2].item = "ctrl"
 	ml[2].lang[0] = "Kontroller"
 	ml[2].lang[1] = "Controller"
-	ml[3].item = "Ready"
-	ml[3].lang[0] = "Klar"
-	ml[3].lang[1] = "Ready"
 	ml[3].item = "selectMode"
 	ml[3].lang[0] = "Velg Modus"
 	ml[3].lang[1] = "Select Mode"
@@ -103,6 +108,18 @@ function initLang(ml ref as menuLang_t[])
 	ml[5].item = "setName"
 	ml[5].lang[0] = "Gi Navn"
 	ml[5].lang[1] = "Set Name"
+	ml[6].item = "wait"
+	ml[6].lang[0] = "Vent"
+	ml[6].lang[1] = "Wait"
+	ml[7].item = "ready"
+	ml[7].lang[0] = "Klar"
+	ml[7].lang[1] = "Ready"
+	ml[8].item = "action"
+	ml[8].lang[0] = "Kjør"
+	ml[8].lang[1] = "Action"
+	ml[9].item = "timer"
+	ml[9].lang[0] = "Tidtaker"
+	ml[9].lang[1] = "Timer"
 	
 endFunction
 

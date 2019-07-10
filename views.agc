@@ -70,6 +70,51 @@ function keyPressed(spriteID)
 	
 endFunction keyTimer
 
+//************************************************* Controller Functions ***********************************************
+
+function controlView()
+	
+	quit 		as integer
+	mouse		as mouse_t
+	spriteID	as integer
+	button		as button_t[]
+	
+	setBackgroundColor(color[10])
+	placeLogo()
+	button = placeControlButtons(color[11])
+	
+	repeat
+		if GetRawKeyReleased(escKey)
+			quit = true
+		endif
+		
+		mouse = updateMouse()		
+		if mouse.hit
+			mouse = getMouseHit(mouse)
+			spriteID = mouse.spriteID
+			/*
+			select spriteID
+			case sprite.bMenu
+				dropDownView()
+			endCase
+			case sprite.bModeClient
+				keyTimer = keyPressed(sprite.bModeClient)
+				modeSelect = "client"
+			endCase
+			case sprite.bModeCtrl
+				keyTimer = keyPressed(sprite.bModeCtrl)
+				modeSelect = "ctrl"
+			endCase
+			endSelect
+			*/
+		endif
+		sync()
+	until quit
+	
+	clearControl(button)
+	
+endFunction
+
 //************************************************* Main Menu Drop Down Functions **************************************
 
 function dropDownView()
