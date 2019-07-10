@@ -97,16 +97,21 @@ getPrivateIP()
 
 main()
 
-function main ()
+function main()
 	
 	appJSON as string
 	placeVersionText()
+	restore as integer = false
 		
 	if not state.fatalError
 		if device.isComputer
 			modeClient()
 		else
-			modeSelectView()
+			if restore
+				modeClient()
+			else
+				mainMenuView()
+			endif
 		endif
 		
 		appJSON = app.toJSON()
@@ -128,18 +133,13 @@ function modeSwitch(mode as string, btn as button_t[])
 	endCase
 	case "ctrl"
 		clearMainMenu(btn)
-		modeController()
+		controlView()
 	endCase
 	endSelect
 	
 endFunction
 
-function modeClient()
-	placeFrame()	
+function modeClient()	
 	testCueLight()
 	testClock()
-endFunction
-
-function modeController()
-	controlView()	
 endFunction

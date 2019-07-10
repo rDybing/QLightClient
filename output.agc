@@ -10,6 +10,18 @@ Copyright 2019 Roy Dybing - all rights reserved
 
 //************************************************* Menu Functions *****************************************************
 
+function placeMainMenu()
+	
+	btn as button_t[]
+	
+	setBackgroundColor(color[10])
+	placeLogo()
+	placeMenuButton(color[0])
+	placeMenuText()
+	btn = placeModeButtons(color[11])
+	
+endFunction btn
+
 function placeLogo()
 	
 	spr as spriteProp_t
@@ -352,6 +364,7 @@ function clearCueLight()
 	clearSpriteSingle(sprite.bReady)
 	setBackgroundColorDefault()
 	clearTweenSingle(tween.back)
+	clearFrame()
 	
 endFunction
 
@@ -433,6 +446,7 @@ function clearCountDown()
 	setBackgroundColorDefault()
 	clearTweenSingle(tween.back)
 	clearTweenSingle(tween.text)
+	clearFrame()
 		
 endFunction
 

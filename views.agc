@@ -10,7 +10,7 @@ Copyright 2019 Roy Dybing - all rights reserved
 
 //************************************************* Main Menu Functions ************************************************
 
-function modeSelectView()
+function mainMenuView()
 	
 	quit		as integer = false
 	keyTimer	as timer_t
@@ -20,15 +20,9 @@ function modeSelectView()
 	modeSelect	as string = ""
 	
 	state.buttonHit = false
-	
-	clearCueLight()
-	clearFrame()
-	setBackgroundColor(color[10])
-	placeLogo()
-	placeMenuButton(color[0])
-	placeMenuText()
-	button = placeModeButtons(color[11])	
-	
+		
+	button = placeMainMenu()
+		
 	repeat
 		mouse = updateMouse()		
 		if mouse.hit
@@ -53,6 +47,7 @@ function modeSelectView()
 			state.buttonHit = false
 			highlightButton(spriteID, state.buttonHit)
 			modeSwitch(modeSelect, button)
+			placeMainMenu()
 		endif
 		sync()
 	until quit
@@ -280,6 +275,7 @@ function cueLightView()
 	time = setTimer(1000)
 	backCol = setCueBackgroundColors()
 	placeCueLightStart(backCol[0])
+	placeFrame()
 		
 	repeat
 		// change to get quit-order from controller
@@ -345,6 +341,7 @@ function countdownView(clock as clock_t, prop as property_t)
 	backCol = setClockBackgroundColors()
 	
 	placeCountdownStart(clock.hour, clock.min, clock.sec, backCol[0], prop)
+	placeFrame()
 	time = setTimer(1000)
 			
 	repeat
@@ -377,5 +374,6 @@ function countdownView(clock as clock_t, prop as property_t)
 	until quit
 	
 	clearCountDown()
+	clearFrame()
 	
 endFunction
