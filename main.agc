@@ -43,7 +43,6 @@ Contact: roy[dot]dybing[at]gmail[dot]com
 #constant false			= 0
 #constant true			= 1
 #constant nil			= -1
-#constant maxLocal		= 10
 #constant escKey		= 27
 
 global media		as media_t				// constant IDs
@@ -53,7 +52,7 @@ global sound 		as sound_t				// constant IDs
 global sprite		as sprite_t				// constant IDs
 global tween		as tween_t				// constant IDs
 global txt			as txt_t				// constant IDs
-global ml 			as menuLang_t[maxLocal]	// constant language strings
+global ml 			as menuLang_t[]			// constant language strings after load from file
 global device 		as device_t				// constant device properties
 global app			as appSettings_t		// constant IP, api and key values
 global color		as color_t[12]			// constant color values
@@ -61,7 +60,6 @@ global state		as globalState_t		// will change here, there and everywhere
 global version		as version_t			// constant version info
 
 initConstants()
-initLang(ml)
 initColor()
 loadMedia()
 setStartState()
@@ -70,12 +68,9 @@ setDevice()
 SetErrorMode(2)
 SetRandomSeed(GetUnixTime())
 
+ml = loadLocalization()
 loadAppSettings()
 setLanguage()
-
-if app.id = "ERROR"
-	noSettingsFileError()
-endif
 
 if app.id = ""
 	app.id = createAppID()
@@ -126,13 +121,13 @@ endFunction
 
 function modeSwitch(mode as string, btn as button_t[])
 	
+	clearMainMenu(btn)
+	
 	select mode
 	case "client"
-		clearMainMenu(btn)
 		networkListener()
 	endCase
 	case "ctrl"
-		clearMainMenu(btn)
 		controlView()
 	endCase
 	endSelect

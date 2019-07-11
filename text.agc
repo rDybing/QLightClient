@@ -328,18 +328,6 @@ function setTextProperties(mt ref as txtProp_t, x as float, y as float, align as
 	
 endFunction mt
 
-function initTxtProp(mt ref as txtProp_t)
-	
-	mt.startY = 50
-	mt.startX = 4
-	mt.offset = 4
-	mt.align = 1
-	mt.hOffset = 200
-	mt.size = 4
-	mt.maxLines = 21
-	
-endFunction
-
 function getLangString(item as string, ID as integer)
 	
 	out as string

@@ -101,7 +101,7 @@ endFunction
 
 //************************************************* Controller Functions ***********************************************
 
-function placeControlButtons()
+function placeControlButtons(dimmed as integer)
 	
 	spr as spriteProp_t
 	btn as button_t[4]
@@ -119,13 +119,13 @@ function placeControlButtons()
 	// Button Yellow
 	spr.posY = spr.posY + spr.height + 2
 	imageSetup(sprite.bCtrlReady, layer.C, spr, media.dot)
-	SetSpriteColor(sprite.bCtrlReady, color[4].r, color[4].g, color[4].b, 128)
+	SetSpriteColor(sprite.bCtrlReady, color[4].r, color[4].g, color[4].b, dimmed)
 	placeButtonText(txt.bCtrlReady, getLangString("ready", state.language), layer.B, spr, color[0])
 	btn[1] = buttonTransfer(spr, sprite.bCtrlReady, txt.bCtrlReady)
 	// Button Green
 	spr.posY = spr.posY + spr.height + 2
 	imageSetup(sprite.bCtrlAction, layer.C, spr, media.dot)
-	SetSpriteColor(sprite.bCtrlAction, color[5].r, color[5].g, color[5].b, 128)	
+	SetSpriteColor(sprite.bCtrlAction, color[5].r, color[5].g, color[5].b, dimmed)	
 	placeButtonText(txt.bCtrlAction, getLangString("action", state.language), layer.B, spr, color[0])
 	btn[2] = buttonTransfer(spr, sprite.bCtrlAction, txt.bCtrlAction)
 	// Button Timer
@@ -137,12 +137,12 @@ function placeControlButtons()
 	
 endFunction btn
 
-function highlightColorButton(spriteID as integer, highlight as integer)
+function highlightColorButton(spriteID as integer, highlight as integer, dimmed as integer)
 	
 	if highlight
 		SetSpriteColorAlpha(spriteID, 256)
 	else
-		SetSpriteColorAlpha(spriteID, 128)
+		SetSpriteColorAlpha(spriteID, dimmed)
 	endif
 	
 endFunction

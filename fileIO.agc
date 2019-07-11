@@ -51,9 +51,8 @@ function loadAppSettings()
 		appTemp.Load(appSettings)
 		app = appTemp[0]
 	else
-		app.id = "ERROR"
+		noSettingsFileError()
 	endif
-	//testGeneral(app.toJSON())
 
 endFunction
 
@@ -68,3 +67,20 @@ function saveAppSettings()
 	appTemp.Save(appSettings)
 	
 endFunction
+
+//************************************************* Localization Load **************************************************
+
+function loadLocalization()
+	
+	locFile		as string	
+	locTemp		as menuLang_t[]
+	
+	locFile = "localization.json"
+	
+	if GetFileExists(locFile)
+		locTemp.Load(locFile)
+	else
+		noLocalizationFileError()
+	endif
+
+endFunction locTemp

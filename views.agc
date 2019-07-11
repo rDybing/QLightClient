@@ -74,10 +74,11 @@ function controlView()
 	spriteID	as integer
 	button		as button_t[]
 	modeSelect	as string
+	dimmed		as integer = 48
 	
 	setBackgroundColor(color[10])
 	placeLogo()
-	button = placeControlButtons()
+	button = placeControlButtons(dimmed)
 	
 	repeat
 		if GetRawKeyReleased(escKey)
@@ -111,7 +112,7 @@ function controlView()
 		if state.buttonHit
 			click()
 			state.buttonHit = false
-			changeButtonHighlight(modeSelect)
+			changeButtonHighlight(modeSelect, dimmed)
 			networkEmitter(modeSelect)
 		endif
 		sync()
@@ -121,23 +122,23 @@ function controlView()
 	
 endFunction
 
-function changeButtonHighlight(in as string)
+function changeButtonHighlight(in as string, dimmed as integer)
 	
 	select in
 	case "wait"
-		highlightColorButton(sprite.bCtrlWait, true)
-		highlightColorButton(sprite.bCtrlReady, false)
-		highlightColorButton(sprite.bCtrlAction, false)
+		highlightColorButton(sprite.bCtrlWait, true, dimmed)
+		highlightColorButton(sprite.bCtrlReady, false, dimmed)
+		highlightColorButton(sprite.bCtrlAction, false, dimmed)
 	endCase
 	case "ready"
-		highlightColorButton(sprite.bCtrlWait, false)
-		highlightColorButton(sprite.bCtrlReady, true)
-		highlightColorButton(sprite.bCtrlAction, false)
+		highlightColorButton(sprite.bCtrlWait, false, dimmed)
+		highlightColorButton(sprite.bCtrlReady, true, dimmed)
+		highlightColorButton(sprite.bCtrlAction, false, dimmed)
 	endCase
 	case "action"
-		highlightColorButton(sprite.bCtrlWait, false)
-		highlightColorButton(sprite.bCtrlReady, false)
-		highlightColorButton(sprite.bCtrlAction, true)
+		highlightColorButton(sprite.bCtrlWait, false, dimmed)
+		highlightColorButton(sprite.bCtrlReady, false, dimmed)
+		highlightColorButton(sprite.bCtrlAction, true, dimmed)
 	endCase
 	case "timer"
 	endCase

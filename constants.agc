@@ -88,41 +88,6 @@ function initConstants()
 	
 endFunction
 
-function initLang(ml ref as menuLang_t[])
-	
-	ml[0].item = "version"
-	ml[0].lang[0] = "Versjon:"
-	ml[0].lang[1] = "Version:"
-	ml[1].item = "client"
-	ml[1].lang[0] = "Klient"
-	ml[1].lang[1] = "Client"
-	ml[2].item = "ctrl"
-	ml[2].lang[0] = "Kontroller"
-	ml[2].lang[1] = "Controller"
-	ml[3].item = "selectMode"
-	ml[3].lang[0] = "Velg Modus"
-	ml[3].lang[1] = "Select Mode"
-	ml[4].item = "setLang"
-	ml[4].lang[0] = "Velg Språk"
-	ml[4].lang[1] = "Set Language"
-	ml[5].item = "setName"
-	ml[5].lang[0] = "Gi Navn"
-	ml[5].lang[1] = "Set Name"
-	ml[6].item = "wait"
-	ml[6].lang[0] = "Vent"
-	ml[6].lang[1] = "Wait"
-	ml[7].item = "ready"
-	ml[7].lang[0] = "Klar"
-	ml[7].lang[1] = "Ready"
-	ml[8].item = "action"
-	ml[8].lang[0] = "Kjør"
-	ml[8].lang[1] = "Action"
-	ml[9].item = "timer"
-	ml[9].lang[0] = "Tidtaker"
-	ml[9].lang[1] = "Timer"
-	
-endFunction
-
 function getLocaleIDs()
 		
 	loc as locale_t[5]
