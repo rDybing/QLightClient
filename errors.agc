@@ -10,16 +10,9 @@ Copyright 2019 Roy Dybing - all rights reserved
  
 //************************************************* Error Handling *****************************************************
 
-function noSettingsFileError()
+function noFileError(in as string)
 	
-	errorOut('No AppSettings File Exist\nExiting...')
-	state.fatalError = true
-
-endFunction
-
-function noLocalizationFileError()
-	
-	errorOut('No Localization File Exist\nExiting...')
+	errorOut(in)
 	state.fatalError = true
 
 endFunction

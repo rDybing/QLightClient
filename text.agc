@@ -102,7 +102,7 @@ function placeCtrlClock(in as string, col as color_t, prop ref as property_t)
 	mt as txtProp_t
 	
 	mt.startX = getSpriteX(sprite.bCtrlWait)
-	mt.startY = getSpriteY(sprite.bCtrlPlayPause)
+	mt.startY = getSpriteY(sprite.bCtrlPlayPause) + 0.25
 	mt.align = 0
 	mt.layer = layer.B
 		

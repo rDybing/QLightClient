@@ -53,7 +53,7 @@ function loadAppSettings()
 		appTemp.Load(appSettings)
 		app = appTemp[0]
 	else
-		noSettingsFileError()
+		noFileError('No AppSettings File Exist\nExiting...')
 	endif
 
 endFunction
@@ -96,7 +96,7 @@ function loadLocalization()
 	if GetFileExists(locFile)
 		locTemp.Load(locFile)
 	else
-		noLocalizationFileError()
+		noFileError('No Localization File Exist\nExiting...')
 	endif
 
 endFunction locTemp

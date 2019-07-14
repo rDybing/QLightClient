@@ -86,7 +86,7 @@ function controlView()
 	placeLogo()
 	button = placeControlButtons(dimmed)
 	
-	prop.baseSize = 9
+	prop.baseSize = 7.5
 	prop.font = media.fontC
 	prop.fontColor = 5
 	prop.fontAlpha = 192
@@ -164,11 +164,13 @@ function controlView()
 			highlightButton(spriteID, false)
 		endif
 		
-		if clock.play and getTimer(clockTimer)
-			updateCtrlClock(clock, clockCol)
+		if clock.play 
+			if getTimer(clockTimer)
+				updateCtrlClock(clock, clockCol)
+			endif
+			updateTweenString(txt.clock)
 		endif
 		//testClockRaw(clock)
-		updateTweenString(txt.clock)
 		sync()
 	until quit
 	

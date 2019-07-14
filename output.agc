@@ -146,6 +146,7 @@ function placeControlButtons(dimmed as integer)
 	sprTemp = spr
 	spr.posX = 70
 	spr.width = 15
+	spr.height = -1
 	spriteSetup(sprite.bCtrlPlayPause, layer.C, spr, btnPP)
 	SetSpriteColor(sprite.bCtrlPlayPause, color[5].r, color[5].g, color[5].b, color[11].a)
 	placeButtonText(txt.null, "", layer.B, spr, color[0], sTxt)
