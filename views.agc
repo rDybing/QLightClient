@@ -72,9 +72,11 @@ function controlView()
 	quit 		as integer
 	mouse		as mouse_t
 	spriteID	as integer
+	keyTimer	as timer_t
 	button		as button_t[]
 	modeSelect	as string
 	dimmed		as integer = 48
+	altButton	as integer = false
 	
 	setBackgroundColor(color[10])
 	placeLogo()
@@ -107,10 +109,12 @@ function controlView()
 				modeSelect = "timer"
 			endCase
 			case sprite.bCtrlEdit
-				// do stuff
+				keyTimer = keyPressed(sprite.bCtrlEdit)
+				altButton = true
 			endCase
 			case sprite.bCtrlReset
-				// do stuff
+				keyTimer = keyPressed(sprite.bCtrlReset)
+				altButton = true
 			endCase
 			endSelect
 		endif
@@ -120,6 +124,11 @@ function controlView()
 			state.buttonHit = false
 			changeButtonHighlight(modeSelect, dimmed)
 			networkEmitter(modeSelect)
+		endif
+		
+		if getTimer(keyTimer) and altButton
+			altButton = false
+			highlightButton(spriteID, false)
 		endif
 		sync()
 	until quit
@@ -135,18 +144,31 @@ function changeButtonHighlight(in as string, dimmed as integer)
 		highlightColorButton(sprite.bCtrlWait, true, dimmed)
 		highlightColorButton(sprite.bCtrlReady, false, dimmed)
 		highlightColorButton(sprite.bCtrlAction, false, dimmed)
+		highlightButton(sprite.bCtrlTimer, false)
 	endCase
 	case "ready"
 		highlightColorButton(sprite.bCtrlWait, false, dimmed)
 		highlightColorButton(sprite.bCtrlReady, true, dimmed)
 		highlightColorButton(sprite.bCtrlAction, false, dimmed)
+		highlightButton(sprite.bCtrlTimer, false)
 	endCase
 	case "action"
 		highlightColorButton(sprite.bCtrlWait, false, dimmed)
 		highlightColorButton(sprite.bCtrlReady, false, dimmed)
 		highlightColorButton(sprite.bCtrlAction, true, dimmed)
+		highlightButton(sprite.bCtrlTimer, false)
 	endCase
 	case "timer"
+		highlightColorButton(sprite.bCtrlWait, false, dimmed)
+		highlightColorButton(sprite.bCtrlReady, false, dimmed)
+		highlightColorButton(sprite.bCtrlAction, false, dimmed)
+		highlightButton(sprite.bCtrlTimer, true)
+	endCase
+	case "edit"
+		highlightButton(sprite.bCtrlEdit, true)
+	endCase
+	case "reset"
+		highlightButton(sprite.bCtrlReset, true)
 	endCase
 	endSelect
 	
