@@ -78,8 +78,8 @@ function controlView()
 	dimmed		as integer = 48
 	altButton	as integer = false
 	clock		as clock_t
-	items 		as integer
 	clockTimer	as timer_t
+	clockCol	as color_t[2]
 	prop		as property_t
 	
 	setBackgroundColor(color[10])
@@ -92,8 +92,8 @@ function controlView()
 	prop.fontAlpha = 192
 	
 	clock = loadDefaultClock()
+	clockCol = setClockColors()
 	
-	items = setClockItems(clock)	
 	setSecondsInClock(clock)
 	placeCountdownStart(clock.hour, clock.min, clock.sec, color[5], prop, "ctrl")
 	clockTimer = setTimer(1000)
@@ -144,6 +144,9 @@ function controlView()
 					keyTimer = keyPressed(sprite.bCtrlReset)
 					altButton = true
 					clock.play = false
+					clock = loadDefaultClock()
+					setSecondsInClock(clock)
+					resetCtrlClock(clock, clockCol, prop.fontAlpha)
 				endif
 			endCase
 			endSelect
@@ -161,10 +164,11 @@ function controlView()
 			highlightButton(spriteID, false)
 		endif
 		
-		if clock.play
-			updateCtrlClock(clock)
+		if clock.play and getTimer(clockTimer)
+			updateCtrlClock(clock, clockCol)
 		endif
-		testClockRaw(clock)
+		//testClockRaw(clock)
+		updateTweenString(txt.clock)
 		sync()
 	until quit
 	
@@ -172,9 +176,20 @@ function controlView()
 	
 endFunction
 
-function updateCtrlClock(c ref as clock_t)
+function updateCtrlClock(c ref as clock_t, cc as color_t[])
 	
+	if c.secCurrent <> 0
+		updateClockTime(c)
+		getClockCtrlChange(c, cc)
+		updateClockText(c, 3)
+	endif
+		
+endFunction
+
+function resetCtrlClock(c ref as clock_t, cc as color_t[], alpha as integer)
 	
+	setClockCtrlReset(c, cc[0], alpha)
+	updateClockText(c, 3)
 	
 endFunction
 
@@ -451,7 +466,7 @@ function countdownView(clock as clock_t, prop as property_t)
 	pulseIn = false	
 	items = setClockItems(clock)	
 	setSecondsInClock(clock)
-	backCol = setClockBackgroundColors()
+	backCol = setClockColors()
 	
 	placeCountdownStart(clock.hour, clock.min, clock.sec, backCol[0], prop, "countdown")
 	placeFrame()

@@ -94,7 +94,7 @@ function setClockItems(c as clock_t)
 	
 endFunction out
 
-function setClockBackgroundColors()
+function setClockColors()
 	
 	bc as color_t[]
 	

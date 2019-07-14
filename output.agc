@@ -488,6 +488,36 @@ function getClockBackgroundChange(c as clock_t, col as color_t[])
 	
 endFunction
 
+function getClockCtrlChange(c as clock_t, col as color_t[])
+	
+	duration as integer
+	
+	if c.secCurrent = c.yStartSec
+		duration = c.yStartSec - c.rStartSec
+		clearTweenSingle(tween.text)
+		setTextTweenColor(tween.text, txt.clock, col[1], duration, 3)		
+	endif
+	if c.secCurrent = c.rStartSec
+		duration = c.rStartSec - c.rEndSec
+		clearTweenSingle(tween.text)
+		setTextTweenColor(tween.text, txt.clock, col[2], duration, 3)	
+	endif
+	if c.secCurrent = 0
+		clearTweenSingle(tween.text)
+	endif
+	
+endFunction
+
+function setClockCtrlReset(c ref as clock_t, cc as color_t, alpha as integer)
+	
+	c.hour = c.secCurrent / 3600
+	c.min = (c.secCurrent - (c.hour * 3600)) / 60
+	c.sec = c.secCurrent - (c.hour * 3600) - (c.min * 60)
+	clearTweenSingle(tween.text)
+	SetTextColor(txt.clock, cc.r, cc.g, cc.b, alpha)
+	
+endFunction
+
 function setClockBackgroundPulse(pulseIn as integer, col as color_t, prop as property_t)
 	
 	duration as integer
@@ -498,13 +528,13 @@ function setClockBackgroundPulse(pulseIn as integer, col as color_t, prop as pro
 		clearTweenSingle(tween.back)
 		setSpriteTweenColor(tween.back, sprite.back, col, duration, 3)
 		clearTweenSingle(tween.text)	
-		setTextTweenColor(tween.text, txt.clock, color[prop.fontColor], duration)
+		setTextTweenColor(tween.text, txt.clock, color[prop.fontColor], duration, 3)
 	else
 		// go to black background 
 		clearTweenSingle(tween.back)
 		setSpriteTweenColor(tween.back, sprite.back, color[1], duration, 3)	
 		clearTweenSingle(tween.text)
-		setTextTweenColor(tween.text, txt.clock, col, duration)
+		setTextTweenColor(tween.text, txt.clock, col, duration, 3)
 	endif
 	
 endFunction not pulseIn
@@ -630,14 +660,14 @@ function setSpriteTweenColor(tweenID as integer, spriteID as integer, col as col
 
 endFunction
 
-function setTextTweenColor(tweenID as integer, textID as integer, col as color_t, duration as float)
+function setTextTweenColor(tweenID as integer, textID as integer, col as color_t, duration as float, mode as integer)
 	
 	clearTweenSingle(tweenID)
 
 	CreateTweenText(tweenID, duration)
-	SetTweenTextRed(tweenID, GetTextColorRed(textID), col.r, TweenEaseIn1())
-	SetTweenTextGreen(tweenID, GetTextColorGreen(textID), col.g, TweenEaseIn1())
-	SetTweenTextBlue(tweenID, GetTextColorBlue(textID), col.b, TweenEaseIn1())
+	SetTweenTextRed(tweenID, GetTextColorRed(textID), col.r, mode)
+	SetTweenTextGreen(tweenID, GetTextColorGreen(textID), col.g, mode)
+	SetTweenTextBlue(tweenID, GetTextColorBlue(textID), col.b, mode)
 	PlayTweenText(tweenID, textID, 0)
 
 endFunction
