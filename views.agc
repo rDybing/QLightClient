@@ -77,6 +77,7 @@ function controlView()
 	modeSelect	as string
 	dimmed		as integer = 48
 	altButton	as integer = false
+	clock		as clock_t
 	
 	setBackgroundColor(color[10])
 	placeLogo()
@@ -94,27 +95,42 @@ function controlView()
 			select spriteID
 			case sprite.bCtrlWait
 				state.buttonHit = true
+				state.mode = "cue"
 				modeSelect = "wait"
 			endCase
 			case sprite.bCtrlReady
 				state.buttonHit = true
+				state.mode = "cue"
 				modeSelect = "ready"
 			endCase
 			case sprite.bCtrlAction
 				state.buttonHit = true
+				state.mode = "cue"
 				modeSelect = "action"
 			endCase
 			case sprite.bCtrlTimer
 				state.buttonHit = true
+				state.mode = "timer"
 				modeSelect = "timer"
+			endCase
+			case sprite.bCtrlPlayPause
+				if state.mode = "timer"
+					click()
+					clock.play = not clock.play
+					setSpriteFramePlayPause(clock.play)
+				endif
 			endCase
 			case sprite.bCtrlEdit
 				keyTimer = keyPressed(sprite.bCtrlEdit)
 				altButton = true
 			endCase
 			case sprite.bCtrlReset
-				keyTimer = keyPressed(sprite.bCtrlReset)
-				altButton = true
+				if state.mode = "timer"
+					keyTimer = keyPressed(sprite.bCtrlReset)
+					altButton = true
+					clock.play = false
+					setSpriteFramePlayPause(clock.play)
+				endif
 			endCase
 			endSelect
 		endif
@@ -122,7 +138,7 @@ function controlView()
 		if state.buttonHit
 			click()
 			state.buttonHit = false
-			changeButtonHighlight(modeSelect, dimmed)
+			changeButtonHighlight(modeSelect, dimmed, clock)
 			networkEmitter(modeSelect)
 		endif
 		
@@ -137,7 +153,7 @@ function controlView()
 	
 endFunction
 
-function changeButtonHighlight(in as string, dimmed as integer)
+function changeButtonHighlight(in as string, dimmed as integer, clock ref as clock_t)
 	
 	select in
 	case "wait"
@@ -145,30 +161,37 @@ function changeButtonHighlight(in as string, dimmed as integer)
 		highlightColorButton(sprite.bCtrlReady, false, dimmed)
 		highlightColorButton(sprite.bCtrlAction, false, dimmed)
 		highlightButton(sprite.bCtrlTimer, false)
+		resetPlayPause(clock)
 	endCase
 	case "ready"
 		highlightColorButton(sprite.bCtrlWait, false, dimmed)
 		highlightColorButton(sprite.bCtrlReady, true, dimmed)
 		highlightColorButton(sprite.bCtrlAction, false, dimmed)
 		highlightButton(sprite.bCtrlTimer, false)
+		resetPlayPause(clock)
 	endCase
 	case "action"
 		highlightColorButton(sprite.bCtrlWait, false, dimmed)
 		highlightColorButton(sprite.bCtrlReady, false, dimmed)
 		highlightColorButton(sprite.bCtrlAction, true, dimmed)
 		highlightButton(sprite.bCtrlTimer, false)
+		resetPlayPause(clock)
 	endCase
 	case "timer"
 		highlightColorButton(sprite.bCtrlWait, false, dimmed)
 		highlightColorButton(sprite.bCtrlReady, false, dimmed)
 		highlightColorButton(sprite.bCtrlAction, false, dimmed)
 		highlightButton(sprite.bCtrlTimer, true)
+		setSpriteFramePlayPause(false)
+	endCase
+	case "playpause"
 	endCase
 	case "edit"
 		highlightButton(sprite.bCtrlEdit, true)
 	endCase
 	case "reset"
 		highlightButton(sprite.bCtrlReset, true)
+		setSpriteFramePlayPause(false)
 	endCase
 	endSelect
 	

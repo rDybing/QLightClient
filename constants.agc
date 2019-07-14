@@ -25,9 +25,10 @@ function initConstants()
 	layer.back				= 999
 		
 	sound.click				= 1
-		
-	txt.version				= 1000
-	txt.editBox				= 1001
+	
+	txt.null				= 1000	
+	txt.version				= 1001
+	txt.editBox				= 1002
 	txt.bModeClient			= 1008
 	txt.bModeCtrl			= 1009
 	txt.bCtrlWait			= 1010
@@ -55,11 +56,12 @@ function initConstants()
 	sprite.bCtrlTimer		= 1020
 	sprite.bCtrlEdit		= 1021
 	sprite.bCtrlReset		= 1022
-	sprite.bLang			= 1023
-	sprite.bName			= 1024
-	sprite.bLeft			= 1025
-	sprite.bRight			= 1026
-	sprite.bCheck			= 1027
+	sprite.bCtrlPlayPause	= 1023
+	sprite.bLang			= 1024
+	sprite.bName			= 1025
+	sprite.bLeft			= 1026
+	sprite.bRight			= 1027
+	sprite.bCheck			= 1028
 	sprite.flag				= 1080
 	sprite.frame			= 1097	
 	sprite.back				= 1099
@@ -87,6 +89,8 @@ function initConstants()
 	media.bLeft				= 1015
 	media.bRight			= 1016
 	media.bCheck			= 1017
+	media.bPlay				= 1018
+	media.bPause			= 1019
 	media.flagNO			= 1080
 	media.flagUK			= 1081
 	
@@ -129,7 +133,6 @@ function initColor()
 	// Balanced Red
 	color[3].r = 225
 	color[3].g = 55
-	//color[3].g = 88
 	color[3].b = 55
 	color[3].a = 255
 	// Balanced Yellow
@@ -141,7 +144,6 @@ function initColor()
 	color[5].r = 35
 	color[5].g = 204
 	color[5].b = 65
-	//color[5].b = 157
 	color[5].a = 255
 	// Highlight Blue
 	color[6].r = 96

@@ -105,8 +105,13 @@ endFunction
 function placeControlButtons(dimmed as integer)
 	
 	spr 	as spriteProp_t
-	btn 	as button_t[6]
+	sprTemp	as spriteProp_t
+	btn 	as button_t[7]
 	sTxt	as integer = false
+	btnPP	as integer[]
+	
+	btnPP.insert(media.bPlay)
+	btnPP.insert(media.bPause)
 	
 	spr.width = 70
 	spr.height = 10
@@ -136,6 +141,16 @@ function placeControlButtons(dimmed as integer)
 	SetSpriteColor(sprite.bCtrlTimer, color[11].r, color[11].g, color[11].b, color[11].a)
 	placeButtonText(txt.bCtrlTimer, getLangString("timer", state.language), layer.B, spr, color[0], sTxt)
 	btn[3] = buttonTransfer(spr, sprite.bCtrlTimer, txt.bCtrlTimer)
+	// Button Play/Pause (timer)
+	spr.posY = spr.posY + spr.height + 2
+	sprTemp = spr
+	spr.posX = 70
+	spr.width = 15
+	spriteSetup(sprite.bCtrlPlayPause, layer.C, spr, btnPP)
+	SetSpriteColor(sprite.bCtrlPlayPause, color[5].r, color[5].g, color[5].b, color[11].a)
+	placeButtonText(txt.null, "", layer.B, spr, color[0], sTxt)
+	btn[4] = buttonTransfer(spr, sprite.bCtrlPlayPause, txt.null)
+	spr = sprTemp
 	// Button Edit (timer)
 	spr.posY = spr.posY + spr.height + 2
 	spr.width = (spr.width / 2) - 1.5
@@ -143,15 +158,14 @@ function placeControlButtons(dimmed as integer)
 	imageSetup(sprite.bCtrlEdit, layer.C, spr, media.dot)
 	SetSpriteColor(sprite.bCtrlEdit, color[11].r, color[11].g, color[11].b, color[11].a)
 	placeButtonText(txt.bCtrlEdit, getLangString("edit", state.language), layer.B, spr, color[0], sTxt)
-	btn[4] = buttonTransfer(spr, sprite.bCtrlEdit, txt.bCtrlEdit)
+	btn[5] = buttonTransfer(spr, sprite.bCtrlEdit, txt.bCtrlEdit)
 	// Button Reset (timer)
 	spr.posX = spr.posX + spr.width + 3
 	imageSetup(sprite.bCtrlReset, layer.C, spr, media.dot)
 	SetSpriteColor(sprite.bCtrlReset, color[11].r, color[11].g, color[11].b, color[11].a)
 	placeButtonText(txt.bCtrlReset, getLangString("reset", state.language), layer.B, spr, color[0], sTxt)
-	btn[5] = buttonTransfer(spr, sprite.bCtrlReset, txt.bCtrlReset)
-	
-	
+	btn[6] = buttonTransfer(spr, sprite.bCtrlReset, txt.bCtrlReset)
+		
 endFunction btn
 
 function highlightColorButton(spriteID as integer, highlight as integer, dimmed as integer)
@@ -160,6 +174,26 @@ function highlightColorButton(spriteID as integer, highlight as integer, dimmed 
 		SetSpriteColorAlpha(spriteID, 256)
 	else
 		SetSpriteColorAlpha(spriteID, dimmed)
+	endif
+	
+endFunction
+
+function resetPlayPause(c ref as clock_t)
+	
+		SetSpriteFrame(sprite.bCtrlPlayPause, 1)
+		SetSpriteColor(sprite.bCtrlPlayPause, color[5].r, color[5].g, color[5].b, color[11].a)
+		c.play = false
+		
+endFunction
+
+function setSpriteFramePlayPause(in as integer)
+	
+	if in
+		SetSpriteFrame(sprite.bCtrlPlayPause, 2)
+		SetSpriteColor(sprite.bCtrlPlayPause, color[3].r, color[3].g, color[3].b, color[3].a)
+	else
+		SetSpriteFrame(sprite.bCtrlPlayPause, 1)
+		SetSpriteColor(sprite.bCtrlPlayPause, color[5].r, color[5].g, color[5].b, color[5].a)
 	endif
 	
 endFunction

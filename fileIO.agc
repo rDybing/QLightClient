@@ -33,6 +33,8 @@ function loadMedia()
 	LoadImage(media.bLeft, "btnLeft.png")
 	LoadImage(media.bRight, "btnRight.png")
 	LoadImage(media.bCheck, "btnCheck.png")
+	LoadImage(media.bPlay, "btnPlay.png")
+	LoadImage(media.bPause, "btnPause.png")
 	LoadImage(media.flagNO, "flagNorway.png")
 	LoadImage(media.flagUK, "flagUK.png")
 	

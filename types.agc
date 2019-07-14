@@ -54,6 +54,7 @@ type globalState_t
 	landscape			as integer
 	language			as integer
 	buttonHit			as integer
+	mode				as string
 endType
 
 type timer_t
@@ -110,6 +111,7 @@ type clock_t
 	yStartSec			as integer
 	rStartSec			as integer
 	rEndSec				as integer
+	play				as integer
 endType
 
 // text control in countdown
@@ -143,6 +145,8 @@ type media_t
 	bLeft				as integer
 	bRight				as integer
 	bCheck				as integer
+	bPlay				as integer
+	bPause				as integer
 	flagNO				as integer
 	flagUK				as integer
 endType
@@ -172,6 +176,7 @@ type sprite_t
 	bCtrlTimer			as integer
 	bCtrlEdit			as integer
 	bCtrlReset			as integer
+	bCtrlPlayPause		as integer
 	bLang				as integer
 	bName				as integer
 	bLeft				as integer
@@ -216,6 +221,7 @@ type txtProp_t
 endType
 
 type txt_t
+	null				as integer
 	version				as integer
 	editBox				as integer
 	clock				as integer
