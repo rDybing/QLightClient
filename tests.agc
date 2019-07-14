@@ -21,22 +21,17 @@ endFunction
 
 function testClock()
 	
-	time as clock_t
+	clock as clock_t
 	prop as property_t
 	
-	time.hour = 0
-	time.min = 0
-	time.sec = 30
-	// note: 100% = start of countdown || 0% = end of countdown
-	time.yStartPercent = 90
-	time.rStartPercent = 20
-	time.rEndPercent = 5
+	clock = loadDefaultClock()
+	
 	prop.baseSize = 0.9
 	prop.font = media.fontC
 	prop.fontColor = 1
 	prop.fontAlpha = 192
 	prop.orientation = 1
-	countdownView(time, prop)
+	countdownView(clock, prop)
 	
 endFunction
 

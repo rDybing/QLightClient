@@ -70,6 +70,20 @@ function saveAppSettings()
 	
 endFunction
 
+function loadDefaultClock()
+	
+	clock as clock_t
+	
+	clock.hour = 0
+	clock.min = 0
+	clock.sec = 30
+	// note: 100% = start of countdown || 0% = end of countdown
+	clock.yStartPercent = 90
+	clock.rStartPercent = 20
+	clock.rEndPercent = 5
+	
+endFunction clock
+
 //************************************************* Localization Load **************************************************
 
 function loadLocalization()

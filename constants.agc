@@ -14,7 +14,7 @@ function initConstants()
 	
 	version.name			= "QLight Client"
 	version.major			= 0
-	version.minor			= 1
+	version.minor			= 2
 	version.patch			= 0
 
 	layer.top				= 0

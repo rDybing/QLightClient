@@ -206,6 +206,8 @@ function clearControl(btn as button_t[])
 		clearSpriteSingle(btn[i].sprID)
 		clearTextSingle(btn[i].txtID)
 	next i
+	
+	clearTextSingle(txt.clock)
 			
 endFunction
 
@@ -365,8 +367,6 @@ function placeSetClientName()
 	
 endFunction btn
 
-
-
 //************************************************* Cue Light Functions ************************************************
 
 function placeCueLightStart(col as color_t)
@@ -432,7 +432,7 @@ endFunction
 
 //************************************************* Countdown Functions ************************************************
 
-function placeCountdownStart(h, m, s as integer, col as color_t, prop ref as property_t)
+function placeCountdownStart(h, m, s as integer, col as color_t, prop ref as property_t, mode as string)
 	
 	hour 	as string
 	min		as string
@@ -443,21 +443,28 @@ function placeCountdownStart(h, m, s as integer, col as color_t, prop ref as pro
 	min	 = str(m)
 	sec	 = str(s)
 	
-	if h <> 0 
+	if mode = "ctrl"
 		clock = hour + ":" + min + ":" + sec
+	else
+		if h <> 0 
+			clock = hour + ":" + min + ":" + sec
+		endif
+		if h = 0 and m <> 0  
+			clock = min + ":" + sec
+		endif
+		if h = 0 and m = 0
+			clock = sec
+		endif
 	endif
 	
-	if h = 0 and m <> 0  
-		clock = min + ":" + sec
-	endif
-	
-	if h = 0 and m = 0
-		clock = sec
-	endif
-	
-	setBackgroundColor(col)
 	clock = padClock(clock)
-	placeStartClock(clock, prop)
+	
+	if mode = "ctrl"
+		placeCtrlClock(clock, col, prop)
+	else
+		setBackgroundColor(col)
+		placeStartClock(clock, prop)
+	endif
 	
 endFunction
 

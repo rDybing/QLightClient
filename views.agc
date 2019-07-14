@@ -61,7 +61,7 @@ function keyPressed(spriteID)
 	state.buttonHit = true
 	highlightButton(spriteID, state.buttonHit)
 	click()
-	keyTimer = setTimer(75)
+	keyTimer = setTimer(50)
 	
 endFunction keyTimer
 
@@ -78,10 +78,25 @@ function controlView()
 	dimmed		as integer = 48
 	altButton	as integer = false
 	clock		as clock_t
+	items 		as integer
+	clockTimer	as timer_t
+	prop		as property_t
 	
 	setBackgroundColor(color[10])
 	placeLogo()
 	button = placeControlButtons(dimmed)
+	
+	prop.baseSize = 9
+	prop.font = media.fontC
+	prop.fontColor = 5
+	prop.fontAlpha = 192
+	
+	clock = loadDefaultClock()
+	
+	items = setClockItems(clock)	
+	setSecondsInClock(clock)
+	placeCountdownStart(clock.hour, clock.min, clock.sec, color[5], prop, "ctrl")
+	clockTimer = setTimer(1000)
 	
 	repeat
 		if GetRawKeyReleased(escKey)
@@ -115,9 +130,9 @@ function controlView()
 			endCase
 			case sprite.bCtrlPlayPause
 				if state.mode = "timer"
-					click()
+					state.buttonHit = true
+					modeSelect = "playpause"
 					clock.play = not clock.play
-					setSpriteFramePlayPause(clock.play)
 				endif
 			endCase
 			case sprite.bCtrlEdit
@@ -129,7 +144,6 @@ function controlView()
 					keyTimer = keyPressed(sprite.bCtrlReset)
 					altButton = true
 					clock.play = false
-					setSpriteFramePlayPause(clock.play)
 				endif
 			endCase
 			endSelect
@@ -146,10 +160,21 @@ function controlView()
 			altButton = false
 			highlightButton(spriteID, false)
 		endif
+		
+		if clock.play
+			updateCtrlClock(clock)
+		endif
+		testClockRaw(clock)
 		sync()
 	until quit
 	
 	clearControl(button)
+	
+endFunction
+
+function updateCtrlClock(c ref as clock_t)
+	
+	
 	
 endFunction
 
@@ -185,13 +210,14 @@ function changeButtonHighlight(in as string, dimmed as integer, clock ref as clo
 		setSpriteFramePlayPause(false)
 	endCase
 	case "playpause"
+		setSpriteFramePlayPause(clock.play)
 	endCase
 	case "edit"
 		highlightButton(sprite.bCtrlEdit, true)
 	endCase
 	case "reset"
 		highlightButton(sprite.bCtrlReset, true)
-		setSpriteFramePlayPause(false)
+		setSpriteFramePlayPause(clock.play)
 	endCase
 	endSelect
 	
@@ -427,7 +453,7 @@ function countdownView(clock as clock_t, prop as property_t)
 	setSecondsInClock(clock)
 	backCol = setClockBackgroundColors()
 	
-	placeCountdownStart(clock.hour, clock.min, clock.sec, backCol[0], prop)
+	placeCountdownStart(clock.hour, clock.min, clock.sec, backCol[0], prop, "countdown")
 	placeFrame()
 	time = setTimer(1000)
 			

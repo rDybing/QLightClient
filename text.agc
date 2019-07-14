@@ -97,6 +97,21 @@ function placeStartClock(in as string, prop ref as property_t)
 		
 endFunction
 
+function placeCtrlClock(in as string, col as color_t, prop ref as property_t)
+	
+	mt as txtProp_t
+	
+	mt.startX = getSpriteX(sprite.bCtrlWait)
+	mt.startY = getSpriteY(sprite.bCtrlPlayPause)
+	mt.align = 0
+	mt.layer = layer.B
+		
+	setFontProperties(color[prop.fontColor], prop.fontAlpha, prop.font, prop.baseSize)
+	CreateText(txt.clock, in)
+	textDraw(txt.clock, mt)
+	
+endFunction
+
 function padClock(in as string)
 	
 	out		as string
