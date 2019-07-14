@@ -31,14 +31,24 @@ function placeMenuText()
 	
 endFunction
 
-function placeButtonText(txtId as integer, txtStr as string, layer as integer, spr as spriteProp_t, col as color_t)
+function placeButtonText(txtId as integer, 
+	txtStr as string, 
+	layer as integer, 
+	spr as spriteProp_t, 
+	col as color_t, 
+	smallText as integer)
 	
 	mt as txtProp_t
+	sizeDec as integer = 2
+	
+	if smallText
+		sizeDec = 3
+	endif
 		
 	mt.startX = spr.posX + (spr.width / 2)
 	mt.startY = spr.posY + 0.5
 	mt.align = 1
-	mt.size = spr.height - 2
+	mt.size = spr.height - sizeDec
 	mt.layer = layer
 		
 	setFontProperties(col, 255, media.fontA, mt.size)

@@ -34,10 +34,12 @@ function initConstants()
 	txt.bCtrlReady			= 1011
 	txt.bCtrlAction			= 1012
 	txt.bCtrlTimer			= 1013
-	txt.modeSelect			= 1014
-	txt.appID				= 1015
-	txt.bLang				= 1016
-	txt.bName				= 1017
+	txt.bCtrlEdit			= 1014
+	txt.bCtrlReset			= 1015
+	txt.modeSelect			= 1016
+	txt.appID				= 1017
+	txt.bLang				= 1018
+	txt.bName				= 1019
 	txt.clock				= 1100
 	
 	sprite.logo				= 1010
@@ -51,11 +53,13 @@ function initConstants()
 	sprite.bCtrlReady		= 1018
 	sprite.bCtrlAction		= 1019
 	sprite.bCtrlTimer		= 1020
-	sprite.bLang			= 1021
-	sprite.bName			= 1022
-	sprite.bLeft			= 1023
-	sprite.bRight			= 1024
-	sprite.bCheck			= 1025
+	sprite.bCtrlEdit		= 1021
+	sprite.bCtrlReset		= 1022
+	sprite.bLang			= 1023
+	sprite.bName			= 1024
+	sprite.bLeft			= 1025
+	sprite.bRight			= 1026
+	sprite.bCheck			= 1027
 	sprite.flag				= 1080
 	sprite.frame			= 1097	
 	sprite.back				= 1099

@@ -106,6 +106,12 @@ function controlView()
 				state.buttonHit = true
 				modeSelect = "timer"
 			endCase
+			case sprite.bCtrlEdit
+				// do stuff
+			endCase
+			case sprite.bCtrlReset
+				// do stuff
+			endCase
 			endSelect
 		endif
 		

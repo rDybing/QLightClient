@@ -170,6 +170,8 @@ type sprite_t
 	bCtrlReady			as integer
 	bCtrlAction			as integer
 	bCtrlTimer			as integer
+	bCtrlEdit			as integer
+	bCtrlReset			as integer
 	bLang				as integer
 	bName				as integer
 	bLeft				as integer
@@ -223,6 +225,8 @@ type txt_t
 	bCtrlReady			as integer
 	bCtrlAction			as integer
 	bCtrlTimer			as integer
+	bCtrlEdit			as integer
+	bCtrlReset			as integer
 	modeSelect			as integer
 	appID				as integer
 	bLang				as integer

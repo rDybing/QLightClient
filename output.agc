@@ -52,8 +52,9 @@ endFunction
 
 function placeModeButtons(col as color_t)
 	
-	spr as spriteProp_t
-	btn as button_t[2]
+	spr		as spriteProp_t
+	btn		as button_t[2]
+	sTxt	as integer = false
 	
 	spr.width = 70
 	spr.height = 10
@@ -63,13 +64,13 @@ function placeModeButtons(col as color_t)
 	// Button Client
 	imageSetup(sprite.bModeClient, layer.C, spr, media.dot)
 	SetSpriteColor(sprite.bModeClient, col.r, col.g, col.b, col.a)	
-	placeButtonText(txt.bModeClient, getLangString("client", state.language), layer.B, spr, color[0])
+	placeButtonText(txt.bModeClient, getLangString("client", state.language), layer.B, spr, color[0], sTxt)
 	btn[0] = buttonTransfer(spr, sprite.bModeClient, txt.bModeClient)
 	// Button Controller
 	spr.posY = spr.posY + spr.height + 2
 	imageSetup(sprite.bModeCtrl, layer.C, spr, media.dot)
 	SetSpriteColor(sprite.bModeCtrl, col.r, col.g, col.b, col.a)
-	placeButtonText(txt.bModeCtrl, getLangString("ctrl", state.language), layer.B, spr, color[0])
+	placeButtonText(txt.bModeCtrl, getLangString("ctrl", state.language), layer.B, spr, color[0], sTxt)
 	btn[1] = buttonTransfer(spr, sprite.bModeCtrl, txt.bModeCtrl)
 	
 endFunction btn
@@ -103,8 +104,9 @@ endFunction
 
 function placeControlButtons(dimmed as integer)
 	
-	spr as spriteProp_t
-	btn as button_t[4]
+	spr 	as spriteProp_t
+	btn 	as button_t[6]
+	sTxt	as integer = false
 	
 	spr.width = 70
 	spr.height = 10
@@ -114,26 +116,41 @@ function placeControlButtons(dimmed as integer)
 	// Button Red
 	imageSetup(sprite.bCtrlWait, layer.C, spr, media.dot)
 	SetSpriteColor(sprite.bCtrlWait, color[3].r, color[3].g, color[3].b, 255)	
-	placeButtonText(txt.bCtrlWait, getLangString("wait", state.language), layer.B, spr, color[0])
+	placeButtonText(txt.bCtrlWait, getLangString("wait", state.language), layer.B, spr, color[0], sTxt)
 	btn[0] = buttonTransfer(spr, sprite.bCtrlWait, txt.bCtrlWait)
 	// Button Yellow
 	spr.posY = spr.posY + spr.height + 2
 	imageSetup(sprite.bCtrlReady, layer.C, spr, media.dot)
 	SetSpriteColor(sprite.bCtrlReady, color[4].r, color[4].g, color[4].b, dimmed)
-	placeButtonText(txt.bCtrlReady, getLangString("ready", state.language), layer.B, spr, color[0])
+	placeButtonText(txt.bCtrlReady, getLangString("ready", state.language), layer.B, spr, color[0], sTxt)
 	btn[1] = buttonTransfer(spr, sprite.bCtrlReady, txt.bCtrlReady)
 	// Button Green
 	spr.posY = spr.posY + spr.height + 2
 	imageSetup(sprite.bCtrlAction, layer.C, spr, media.dot)
 	SetSpriteColor(sprite.bCtrlAction, color[5].r, color[5].g, color[5].b, dimmed)	
-	placeButtonText(txt.bCtrlAction, getLangString("action", state.language), layer.B, spr, color[0])
+	placeButtonText(txt.bCtrlAction, getLangString("action", state.language), layer.B, spr, color[0], sTxt)
 	btn[2] = buttonTransfer(spr, sprite.bCtrlAction, txt.bCtrlAction)
 	// Button Timer
 	spr.posY = spr.posY + spr.height + 2
 	imageSetup(sprite.bCtrlTimer, layer.C, spr, media.dot)
 	SetSpriteColor(sprite.bCtrlTimer, color[11].r, color[11].g, color[11].b, color[11].a)
-	placeButtonText(txt.bCtrlTimer, getLangString("timer", state.language), layer.B, spr, color[0])
+	placeButtonText(txt.bCtrlTimer, getLangString("timer", state.language), layer.B, spr, color[0], sTxt)
 	btn[3] = buttonTransfer(spr, sprite.bCtrlTimer, txt.bCtrlTimer)
+	// Button Edit (timer)
+	spr.posY = spr.posY + spr.height + 2
+	spr.width = (spr.width / 2) - 1.5
+	sTxt = true
+	imageSetup(sprite.bCtrlEdit, layer.C, spr, media.dot)
+	SetSpriteColor(sprite.bCtrlEdit, color[11].r, color[11].g, color[11].b, color[11].a)
+	placeButtonText(txt.bCtrlEdit, getLangString("edit", state.language), layer.B, spr, color[0], sTxt)
+	btn[4] = buttonTransfer(spr, sprite.bCtrlEdit, txt.bCtrlEdit)
+	// Button Reset (timer)
+	spr.posX = spr.posX + spr.width + 3
+	imageSetup(sprite.bCtrlReset, layer.C, spr, media.dot)
+	SetSpriteColor(sprite.bCtrlReset, color[11].r, color[11].g, color[11].b, color[11].a)
+	placeButtonText(txt.bCtrlReset, getLangString("reset", state.language), layer.B, spr, color[0], sTxt)
+	btn[5] = buttonTransfer(spr, sprite.bCtrlReset, txt.bCtrlReset)
+	
 	
 endFunction btn
 
@@ -162,11 +179,12 @@ endFunction
 
 function placeDropDownMenu(options as string[])
 	
-	btn as button_t[2]
-	spr as spriteProp_t
-	col as color_t
-	col = color[12]
+	btn		as button_t[2]
+	spr		as spriteProp_t
+	sTxt	as integer = false
+	col		as color_t
 	
+	col = color[12]
 	spr.width = 74
 	spr.height = 8 * (options.length + 1)
 	spr.posX =  26
@@ -184,13 +202,13 @@ function placeDropDownMenu(options as string[])
 	// Button Set Language
 	imageSetup(sprite.bLang, layer.front, spr, media.dot)
 	SetSpriteColor(sprite.bLang, col.r, col.g, col.b, 32)
-	placeButtonText(txt.bLang, getLangString(options[0], state.language), layer.top, spr, color[0])
+	placeButtonText(txt.bLang, getLangString(options[0], state.language), layer.top, spr, color[0], sTxt)
 	btn[0] = buttonTransfer(spr, sprite.bLang, txt.bLang)
 	// Button Set Client Name
 	spr.posY = spr.posY + spr.height + 2
 	imageSetup(sprite.bName, layer.front, spr, media.dot)
 	SetSpriteColor(sprite.bName, col.r, col.g, col.b, 32)
-	placeButtonText(txt.bName, getLangString(options[1], state.language), layer.top, spr, color[0])
+	placeButtonText(txt.bName, getLangString(options[1], state.language), layer.top, spr, color[0], sTxt)
 	btn[1] = buttonTransfer(spr, sprite.bName, txt.bName)
 	
 endFunction btn
