@@ -24,7 +24,7 @@ function testClock()
 	clock as clock_t
 	prop as property_t
 	
-	clock = loadDefaultClock()
+	clock = loadClockTimer()
 	
 	prop.baseSize = 0.9
 	prop.font = media.fontC

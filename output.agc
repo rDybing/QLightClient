@@ -199,7 +199,7 @@ function setSpriteFramePlayPause(in as integer)
 	
 endFunction
 
-function placeSetClockEdit(c ref as clock_t)
+function placeSetClockEdit()
 	
 	btn as button_t
 	mt	as txtProp_t
@@ -215,7 +215,7 @@ function placeSetClockEdit(c ref as clock_t)
 	spr.width = 16
 	spr.height = 10
 	
-	placeTextInput(mt, c.output, 10)
+	placeTextInput(mt, "", 10)
 	SetEditBoxInputType(txt.editbox, 1) 
 	// Button Accept
 	imageSetup(sprite.bCheck, layer.front, spr, media.bCheck)

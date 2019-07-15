@@ -92,7 +92,7 @@ function controlView()
 	prop.fontColor = 5
 	prop.fontAlpha = 192
 	
-	clock = loadDefaultClock()
+	clock = loadClockTimer()
 	clockCol = setClockColors()
 	
 	setSecondsInClock(clock)
@@ -148,7 +148,7 @@ function controlView()
 					keyTimer = keyPressed(sprite.bCtrlReset)
 					altButton = true
 					clock.play = false
-					clock = loadDefaultClock()
+					clock = loadClockTimer()
 					setSecondsInClock(clock)
 					resetCtrlClock(clock, clockCol, prop.fontAlpha)
 				endif
@@ -167,7 +167,7 @@ function controlView()
 			altButton = false
 			highlightButton(spriteID, false)
 			if modeSelect = "edit"
-				btnOK = placeSetClockEdit(clock)
+				btnOK = placeSetClockEdit()
 			endif
 		endif
 		
@@ -187,7 +187,7 @@ function controlView()
 			endif
 			updateTweenString(txt.clock)
 		endif
-		//testClockRaw(clock)
+		testClockRaw(clock)
 		sync()
 	until quit
 	
@@ -203,7 +203,7 @@ function handleChangeClockEdit(spriteID as integer, nameBtn ref as button_t, c r
 		click()
 		c.output = getEditBoxInput()
 		setClockFromInput(c)
-		//saveDefaultClock()
+		saveClockTimer(c)
 		out = true
 	endif
 	

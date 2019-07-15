@@ -70,7 +70,7 @@ function saveAppSettings()
 	
 endFunction
 
-function loadDefaultClock()
+function loadClockTimer()
 	
 	clock as clock_t
 	
@@ -83,6 +83,18 @@ function loadDefaultClock()
 	clock.rEndPercent = 5
 	
 endFunction clock
+
+function saveClockTimer(c as clock_t)
+	
+	clockTimer	as string
+	clockTemp	as clock_t[]
+	
+	clockTimer = "clockTimer.json"
+	
+	clockTemp.insert(c)
+	clockTemp.Save(clockTimer)
+	
+endFunction
 
 //************************************************* Localization Load **************************************************
 
