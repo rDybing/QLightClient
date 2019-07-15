@@ -461,38 +461,31 @@ endFunction
 
 //************************************************* Countdown Functions ************************************************
 
-function placeCountdownStart(h, m, s as integer, col as color_t, prop ref as property_t, mode as string)
+function placeCountdownStart(c ref as clock_t, col as color_t, prop ref as property_t, mode as string)
 	
-	hour 	as string
-	min		as string
-	sec		as String
-	clock 	as string
-
-	hour = str(h)
-	min	 = str(m)
-	sec	 = str(s)
-	
+	c.output = ""
+		
 	if mode = "ctrl"
-		clock = hour + ":" + min + ":" + sec
+		c.output = str(c.hour) + ":" + str(c.min) + ":" + str(c.sec)
 	else
-		if h <> 0 
-			clock = hour + ":" + min + ":" + sec
+		if c.hour <> 0 
+			c.output = str(c.hour) + ":" + str(c.min) + ":" + str(c.sec)
 		endif
-		if h = 0 and m <> 0  
-			clock = min + ":" + sec
+		if c.hour = 0 and c.min <> 0  
+			c.output = str(c.min) + ":" + str(c.sec)
 		endif
-		if h = 0 and m = 0
-			clock = sec
+		if c.hour = 0 and c.min = 0
+			c.output = str(c.sec)
 		endif
 	endif
 	
-	clock = padClock(clock)
+	c.output = padClock(c.output)
 	
 	if mode = "ctrl"
-		placeCtrlClock(clock, col, prop)
+		placeCtrlClock(c.output, col, prop)
 	else
 		setBackgroundColor(col)
-		placeStartClock(clock, prop)
+		placeStartClock(c.output, prop)
 	endif
 	
 endFunction

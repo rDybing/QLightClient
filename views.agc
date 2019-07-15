@@ -96,7 +96,7 @@ function controlView()
 	clockCol = setClockColors()
 	
 	setSecondsInClock(clock)
-	placeCountdownStart(clock.hour, clock.min, clock.sec, color[5], prop, "ctrl")
+	placeCountdownStart(clock, color[5], prop, "ctrl")
 	
 	repeat
 		if GetRawKeyReleased(escKey)
@@ -487,7 +487,7 @@ endFunction
  
 //************************************************* Countdown Timer ****************************************************
 
-function countdownView(clock as clock_t, prop as property_t)
+function countdownView(clock ref as clock_t, prop as property_t)
 	
 	quit		as integer
 	items		as integer
@@ -501,7 +501,7 @@ function countdownView(clock as clock_t, prop as property_t)
 	setSecondsInClock(clock)
 	backCol = setClockColors()
 	
-	placeCountdownStart(clock.hour, clock.min, clock.sec, backCol[0], prop, "countdown")
+	placeCountdownStart(clock, backCol[0], prop, "countdown")
 	placeFrame()
 	time = setTimer(1000)
 			
