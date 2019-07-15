@@ -105,6 +105,10 @@ function placeCtrlClock(in as string, col as color_t, prop ref as property_t)
 	mt.startY = getSpriteY(sprite.bCtrlPlayPause) + 0.25
 	mt.align = 0
 	mt.layer = layer.B
+	
+	if device.aspect > 0.6
+		inc prop.baseSize
+	endif
 		
 	setFontProperties(color[prop.fontColor], prop.fontAlpha, prop.font, prop.baseSize)
 	CreateText(txt.clock, in)
@@ -138,32 +142,33 @@ function padClock(in as string)
 	
 endFunction out
 
-function updateClockText(in as clock_t, items as integer)
+function updateClockText(c ref as clock_t, items as integer)
 	
 	number as string[]
-	out as String
+	
+	c.output = ""
 	
 	select items
 	case 1
-		number.insert(str(in.sec))
+		number.insert(str(c.sec))
 	endCase
 	case 2
-		number.insert(str(in.min) + ":")
-		number.insert(str(in.sec))
+		number.insert(str(c.min) + ":")
+		number.insert(str(c.sec))
 	endCase
 	case default
-		number.insert(str(in.hour) + ":")
-		number.insert(str(in.min) + ":")
-		number.insert(str(in.sec))
+		number.insert(str(c.hour) + ":")
+		number.insert(str(c.min) + ":")
+		number.insert(str(c.sec))
 	endCase
 	endSelect
 	
 	for i = 0 to items - 1
-		out = out + number[i]
+		c.output = c.output + number[i]
 	next i
 	
-	out = padClock(out)
-	SetTextString(txt.clock, out)
+	c.output = padClock(c.output)
+	SetTextString(txt.clock, c.output)
 	
 endFunction
 

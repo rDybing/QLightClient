@@ -81,6 +81,7 @@ function controlView()
 	clockTimer	as timer_t
 	clockCol	as color_t[2]
 	prop		as property_t
+	btnOk		as button_t
 	
 	setBackgroundColor(color[10])
 	placeLogo()
@@ -96,7 +97,6 @@ function controlView()
 	
 	setSecondsInClock(clock)
 	placeCountdownStart(clock.hour, clock.min, clock.sec, color[5], prop, "ctrl")
-	clockTimer = setTimer(1000)
 	
 	repeat
 		if GetRawKeyReleased(escKey)
@@ -133,11 +133,15 @@ function controlView()
 					state.buttonHit = true
 					modeSelect = "playpause"
 					clock.play = not clock.play
+					clockTimer = setTimer(1000)
 				endif
 			endCase
 			case sprite.bCtrlEdit
-				keyTimer = keyPressed(sprite.bCtrlEdit)
-				altButton = true
+				if not clock.play
+					keyTimer = keyPressed(sprite.bCtrlEdit)
+					altButton = true
+					modeSelect = "edit"
+				endif
 			endCase
 			case sprite.bCtrlReset
 				if state.mode = "timer"
@@ -162,6 +166,19 @@ function controlView()
 		if getTimer(keyTimer) and altButton
 			altButton = false
 			highlightButton(spriteID, false)
+			if modeSelect = "edit"
+				btnOK = placeSetClockEdit(clock)
+			endif
+		endif
+		
+		if btnOK.active
+			timeSet = handleChangeClockEdit(spriteID, btnOK, clock)
+			if timeSet
+				clearTextInput(btnOK.sprID)
+				timeSet = false
+				btnOK.active = false
+				updateClockText(clock, 3)
+			endif
 		endif
 		
 		if clock.play 
@@ -177,6 +194,20 @@ function controlView()
 	clearControl(button)
 	
 endFunction
+
+function handleChangeClockEdit(spriteID as integer, nameBtn ref as button_t, c ref as clock_t)
+	
+	out as integer = false
+	
+	if spriteID = nameBtn.sprID
+		click()
+		c.output = getEditBoxInput()
+		setClockFromInput(c)
+		//saveDefaultClock()
+		out = true
+	endif
+	
+endFunction out
 
 function updateCtrlClock(c ref as clock_t, cc as color_t[])
 	

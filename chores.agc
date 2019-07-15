@@ -94,6 +94,33 @@ function setClockItems(c as clock_t)
 	
 endFunction out
 
+function setClockFromInput(c ref as clock_t)
+	
+	percent as float
+	total as float
+	
+	c.output = trimString(c.output, ".") 
+	
+	c.secTotal = val(c.output) * 60
+	c.secCurrent = c.secTotal
+	
+	c.hour = c.secCurrent / 3600
+	c.min = (c.secCurrent - (c.hour * 3600)) / 60
+	c.sec = c.secCurrent - (c.hour * 3600) - (c.min * 60)
+	
+	total = c.secTotal
+	
+	percent = total / 100
+	
+	c.yStartSec = c.yStartPercent * percent
+	c.rStartSec = c.rStartPercent * percent
+	c.rEndSec = c.rEndPercent * percent
+	
+	c.output = str(c.hour) + ":" + str(c.min) + ":" + str(c.sec)
+	c.output = padClock(c.output)
+	
+endFunction
+
 function setClockColors()
 	
 	bc as color_t[]

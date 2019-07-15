@@ -199,6 +199,34 @@ function setSpriteFramePlayPause(in as integer)
 	
 endFunction
 
+function placeSetClockEdit(c ref as clock_t)
+	
+	btn as button_t
+	mt	as txtProp_t
+	spr as spriteProp_t
+	
+	mt.startX = getSpriteX(sprite.bCtrlWait)
+	mt.startY = getSpriteY(sprite.bCtrlWait) - GetSpriteHeight(sprite.bCtrlWait)
+	mt.size = 7
+	mt.align = 1
+	
+	spr.posX = 70
+	spr.posY = mt.startY - 2
+	spr.width = 16
+	spr.height = 10
+	
+	placeTextInput(mt, c.output, 10)
+	SetEditBoxInputType(txt.editbox, 1) 
+	// Button Accept
+	imageSetup(sprite.bCheck, layer.front, spr, media.bCheck)
+	btn = buttonTransfer(spr, sprite.bCheck, nil)
+	btn.active = true
+	SetSpriteColor(sprite.bCheck, color[5].r, color[5].g, color[5].b, 255)
+	
+	SetEditBoxFocus(txt.editBox, 1)
+	
+endFunction btn
+
 function clearControl(btn as button_t[])
 	
 	clearSpriteSingle(sprite.logo)
@@ -293,7 +321,7 @@ function placeSelectLanguage(posY as float)
 	languages.insert(media.flagUK)
 
 	spr.width = 16
-	spr.height = 10
+	spr.height = -1
 	spr.posX = 28
 	spr.posY = posY
 	

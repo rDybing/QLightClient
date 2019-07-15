@@ -112,6 +112,7 @@ type clock_t
 	rStartSec			as integer
 	rEndSec				as integer
 	play				as integer
+	output				as string
 endType
 
 // text control in countdown
