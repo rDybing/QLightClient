@@ -52,31 +52,42 @@ function receiveClientsConnect(net ref as network_t)
 	clientAck		as integer
 	clientName		as string
 	clientRemoval	as integer
+	clientConnectID	as integer
 	tc				as client_t
 	out				as string
 	
-	clientID = GetNetworkFirstClient(net.id)
+	clientConnectID = GetNetworkFirstClient(net.id)
 	
-	while clientID > 0 and net.clients.length < maxClients	
+	while clientConnectID > 0 and net.clients.length < maxClients
+		// handle disconnect
+		clientRemoval = false
+		if GetNetworkClientDisconnected(net.id, clientConnectID)
+			if GetNetworkClientUserData(net.id, clientConnectID, 0) = 0
+				SetNetworkClientUserData(net.id, clientConnectID, 0, 1)
+				DeleteNetworkClient(net.id, clientConnectID)
+			endif
+			removeClient(net, clientConnectID)
+			clientRemoval = true
+		endif			
 		// seperate out host
-		if clientID = GetNetworkMyClientID(net.id)
-			net.hostID = clientID
+		if clientConnectID = GetNetworkMyClientID(net.id)
+			net.hostID = clientConnectID
 		else
-			clientName = getNetworkClientName(net.id, clientID)
-			if getClientExists(net, clientName) = false
+			clientName = getNetworkClientName(net.id, clientConnectID)
+			if getClientExists(net, clientName) = false and clientRemoval = false
 				if net.clients.length < maxClients
-					tc.connectId = clientID
-					tc.name = clientName
+					tc.connectId = clientConnectID
+					tc.id = clientName
 					net.clients.insert(tc)
 					clientAck = createNetworkMessage()
 					out = "ok" + ":" + str(net.hostID)
 					AddNetworkMessageString(clientAck, out)
-					sendNetworkMessage(net.id, clientID, clientAck)
+					sendNetworkMessage(net.id, clientConnectID, clientAck)
 				endif
 			endif
 		endif
 		net.clientCount = GetNetworkNumClients(net.id) - 1		
-		clientID = GetNetworkNextClient(net.id)
+		clientConnectID = GetNetworkNextClient(net.id)
 	endWhile
 		 
 endFunction
@@ -141,7 +152,7 @@ endFunction
 
 function joinHost(net ref as network_t)
 	
-	net.id = JoinNetwork("QLightNet", app.name)
+	net.id = JoinNetwork("QLightNet", app.id)
 	
 endFunction
 

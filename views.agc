@@ -107,7 +107,7 @@ function controlView()
 	
 	initHostLAN(net)
 	
-	clientTimer = setTimer(2000)
+	clientTimer = setTimer(500)
 	
 	repeat
 		if GetRawKeyReleased(escKey)
@@ -154,6 +154,9 @@ function controlView()
 		if getTimer(clientTimer)
 			receiveClientsConnect(net)
 		endif
+		
+		receiveClientsMessage(net)
+		
 		//testClockRaw(clock)
 		testNetwork(net)
 		sync()
