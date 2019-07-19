@@ -10,15 +10,6 @@ Copyright 2019 Roy Dybing - all rights reserved
 
 //************************************************* Module Tests *******************************************************
 
-function testCueLight()
-	
-	time as timer_t
-	cue as cueLight_t
-	
-	cueLightView()
-	
-endFunction
-
 function testClock()
 	
 	clock as clock_t

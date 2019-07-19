@@ -29,14 +29,14 @@ function networkEmitter(net ref as network_t, cmd as string, cue as cueLight_t)
 	case "close"
 		closeHostLAN(net)
 	endCase
-	case "ready"
-		cue.colorStep = 0
+	case "wait" // red
+		cue.colorStep = 2
 	endCase
-	case "wait"
+	case "ready" // yellow
 		cue.colorStep = 1
 	endCase
-	case "action"
-		cue.colorStep = 2
+	case "action" // green
+		cue.colorStep = 0
 	endCase
 	endSelect
 	
@@ -139,11 +139,16 @@ endFunction
 
 function sendCueLAN(net as network_t, cue as cueLight_t)
 	
-	cueUpdate = CreateNetworkMessage()
 	transmitJSON as string
-	transmitJSON = cue.toJSON()
+	mode as string
+	msg as string
 	
-	AddNetworkMessageString(cueUpdate, transmitJSON)
+	cueUpdate = CreateNetworkMessage()
+	transmitJSON = cue.toJSON()
+	mode = "cue"
+	msg = mode + "|" + transmitJSON
+	
+	AddNetworkMessageString(cueUpdate, msg)
 	SendNetworkMessage(net.id, 0, cueUpdate)	
 	
 endFunction
@@ -207,16 +212,26 @@ function getServerInActive(net as network_t)
 	
 endFunction out
 
-function networkListener()
+function receiveCueLAN(net as network_t)
 	
-	testCueLight()
-	testClock()
+	serverMsg	as integer
+	temp		as string
+	netMsg		as message_t
 	
-endFunction
+	serverMsg = GetNetworkMessage(net.id)
+	
+	if serverMsg <> 0
+		temp = GetNetworkMessageString(serverMsg)
+		if CountStringTokens(temp, "|") > 0
+			netMsg.mode = GetStringToken(temp, "|", 1)
+			netMsg.inJSON = GetStringToken(temp, "|", 2)
+			netMsg.new = true
+		endif
+	endif		
+	
+	DeleteNetworkMessage(serverMsg)	
 
-function receiveCueLAN(cue ref as cueLight_t, net as network_t)
-
-endFunction
+endFunction netMsg
 
 function getCueUpdate(cue ref as cueLight_t)
 	

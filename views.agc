@@ -394,9 +394,49 @@ function handleChangeClientName(spriteID as integer, nameBtn ref as button_t)
 	
 endFunction out
 
+//************************************************* Cue Controller Functions *******************************************
+
+function cueController()
+	
+	quit	as integer
+	net		as network_t
+	netMsg	as message_t
+	
+	netMsg.mode = "cue"
+	
+	if app.name = ""
+		app.name = "client"
+	endif
+
+	joinHost(net)
+
+	repeat
+		print("waiting for response from server...")
+		testNetwork(net)
+		sync()
+	until receiveServerAck(net)
+	
+	repeat
+		select netMsg.mode
+		case "cue"
+			netMsg = cueLightView(net, netMsg)
+		endCase
+		case "timer"
+			//netMsg = countdownView(net, netMsg)
+		endCase
+		case "quit"
+			quit = true
+		endCase
+		endSelect
+	until quit
+	
+	disconnectHost(net)
+	
+endFunction
+
 //************************************************* Cue Light Functions ************************************************
 
-function cueLightView()
+function cueLightView(net ref as network_t, netMsg as message_t)
 	
 	quit		as integer
 	cue			as cueLight_t
@@ -404,47 +444,40 @@ function cueLightView()
 	time		as timer_t
 	pulseIn		as integer = false
 	mouse		as mouse_t
-	net			as network_t
 	
 	time = setTimer(1000)
 	backCol = setCueBackgroundColors()
 	placeCueLightStart(backCol[0])
 	placeFrame()
-	
-	if app.name = ""
-		app.name = "client"
-	endif
-	
-	joinHost(net)
-	
+			
 	repeat
-		print("waiting for response from server...")
-		testNetwork(net)
-		sync()
-	until receiveServerAck(net)
+		// get network message
+		netMsg = receiveCueLAN(net)
 		
-	repeat
-		// change to get quit-order from controller
-		if GetRawKeyReleased(escKey)
+		if netMsg.mode = "quit" or netMsg.mode = "timer"
 			quit = true
-		endif
-				
-		testCueRaw(cue)
-		// if new message from server
-		if getCueUpdate(cue)
-			// set background
-			if cue.fadeOn
-				setSpriteTweenColor(tween.back, sprite.back, backCol[cue.colorStep], cue.fadeDuration, 3)
-			else
-				setBackgroundColor(backCol[cue.colorStep])
+		else
+			if GetRawKeyReleased(escKey)
+				netMsg.mode = "quit"
+				quit = true
 			endif
-			// set readybutton
-			if cue.responseUpd
-				if cue.responseReq
-					placeReadyButton(backCol[2])
+			// if new message from server
+			if netMsg.new
+				cue.fromJSON(netMsg.inJSON)
+				// set background
+				if cue.fadeOn
+					setSpriteTweenColor(tween.back, sprite.back, backCol[cue.colorStep], cue.fadeDuration, 3)
+				else
+					setBackgroundColor(backCol[cue.colorStep])
 				endif
-				if cue.responseAck
-					clearSpriteSingle(sprite.bReady)
+				// set readybutton
+				if cue.responseUpd
+					if cue.responseReq
+						placeReadyButton(backCol[2])
+					endif
+					if cue.responseAck
+						clearSpriteSingle(sprite.bReady)
+					endif
 				endif
 			endif
 		endif
@@ -463,14 +496,14 @@ function cueLightView()
 			updateTweenSpriteReady()
 		endif
 		updateTweenBackground()
+		testCueRaw(cue)
 		testNetwork(net)
 		sync()
 	until quit
 	
-	disconnectHost(net)
 	clearCueLight()
 	
-endFunction
+endFunction netMsg
  
 //************************************************* Countdown Timer ****************************************************
 

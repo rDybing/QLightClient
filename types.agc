@@ -150,6 +150,12 @@ type mode_t
 	emit				as integer
 endType
 
+type message_t
+	new					as integer
+	mode				as string
+	inJSON				as string	
+endType
+
 //************************************************* Media **************************************************************
 
 type media_t
