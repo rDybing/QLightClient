@@ -16,7 +16,7 @@ function initHostLAN(net ref as network_t)
 
 	net.hostPort = 1025
 	net.active = true
-	net.id = hostNetwork(app.name, "QLightNet", net.hostPort)
+	net.id = hostNetwork("QLightNet", app.name, net.hostPort)
 	SetNetworkLatency(net.id, 50)
 	//testNetConnect(gs)
 endFunction
@@ -57,23 +57,13 @@ function receiveClientsConnect(net ref as network_t)
 	
 	clientID = GetNetworkFirstClient(net.id)
 	
-	while clientID > 0 and net.clients.length < maxClients
-		// handle disconnect
-		clientRemoval = false
-		if GetNetworkClientDisconnected(net.id, clientID)
-			if GetNetworkClientUserData(net.id, clientID, 0) = 0
-				SetNetworkClientUserData(net.id, clientID, 0, 1)
-				DeleteNetworkClient(net.id, clientID)
-			endif
-			removeClient(net, clientID)
-			clientRemoval = true
-		endif		
+	while clientID > 0 and net.clients.length < maxClients	
 		// seperate out host
 		if clientID = GetNetworkMyClientID(net.id)
 			net.hostID = clientID
 		else
 			clientName = getNetworkClientName(net.id, clientID)
-			if getClientExists(net, clientName) = false and clientRemoval = false
+			if getClientExists(net, clientName) = false
 				if net.clients.length < maxClients
 					tc.connectId = clientID
 					tc.name = clientName
@@ -89,6 +79,30 @@ function receiveClientsConnect(net ref as network_t)
 		clientID = GetNetworkNextClient(net.id)
 	endWhile
 		 
+endFunction
+
+function receiveClientsMessage(net ref as network_t)
+	
+	key as string
+	value as integer
+	temp as string
+	
+	clientMess = getNetworkMessage(net.id)
+		
+	if clientMess <> 0
+		temp = GetNetworkMessageString(clientMess)
+		if CountStringTokens(temp, ":") > 0
+			key = GetStringToken(temp, ":", 1)
+			value = val(getStringToken(temp, ":", 2))			
+			select key
+			case "disconnect"
+				removeClient(net, value)
+			endCase
+			endSelect
+		endif			
+	endif
+	DeleteNetworkMessage(clientMess)
+	
 endFunction
 
 function closeHostLAN(net ref as network_t)

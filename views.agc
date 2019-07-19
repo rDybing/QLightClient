@@ -101,6 +101,10 @@ function controlView()
 	setSecondsInClock(clock)
 	placeCountdownStart(clock, color[5], prop, "ctrl")
 	
+	if app.name = ""
+		app.name = "Server"
+	endif
+	
 	initHostLAN(net)
 	
 	clientTimer = setTimer(2000)
@@ -145,6 +149,10 @@ function controlView()
 				updateCtrlClock(clock, clockCol)
 			endif
 			updateTweenString(txt.clock)
+		endif
+		
+		if getTimer(clientTimer)
+			receiveClientsConnect(net)
 		endif
 		//testClockRaw(clock)
 		testNetwork(net)
@@ -393,11 +401,24 @@ function cueLightView()
 	time		as timer_t
 	pulseIn		as integer = false
 	mouse		as mouse_t
+	net			as network_t
 	
 	time = setTimer(1000)
 	backCol = setCueBackgroundColors()
 	placeCueLightStart(backCol[0])
 	placeFrame()
+	
+	if app.name = ""
+		app.name = "client"
+	endif
+	
+	joinHost(net)
+	
+	repeat
+		print("waiting for response from server...")
+		testNetwork(net)
+		sync()
+	until receiveServerAck(net)
 		
 	repeat
 		// change to get quit-order from controller
@@ -439,9 +460,11 @@ function cueLightView()
 			updateTweenSpriteReady()
 		endif
 		updateTweenBackground()
+		testNetwork(net)
 		sync()
 	until quit
 	
+	disconnectHost(net)
 	clearCueLight()
 	
 endFunction
