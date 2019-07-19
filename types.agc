@@ -46,6 +46,7 @@ endType
 
 type globalState_t
 	httpOK 				as integer
+	loggedIn			as integer
 	live 				as integer
 	apiBusy				as integer
 	fatalError			as integer
@@ -55,6 +56,22 @@ type globalState_t
 	language			as integer
 	buttonHit			as integer
 	mode				as string
+endType
+
+type network_t
+	id					as integer
+	hostID				as integer
+	hostPort			as integer
+	active				as integer
+	clientID			as integer
+	clientCount			as integer
+	clients				as client_t[]
+endType
+
+type client_t
+	id					as string
+	connectID			as integer
+	name				as string
 endType
 
 type timer_t
@@ -90,6 +107,7 @@ endType
 //************************************************* Module Specific ****************************************************
 
 type cueLight_t
+	receiverID			as string[]
 	colorStep			as integer
 	fadeOn				as integer
 	fadeDuration		as float
@@ -123,6 +141,13 @@ type property_t
 	fontAlpha			as integer
 	orientation			as integer
 	padVertical			as integer
+endType
+
+type mode_t
+	altButton			as integer
+	spriteID			as integer
+	enum				as string
+	emit				as integer
 endType
 
 //************************************************* Media **************************************************************

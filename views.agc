@@ -17,7 +17,7 @@ function mainMenuView()
 	mouse		as mouse_t
 	spriteID	as integer
 	button		as button_t[]
-	modeSelect	as string = ""
+	mode		as mode_t
 	
 	state.buttonHit = false
 		
@@ -34,11 +34,11 @@ function mainMenuView()
 			endCase
 			case sprite.bModeClient
 				keyTimer = keyPressed(sprite.bModeClient)
-				modeSelect = "client"
+				mode.enum = "client"
 			endCase
 			case sprite.bModeCtrl
 				keyTimer = keyPressed(sprite.bModeCtrl)
-				modeSelect = "ctrl"
+				mode.enum = "ctrl"
 			endCase
 			endSelect
 		endif	
@@ -46,7 +46,7 @@ function mainMenuView()
 		if getTimer(keyTimer) and state.buttonHit
 			state.buttonHit = false
 			highlightButton(spriteID, state.buttonHit)
-			modeSwitch(modeSelect, button)
+			modeSwitch(mode.enum, button)
 			placeMainMenu()
 		endif
 		sync()
@@ -70,11 +70,8 @@ endFunction keyTimer
 function controlView()
 	
 	quit 		as integer
-	mouse		as mouse_t
-	spriteID	as integer
 	keyTimer	as timer_t
 	button		as button_t[]
-	modeSelect	as string
 	dimmed		as integer = 48
 	altButton	as integer = false
 	clock		as clock_t
@@ -82,6 +79,12 @@ function controlView()
 	clockCol	as color_t[2]
 	prop		as property_t
 	btnOk		as button_t
+	net			as network_t
+	cue			as cueLight_t
+	mode		as mode_t
+	clientTimer	as timer_t
+	
+	cue = initCue()	
 	
 	setBackgroundColor(color[10])
 	placeLogo()
@@ -98,81 +101,37 @@ function controlView()
 	setSecondsInClock(clock)
 	placeCountdownStart(clock, color[5], prop, "ctrl")
 	
+	initHostLAN(net)
+	
+	clientTimer = setTimer(2000)
+	
 	repeat
 		if GetRawKeyReleased(escKey)
 			quit = true
 		endif
 		
-		mouse = updateMouse()		
-		if mouse.hit
-			mouse = getMouseHit(mouse)
-			spriteID = mouse.spriteID
-			select spriteID
-			case sprite.bCtrlWait
-				state.buttonHit = true
-				state.mode = "cue"
-				modeSelect = "wait"
-			endCase
-			case sprite.bCtrlReady
-				state.buttonHit = true
-				state.mode = "cue"
-				modeSelect = "ready"
-			endCase
-			case sprite.bCtrlAction
-				state.buttonHit = true
-				state.mode = "cue"
-				modeSelect = "action"
-			endCase
-			case sprite.bCtrlTimer
-				state.buttonHit = true
-				state.mode = "timer"
-				modeSelect = "timer"
-			endCase
-			case sprite.bCtrlPlayPause
-				if state.mode = "timer"
-					state.buttonHit = true
-					modeSelect = "playpause"
-					clock.play = not clock.play
-					clockTimer = setTimer(1000)
-				endif
-			endCase
-			case sprite.bCtrlEdit
-				if not clock.play
-					keyTimer = keyPressed(sprite.bCtrlEdit)
-					altButton = true
-					modeSelect = "edit"
-				endif
-			endCase
-			case sprite.bCtrlReset
-				if state.mode = "timer"
-					keyTimer = keyPressed(sprite.bCtrlReset)
-					altButton = true
-					clock.play = false
-					clock = loadClockTimer()
-					setSecondsInClock(clock)
-					resetCtrlClock(clock, clockCol, prop.fontAlpha)
-				endif
-			endCase
-			endSelect
-		endif
-		
+		handleControlButtons(mode, clock, clockCol, clockTimer, keyTimer, prop.fontAlpha)
+				
 		if state.buttonHit
 			click()
 			state.buttonHit = false
-			changeButtonHighlight(modeSelect, dimmed, clock)
-			networkEmitter(modeSelect)
+			changeButtonHighlight(mode.enum, dimmed, clock)
+			if mode.emit
+				networkEmitter(net, mode.enum, cue)
+				mode.emit = false
+			endif
 		endif
 		
-		if getTimer(keyTimer) and altButton
-			altButton = false
-			highlightButton(spriteID, false)
-			if modeSelect = "edit"
+		if getTimer(keyTimer) and mode.altButton
+			mode.altButton = false
+			highlightButton(mode.spriteID, false)
+			if mode.enum = "edit"
 				btnOK = placeSetClockEdit()
 			endif
 		endif
 		
 		if btnOK.active
-			timeSet = handleChangeClockEdit(spriteID, btnOK, clock)
+			timeSet = handleChangeClockEdit(mode.spriteID, btnOK, clock)
 			if timeSet
 				clearTextInput(btnOK.sprID)
 				timeSet = false
@@ -187,10 +146,12 @@ function controlView()
 			endif
 			updateTweenString(txt.clock)
 		endif
-		testClockRaw(clock)
+		//testClockRaw(clock)
+		testNetwork(net)
 		sync()
 	until quit
 	
+	networkEmitter(net, "close", cue)
 	clearControl(button)
 	
 endFunction

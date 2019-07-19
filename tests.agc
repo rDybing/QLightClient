@@ -158,3 +158,13 @@ function testDevice()
 	print("langID     : " + str(state.language))
 	
 endFunction
+
+function testNetwork(net as network_t)
+	
+	out as string
+	
+	out = net.toJSON()
+	
+	print(out)
+	
+endFunction

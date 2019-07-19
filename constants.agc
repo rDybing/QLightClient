@@ -182,3 +182,18 @@ function initColor()
 	color[12].a = 255
 	
 endFunction
+
+function initCue()
+	
+	cue as cueLight_t
+	
+	cue.responseUpd = false
+	cue.orientation = 1
+	cue.colorStep = 2 // 0: Green | 1: Yellow | 2: red
+	cue.responseReq = false
+	cue.responseAck = false
+	cue.responseUpd = false
+	cue.fadeOn = true
+	cue.fadeDuration = 0.25
+		
+endFunction cue
