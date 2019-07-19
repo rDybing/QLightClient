@@ -57,6 +57,12 @@ function placeButtonText(txtId as integer,
 
 endFunction
 
+function updateButtonText(txtID as integer, in as string)
+
+	SetTextString(txtID, in)
+
+endFunction
+
 //************************************************* Cue Light Functions ************************************************
 
 

@@ -106,7 +106,7 @@ function placeControlButtons(dimmed as integer)
 
 	spr 	as spriteProp_t
 	sprTemp	as spriteProp_t
-	btn 	as button_t[7]
+	btn 	as button_t[9]
 	sTxt	as integer = false
 	btnPP	as integer[]
 
@@ -118,29 +118,46 @@ function placeControlButtons(dimmed as integer)
 	spr.posX =  15
 	spr.posY = 18
 
+	// Button Audio On/Off (Cue)
+	sprTemp = spr
+	spr.posY = spr.posY - spr.height - 2
+	spr.width = (spr.width / 2) - 1.5
+	sTxt = true
+	imageSetup(sprite.bCtrlAudio, layer.C, spr, media.dot)
+	SetSpriteColor(sprite.bCtrlAudio, color[11].r, color[11].g, color[11].b, color[11].a)
+	placeButtonText(txt.bCtrlAudio, getLangString("audioOff", state.language), layer.B, spr, color[0], sTxt)
+	btn[0] = buttonTransfer(spr, sprite.bCtrlAudio, txt.bCtrlAudio)
+	// Button Fade/Cut (Cue)
+	spr.posX = spr.posX + spr.width + 3
+	imageSetup(sprite.bCtrlFade, layer.C, spr, media.dot)
+	SetSpriteColor(sprite.bCtrlFade, color[11].r, color[11].g, color[11].b, color[11].a)
+	placeButtonText(txt.bCtrlFade, getLangString("fadeOff", state.language), layer.B, spr, color[0], sTxt)
+	btn[1] = buttonTransfer(spr, sprite.bCtrlFade, txt.bCtrlFade)
+	spr = sprTemp
+	sTxt = false
 	// Button Red
 	imageSetup(sprite.bCtrlWait, layer.C, spr, media.dot)
 	SetSpriteColor(sprite.bCtrlWait, color[3].r, color[3].g, color[3].b, 255)	
 	placeButtonText(txt.bCtrlWait, getLangString("wait", state.language), layer.B, spr, color[0], sTxt)
-	btn[0] = buttonTransfer(spr, sprite.bCtrlWait, txt.bCtrlWait)
+	btn[2] = buttonTransfer(spr, sprite.bCtrlWait, txt.bCtrlWait)
 	// Button Yellow
 	spr.posY = spr.posY + spr.height + 2
 	imageSetup(sprite.bCtrlReady, layer.C, spr, media.dot)
 	SetSpriteColor(sprite.bCtrlReady, color[4].r, color[4].g, color[4].b, dimmed)
 	placeButtonText(txt.bCtrlReady, getLangString("ready", state.language), layer.B, spr, color[0], sTxt)
-	btn[1] = buttonTransfer(spr, sprite.bCtrlReady, txt.bCtrlReady)
+	btn[3] = buttonTransfer(spr, sprite.bCtrlReady, txt.bCtrlReady)
 	// Button Green
 	spr.posY = spr.posY + spr.height + 2
 	imageSetup(sprite.bCtrlAction, layer.C, spr, media.dot)
 	SetSpriteColor(sprite.bCtrlAction, color[5].r, color[5].g, color[5].b, dimmed)	
 	placeButtonText(txt.bCtrlAction, getLangString("action", state.language), layer.B, spr, color[0], sTxt)
-	btn[2] = buttonTransfer(spr, sprite.bCtrlAction, txt.bCtrlAction)
+	btn[4] = buttonTransfer(spr, sprite.bCtrlAction, txt.bCtrlAction)
 	// Button Timer
 	spr.posY = spr.posY + spr.height + 2
 	imageSetup(sprite.bCtrlTimer, layer.C, spr, media.dot)
 	SetSpriteColor(sprite.bCtrlTimer, color[11].r, color[11].g, color[11].b, color[11].a)
 	placeButtonText(txt.bCtrlTimer, getLangString("timer", state.language), layer.B, spr, color[0], sTxt)
-	btn[3] = buttonTransfer(spr, sprite.bCtrlTimer, txt.bCtrlTimer)
+	btn[5] = buttonTransfer(spr, sprite.bCtrlTimer, txt.bCtrlTimer)
 	// Button Play/Pause (timer)
 	spr.posY = spr.posY + spr.height + 2
 	sprTemp = spr
@@ -150,7 +167,7 @@ function placeControlButtons(dimmed as integer)
 	spriteSetup(sprite.bCtrlPlayPause, layer.C, spr, btnPP)
 	SetSpriteColor(sprite.bCtrlPlayPause, color[5].r, color[5].g, color[5].b, color[11].a)
 	placeButtonText(txt.null, "", layer.B, spr, color[0], sTxt)
-	btn[4] = buttonTransfer(spr, sprite.bCtrlPlayPause, txt.null)
+	btn[6] = buttonTransfer(spr, sprite.bCtrlPlayPause, txt.null)
 	spr = sprTemp
 	// Button Edit (timer)
 	spr.posY = spr.posY + spr.height + 2
@@ -159,13 +176,13 @@ function placeControlButtons(dimmed as integer)
 	imageSetup(sprite.bCtrlEdit, layer.C, spr, media.dot)
 	SetSpriteColor(sprite.bCtrlEdit, color[11].r, color[11].g, color[11].b, color[11].a)
 	placeButtonText(txt.bCtrlEdit, getLangString("edit", state.language), layer.B, spr, color[0], sTxt)
-	btn[5] = buttonTransfer(spr, sprite.bCtrlEdit, txt.bCtrlEdit)
+	btn[7] = buttonTransfer(spr, sprite.bCtrlEdit, txt.bCtrlEdit)
 	// Button Reset (timer)
 	spr.posX = spr.posX + spr.width + 3
 	imageSetup(sprite.bCtrlReset, layer.C, spr, media.dot)
 	SetSpriteColor(sprite.bCtrlReset, color[11].r, color[11].g, color[11].b, color[11].a)
 	placeButtonText(txt.bCtrlReset, getLangString("reset", state.language), layer.B, spr, color[0], sTxt)
-	btn[6] = buttonTransfer(spr, sprite.bCtrlReset, txt.bCtrlReset)
+	btn[8] = buttonTransfer(spr, sprite.bCtrlReset, txt.bCtrlReset)
 
 endFunction btn
 

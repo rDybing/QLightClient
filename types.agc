@@ -111,6 +111,7 @@ type cueLight_t
 	colorStep			as integer
 	fadeOn				as integer
 	fadeDuration		as float
+	audioOn				as integer
 	responseReq			as integer
 	responseAck			as integer
 	responseUpd			as integer
@@ -209,6 +210,8 @@ type sprite_t
 	bCtrlEdit			as integer
 	bCtrlReset			as integer
 	bCtrlPlayPause		as integer
+	bCtrlAudio			as integer
+	bCtrlFade			as integer
 	bLang				as integer
 	bName				as integer
 	bLeft				as integer
@@ -265,6 +268,8 @@ type txt_t
 	bCtrlTimer			as integer
 	bCtrlEdit			as integer
 	bCtrlReset			as integer
+	bCtrlAudio			as integer
+	bCtrlFade			as integer
 	modeSelect			as integer
 	appID				as integer
 	bLang				as integer

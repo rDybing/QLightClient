@@ -34,10 +34,12 @@ function mainMenuView()
 			endCase
 			case sprite.bModeClient
 				keyTimer = keyPressed(sprite.bModeClient)
+				click()
 				mode.enum = "client"
 			endCase
 			case sprite.bModeCtrl
 				keyTimer = keyPressed(sprite.bModeCtrl)
+				click()
 				mode.enum = "ctrl"
 			endCase
 			endSelect
@@ -60,7 +62,6 @@ function keyPressed(spriteID)
 
 	state.buttonHit = true
 	highlightButton(spriteID, state.buttonHit)
-	click()
 	keyTimer = setTimer(50)
 
 endFunction keyTimer
@@ -129,9 +130,27 @@ function controlView()
 		if getTimer(keyTimer) and mode.altButton
 			mode.altButton = false
 			highlightButton(mode.spriteID, false)
-			if mode.enum = "edit"
+			select mode.enum
+			case "edit"
 				btnOK = placeSetClockEdit()
-			endif
+			endCase
+			case "audio"
+				cue.audioOn = not cue.audioOn
+				if cue.audioOn
+					updateButtonText(txt.bCtrlAudio, getLangString("audioOn", state.language))
+				else
+					updateButtonText(txt.bCtrlAudio, getLangString("audioOff", state.language))
+				endif
+			endCase
+			case "fade"
+				cue.fadeOn = not cue.fadeOn
+				if cue.fadeOn
+					updateButtonText(txt.bCtrlFade, getLangString("fadeOn", state.language))
+				else
+					updateButtonText(txt.bCtrlFade, getLangString("fadeOff", state.language))
+				endif
+			endCase
+			endSelect
 		endif
 
 		if btnOK.active

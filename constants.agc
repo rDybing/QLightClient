@@ -37,10 +37,12 @@ function initConstants()
 	txt.bCtrlTimer			= 1013
 	txt.bCtrlEdit			= 1014
 	txt.bCtrlReset			= 1015
-	txt.modeSelect			= 1016
-	txt.appID				= 1017
-	txt.bLang				= 1018
-	txt.bName				= 1019
+	txt.bCtrlAudio			= 1016
+	txt.bCtrlFade			= 1017
+	txt.modeSelect			= 1018
+	txt.appID				= 1019
+	txt.bLang				= 1020
+	txt.bName				= 1021
 	txt.clock				= 1100
 
 	sprite.logo				= 1010
@@ -57,13 +59,15 @@ function initConstants()
 	sprite.bCtrlEdit		= 1021
 	sprite.bCtrlReset		= 1022
 	sprite.bCtrlPlayPause	= 1023
-	sprite.bLang			= 1024
-	sprite.bName			= 1025
-	sprite.bLeft			= 1026
-	sprite.bRight			= 1027
-	sprite.bCheck			= 1028
+	sprite.bCtrlAudio		= 1024
+	sprite.bCtrlFade		= 1025
+	sprite.bLang			= 1026
+	sprite.bName			= 1027
+	sprite.bLeft			= 1028
+	sprite.bRight			= 1029
+	sprite.bCheck			= 1030
 	sprite.flag				= 1080
-	sprite.frame			= 1097	
+	sprite.frame			= 1097
 	sprite.back				= 1099
 
 	tween.back				= 1000
@@ -193,7 +197,8 @@ function initCue()
 	cue.responseReq = false
 	cue.responseAck = false
 	cue.responseUpd = false
-	cue.fadeOn = true
+	cue.fadeOn = false
 	cue.fadeDuration = 0.25
+	cue.audioOn = false
 
 endFunction cue

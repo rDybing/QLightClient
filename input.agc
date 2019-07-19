@@ -32,6 +32,18 @@ function handleControlButtons(mode ref as mode_t, clock ref as clock_t, clockCol
 		mouse = getMouseHit(mouse)
 		mode.spriteID = mouse.spriteID
 		select mode.spriteID
+		case sprite.bCtrlAudio
+			keyTimer = keyPressed(sprite.bCtrlAudio)
+			mode.emit = false
+			mode.altButton = true
+			mode.enum = "audio"
+		endCase
+		case sprite.bCtrlFade
+			keyTimer = keyPressed(sprite.bCtrlFade)
+			mode.emit = false
+			mode.altButton = true
+			mode.enum = "fade"
+		endCase
 		case sprite.bCtrlWait
 			state.buttonHit = true
 			state.mode = "cue"
