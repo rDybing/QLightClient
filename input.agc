@@ -17,16 +17,16 @@ function getEditBoxInput()
 		out = left(out, 10)
 		SetEditBoxText(txt.editBox, out)
 	endif
-	
+
 endFunction out
 
 //************************************************* Control Actions ****************************************************
 
 function handleControlButtons(mode ref as mode_t, clock ref as clock_t, clockCol ref as color_t[], clockTimer ref as timer_t, keyTimer ref as timer_t, alpha as integer)
-	
-	mouse		as mouse_t
-	
-	mouse = updateMouse()		
+
+	mouse as mouse_t
+
+	mouse = updateMouse()
 
 	if mouse.hit
 		mouse = getMouseHit(mouse)
@@ -87,7 +87,7 @@ function handleControlButtons(mode ref as mode_t, clock ref as clock_t, clockCol
 		endCase
 		endSelect
 	endif
-		
+
 endFunction
 
 //************************************************* Mouse Actions ******************************************************
@@ -102,21 +102,21 @@ function getButton(sprID as integer)
 	if m.hit and m.spriteID = sprID
 		out = true
 	endif
-	
+
 endFunction out
 
 function updateMouse()
-	
+
 	m as mouse_t
 
 	m.x = GetPointerX()
 	m.y = GetPointerY()
 	m.hit = GetPointerPressed()
-	
+
 endFunction m
 
 function getMouseHit(m as mouse_t)
-	
+
 	m.spriteID = GetSpriteHit(m.x, m.y)
-	
+
 endFunction m

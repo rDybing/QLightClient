@@ -93,11 +93,11 @@ getPrivateIP()
 main()
 
 function main()
-	
+
 	appJSON as string
 	placeVersionText()
 	restore as integer = false
-		
+
 	if not state.fatalError
 		if device.isComputer
 			cueController()
@@ -108,7 +108,7 @@ function main()
 				mainMenuView()
 			endif
 		endif
-		
+
 		appJSON = app.toJSON()
 		repeat
 			print("In JSON")
@@ -116,13 +116,13 @@ function main()
 			sync()
 		until GetRawKeyReleased(escKey)
 	endif
-	
+
 endFunction
 
 function modeSwitch(mode as string, btn as button_t[])
-	
+
 	clearMainMenu(btn)
-	
+
 	select mode
 	case "client"
 		cueController()
@@ -131,5 +131,5 @@ function modeSwitch(mode as string, btn as button_t[])
 		controlView()
 	endCase
 	endSelect
-	
+
 endFunction

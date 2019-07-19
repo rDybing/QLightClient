@@ -11,7 +11,7 @@ Copyright 2019 Roy Dybing - all rights reserved
 //************************************************* Control ************************************************************
  
 function initConstants()
-	
+
 	version.name			= "QLight Client"
 	version.major			= 0
 	version.minor			= 2
@@ -23,9 +23,9 @@ function initConstants()
 	layer.B					= 20
 	layer.C					= 30
 	layer.back				= 999
-		
+
 	sound.click				= 1
-	
+
 	txt.null				= 1000	
 	txt.version				= 1001
 	txt.editBox				= 1002
@@ -42,7 +42,7 @@ function initConstants()
 	txt.bLang				= 1018
 	txt.bName				= 1019
 	txt.clock				= 1100
-	
+
 	sprite.logo				= 1010
 	sprite.dropBack			= 1011
 	sprite.bBack			= 1012
@@ -65,12 +65,12 @@ function initConstants()
 	sprite.flag				= 1080
 	sprite.frame			= 1097	
 	sprite.back				= 1099
-	
+
 	tween.back				= 1000
 	tween.text				= 1001
 	tween.ready				= 1002
 	tween.button			= 1003
-	
+
 	media.fontA				= 1000
 	media.fontB				= 1001
 	media.fontC				= 1002
@@ -93,13 +93,13 @@ function initConstants()
 	media.bPause			= 1019
 	media.flagNO			= 1080
 	media.flagUK			= 1081
-	
+
 endFunction
 
 function getLocaleIDs()
-		
+
 	loc as locale_t[5]
-	
+
 	loc[0].ID = txt.bModeClient
 	loc[0].item = "client"
 	loc[1].ID = txt.bModeCtrl
@@ -110,11 +110,11 @@ function getLocaleIDs()
 	loc[3].item = "setLang"
 	loc[4].ID = txt.bName
 	loc[4].item = "setName"
-	
+
 endFunction loc
 
 function initColor()
-	
+
 	// Off-White
 	color[0].r = 230
 	color[0].g = 225
@@ -180,13 +180,13 @@ function initColor()
 	color[12].g = 27
 	color[12].b = 27
 	color[12].a = 255
-	
+
 endFunction
 
 function initCue()
-	
+
 	cue as cueLight_t
-	
+
 	cue.responseUpd = false
 	cue.orientation = 1
 	cue.colorStep = 2 // 0: Green | 1: Yellow | 2: red
@@ -195,5 +195,5 @@ function initCue()
 	cue.responseUpd = false
 	cue.fadeOn = true
 	cue.fadeDuration = 0.25
-		
+
 endFunction cue

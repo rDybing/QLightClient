@@ -11,20 +11,20 @@ Copyright 2019 Roy Dybing - all rights reserved
 //************************************************* Main Menu Functions ************************************************
 
 function mainMenuView()
-	
+
 	quit		as integer = false
 	keyTimer	as timer_t
 	mouse		as mouse_t
 	spriteID	as integer
 	button		as button_t[]
 	mode		as mode_t
-	
+
 	state.buttonHit = false
-		
+
 	button = placeMainMenu()
-		
+
 	repeat
-		mouse = updateMouse()		
+		mouse = updateMouse()
 		if mouse.hit
 			mouse = getMouseHit(mouse)
 			spriteID = mouse.spriteID
@@ -41,7 +41,7 @@ function mainMenuView()
 				mode.enum = "ctrl"
 			endCase
 			endSelect
-		endif	
+		endif
 		// reset button highlight
 		if getTimer(keyTimer) and state.buttonHit
 			state.buttonHit = false
@@ -51,7 +51,7 @@ function mainMenuView()
 		endif
 		sync()
 	until quit
-	
+
 endFunction
 
 function keyPressed(spriteID)
@@ -62,13 +62,13 @@ function keyPressed(spriteID)
 	highlightButton(spriteID, state.buttonHit)
 	click()
 	keyTimer = setTimer(50)
-	
+
 endFunction keyTimer
 
 //************************************************* Controller Functions ***********************************************
 
 function controlView()
-	
+
 	quit 		as integer
 	keyTimer	as timer_t
 	button		as button_t[]
@@ -83,39 +83,39 @@ function controlView()
 	cue			as cueLight_t
 	mode		as mode_t
 	clientTimer	as timer_t
-	
+
 	cue = initCue()	
-	
+
 	setBackgroundColor(color[10])
 	placeLogo()
 	button = placeControlButtons(dimmed)
-	
+
 	prop.baseSize = 7.5
 	prop.font = media.fontC
 	prop.fontColor = 5
 	prop.fontAlpha = 192
-	
+
 	clock = loadClockTimer()
 	clockCol = setClockColors()
-	
+
 	setSecondsInClock(clock)
 	placeCountdownStart(clock, color[5], prop, "ctrl")
-	
+
 	if app.name = ""
 		app.name = "Server"
 	endif
-	
+
 	initHostLAN(net)
-	
+
 	clientTimer = setTimer(500)
-	
+
 	repeat
 		if GetRawKeyReleased(escKey)
 			quit = true
 		endif
 		
 		handleControlButtons(mode, clock, clockCol, clockTimer, keyTimer, prop.fontAlpha)
-				
+
 		if state.buttonHit
 			click()
 			state.buttonHit = false
@@ -125,7 +125,7 @@ function controlView()
 				mode.emit = false
 			endif
 		endif
-		
+
 		if getTimer(keyTimer) and mode.altButton
 			mode.altButton = false
 			highlightButton(mode.spriteID, false)
@@ -133,7 +133,7 @@ function controlView()
 				btnOK = placeSetClockEdit()
 			endif
 		endif
-		
+
 		if btnOK.active
 			timeSet = handleChangeClockEdit(mode.spriteID, btnOK, clock)
 			if timeSet
@@ -143,20 +143,20 @@ function controlView()
 				updateClockText(clock, 3)
 			endif
 		endif
-		
+
 		if clock.play 
 			if getTimer(clockTimer)
 				updateCtrlClock(clock, clockCol)
 			endif
 			updateTweenString(txt.clock)
 		endif
-		
+
 		if getTimer(clientTimer)
 			receiveClientsConnect(net)
 		endif
-		
+
 		receiveClientsMessage(net)
-		
+
 		//testClockRaw(clock)
 		testNetwork(net)
 		sync()
@@ -164,13 +164,13 @@ function controlView()
 	
 	networkEmitter(net, "close", cue)
 	clearControl(button)
-	
+
 endFunction
 
 function handleChangeClockEdit(spriteID as integer, nameBtn ref as button_t, c ref as clock_t)
-	
+
 	out as integer = false
-	
+
 	if spriteID = nameBtn.sprID
 		click()
 		c.output = getEditBoxInput()
@@ -178,28 +178,28 @@ function handleChangeClockEdit(spriteID as integer, nameBtn ref as button_t, c r
 		saveClockTimer(c)
 		out = true
 	endif
-	
+
 endFunction out
 
 function updateCtrlClock(c ref as clock_t, cc as color_t[])
-	
+
 	if c.secCurrent <> 0
 		updateClockTime(c)
 		getClockCtrlChange(c, cc)
 		updateClockText(c, 3)
 	endif
-		
+
 endFunction
 
 function resetCtrlClock(c ref as clock_t, cc as color_t[], alpha as integer)
-	
+
 	setClockCtrlReset(c, cc[0], alpha)
 	updateClockText(c, 3)
-	
+
 endFunction
 
 function changeButtonHighlight(in as string, dimmed as integer, clock ref as clock_t)
-	
+
 	select in
 	case "wait"
 		highlightColorButton(sprite.bCtrlWait, true, dimmed)
@@ -240,13 +240,13 @@ function changeButtonHighlight(in as string, dimmed as integer, clock ref as clo
 		setSpriteFramePlayPause(clock.play)
 	endCase
 	endSelect
-	
+
 endFunction
 
 //************************************************* Main Menu Drop Down Functions **************************************
 
 function dropDownView()
-	
+
 	quit		as integer = false
 	mouse		as mouse_t
 	options		as string[2] = ["setLang", "setName"]
@@ -257,14 +257,14 @@ function dropDownView()
 	ddHeight 	as float
 	offset		as integer = 12
 	tempLang	as integer
-	nameSet		as integer = false	
-	
+	nameSet		as integer = false
+
 	tempLang = state.language
 	button = placeDropDownMenu(options)
 	ddHeight = getDropDownMenuSize()
 	sync()
 	click()
-	
+
 	repeat 
 		mouse = updateMouse()
 		if mouse.hit
@@ -273,7 +273,7 @@ function dropDownView()
 			quit = handleMainDropDown(spriteID, button, langBtn, nameBtn, ddHeight, offset, quit)
 			// Change Language
 			if button[0].active
-				tempLang = handleChangeLanguage(spriteID, langBtn, tempLang)				
+				tempLang = handleChangeLanguage(spriteID, langBtn, tempLang)
 			endif
 			// Change Client Name
 			if button[1].active
@@ -289,17 +289,11 @@ function dropDownView()
 		//testDevice()	
 		sync()
 	until quit
-	
+
 endFunction
 
-function handleMainDropDown(spriteID as integer, 
-	button		ref as button_t[], 
-	langBtn		ref as button_t[],
-	nameBtn		ref as button_t, 
-	ddHeight	as float, 
-	offset		as integer, 
-	quit		as integer)
-	
+function handleMainDropDown(spriteID as integer, button ref as button_t[], langBtn ref as button_t[], nameBtn ref as button_t, ddHeight as float, offset as integer, quit as integer)
+
 	select spriteID
 	// Settings Drop Down Menu
 	case sprite.bMenu
@@ -338,11 +332,11 @@ function handleMainDropDown(spriteID as integer,
 		click()
 	endCase
 	endSelect
-	
+
 endFunction quit
 
 function handleChangeLanguage(spriteID as integer, langBtn ref as button_t[], tempLang as integer)
-	
+
 	select spriteID
 	// Left / Previous
 	case langBtn[0].sprID
@@ -378,32 +372,32 @@ function handleChangeLanguage(spriteID as integer, langBtn ref as button_t[], te
 		endif
 	endCase
 	endSelect
-				
+
 endFunction tempLang
 
 function handleChangeClientName(spriteID as integer, nameBtn ref as button_t)
-	
+
 	out as integer = false
-	
+
 	if spriteID = nameBtn.sprID
 		click()
 		app.name = getEditBoxInput()
 		saveAppSettings()
 		out = true
 	endif
-	
+
 endFunction out
 
 //************************************************* Cue Controller Functions *******************************************
 
 function cueController()
-	
+
 	quit	as integer
 	net		as network_t
 	netMsg	as message_t
-	
+
 	netMsg.mode = "cue"
-	
+
 	if app.name = ""
 		app.name = "client"
 	endif
@@ -429,31 +423,31 @@ function cueController()
 		endCase
 		endSelect
 	until quit
-	
+
 	disconnectHost(net)
-	
+
 endFunction
 
 //************************************************* Cue Light Functions ************************************************
 
 function cueLightView(net ref as network_t, netMsg as message_t)
-	
+
 	quit		as integer
 	cue			as cueLight_t
 	backCol		as color_t[2]
 	time		as timer_t
 	pulseIn		as integer = false
 	mouse		as mouse_t
-	
+
 	time = setTimer(1000)
 	backCol = setCueBackgroundColors()
 	placeCueLightStart(backCol[0])
 	placeFrame()
-			
+
 	repeat
 		// get network message
 		netMsg = receiveCueLAN(net)
-		
+
 		if netMsg.mode = "quit" or netMsg.mode = "timer"
 			quit = true
 		else
@@ -500,31 +494,31 @@ function cueLightView(net ref as network_t, netMsg as message_t)
 		testNetwork(net)
 		sync()
 	until quit
-	
+
 	clearCueLight()
-	
+
 endFunction netMsg
  
 //************************************************* Countdown Timer ****************************************************
 
 function countdownView(clock ref as clock_t, prop as property_t)
-	
+
 	quit		as integer
 	items		as integer
 	time		as timer_t
 	backCol		as color_t[2]
 	pulseIn		as integer
 	mouse		as mouse_t
-	
+
 	pulseIn = false	
-	items = setClockItems(clock)	
+	items = setClockItems(clock)
 	setSecondsInClock(clock)
 	backCol = setClockColors()
-	
+
 	placeCountdownStart(clock, backCol[0], prop, "countdown")
 	placeFrame()
 	time = setTimer(1000)
-			
+
 	repeat
 		// change to get quit-order from controller
 		if GetRawKeyReleased(escKey)
@@ -546,15 +540,15 @@ function countdownView(clock ref as clock_t, prop as property_t)
 			else
 				updateClockTime(clock)
 				getClockBackgroundChange(clock, backCol)
-				updateClockText(clock, items)			
+				updateClockText(clock, items)
 			endif
 		endif
 		updateTweenBackground()
 		updateTweenString(txt.clock)
 		sync()
 	until quit
-	
+
 	clearCountDown()
 	clearFrame()
-	
+
 endFunction

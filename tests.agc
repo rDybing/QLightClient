@@ -11,25 +11,25 @@ Copyright 2019 Roy Dybing - all rights reserved
 //************************************************* Module Tests *******************************************************
 
 function testClock()
-	
+
 	clock as clock_t
 	prop as property_t
-	
+
 	clock = loadClockTimer()
-	
+
 	prop.baseSize = 0.9
 	prop.font = media.fontC
 	prop.fontColor = 1
 	prop.fontAlpha = 192
 	prop.orientation = 1
 	countdownView(clock, prop)
-	
+
 endFunction
 
 function testClockUpdate(prop ref as property_t)
-	
+
 	out as integer = false
-	
+
 	// simple keyboard press for testing purposes
 	if GetRawKeyReleased(48)		// 0: Change orientation
 		inc prop.orientation
@@ -38,15 +38,15 @@ function testClockUpdate(prop ref as property_t)
 		endif
 		out = true
 	endif
-	
+
 endFunction out
 
 function testCueUpdate(cue ref as cueLight_t)
-	
+
 	out as integer = false
-	
+
 	cue.responseUpd = false
-	
+
 	// simple keyboard press for testing purposes
 	if GetRawKeyReleased(48)		// 0: Change orientation
 		inc cue.orientation
@@ -86,13 +86,13 @@ function testCueUpdate(cue ref as cueLight_t)
 	if GetRawKeyReleased(55)		// 7: Set fade off
 		cue.fadeOn = false
 	endIf
-	
+
 endFunction out
 
 //************************************************* Debug Data *********************************************************
 
 function testGeneral(in as string)
-	
+
 	repeat
 		print("......testData......")
 		print("--------------------")
@@ -101,24 +101,24 @@ function testGeneral(in as string)
 		print("click to continue...")
 		sync()
 	until GetRawKeyReleased(escKey) or GetPointerPressed()
-	
+
 endFunction
 
 function testCueRaw(in as cueLight_t)
-	
+
 	print("colorStep  : " + str(in.colorStep))
 	print("fadeOn     : " + str(in.fadeOn))
 	print("fadeDur.   : " + str(in.fadeDuration))
 	print("resp.req   : " + str(in.responseReq))
 	print("resp.ack   : " + str(in.responseAck))
 	print("resp.upd   : " + str(in.responseUpd))
-	
+
 	testDevice()
-	
+
 endFunction
 
 function testClockRaw(in as clock_t)
-	
+
 	print("hours      : " + str(in.hour))
 	print("mins       : " + str(in.min))
 	print("secs       : " + str(in.sec))
@@ -130,7 +130,7 @@ function testClockRaw(in as clock_t)
 	print("r endsec   : " + str(in.rEndSec))
 
 	testDevice()
-	
+
 endFunction
 
 function testDevice()
@@ -147,15 +147,14 @@ function testDevice()
 	print("appID      : " + app.id)
 	print("langCode   : " + app.language)
 	print("langID     : " + str(state.language))
-	
+
 endFunction
 
 function testNetwork(net as network_t)
-	
+
 	out as string
-	
+
 	out = net.toJSON()
-	
 	print(out)
-	
+
 endFunction

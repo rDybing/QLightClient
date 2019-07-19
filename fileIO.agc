@@ -11,9 +11,9 @@ Copyright 2019 Roy Dybing - all rights reserved
 //************************************************* Media Load/Save ****************************************************
 
 function loadMedia()
-	
+
 	LoadSound(sound.click, "keyClick.wav")
-		
+
 	LoadFont(media.fontA, "Roboto-Regular.ttf")
 	LoadFont(media.fontB, "Roboto-Medium.ttf")
 	LoadFont(media.fontC, "UbuntuMono-B.ttf")
@@ -21,7 +21,7 @@ function loadMedia()
 	LoadFont(media.fontE, "Imperium-Hollow.ttf")
 	LoadFont(media.fontF, "College-Halo.ttf")
 	LoadFont(media.fontG, "Aurebesh-Bold.ttf")
-	
+
 	LoadImage(media.back, "whiteDot.png")
 	LoadImage(media.logo, "QLiteLogo.png")
 	LoadImage(media.framePc, "frame_trans_pc.png")
@@ -37,18 +37,18 @@ function loadMedia()
 	LoadImage(media.bPause, "btnPause.png")
 	LoadImage(media.flagNO, "flagNorway.png")
 	LoadImage(media.flagUK, "flagUK.png")
-	
+
 endFunction
  
 //************************************************* AppSettings Load/Save **********************************************
 
 function loadAppSettings()
-	
+
 	appSettings	as string	
 	appTemp		as appSettings_t[]
-	
+
 	appSettings = "appSettings.json"
-	
+
 	if GetFileExists(appSettings)
 		appTemp.Load(appSettings)
 		app = appTemp[0]
@@ -59,21 +59,21 @@ function loadAppSettings()
 endFunction
 
 function saveAppSettings()
-	
+
 	appSettings	as string
 	appTemp		as appSettings_t[]
-	
+
 	appSettings = "appSettings.json"
-	
+
 	appTemp.insert(app)
 	appTemp.Save(appSettings)
-	
+
 endFunction
 
 function loadClockTimer()
-	
+
 	clock as clock_t
-	
+
 	clock.hour = 0
 	clock.min = 0
 	clock.sec = 30
@@ -81,30 +81,30 @@ function loadClockTimer()
 	clock.yStartPercent = 90
 	clock.rStartPercent = 20
 	clock.rEndPercent = 5
-	
+
 endFunction clock
 
 function saveClockTimer(c as clock_t)
-	
+
 	clockTimer	as string
 	clockTemp	as clock_t[]
-	
+
 	clockTimer = "clockTimer.json"
-	
+
 	clockTemp.insert(c)
 	clockTemp.Save(clockTimer)
-	
+
 endFunction
 
 //************************************************* Localization Load **************************************************
 
 function loadLocalization()
-	
-	locFile		as string	
+
+	locFile		as string
 	locTemp		as menuLang_t[]
-	
+
 	locFile = "localization.json"
-	
+
 	if GetFileExists(locFile)
 		locTemp.Load(locFile)
 	else
