@@ -100,6 +100,25 @@ function initConstants()
 
 endFunction
 
+function initEnums()
+	
+	enum.client				= 10
+	enum.ctrl				= 11
+	enum.cue				= 12
+	enum.countdown			= 13
+	enum.quit				= 14
+	enum.close				= 15
+	enum.wait				= 16
+	enum.ready				= 17
+	enum.action				= 18
+	enum.audio				= 19
+	enum.fade				= 20
+	enum.playPause			= 21
+	enum.edit				= 22
+	enum.reset				= 23
+	
+endFunction
+
 function getLocaleIDs()
 
 	loc as locale_t[5]

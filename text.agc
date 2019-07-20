@@ -15,7 +15,7 @@ function placeMenuText()
 	mt as txtProp_t
 
 	mt.startX = 50
-	mt.startY = 21
+	mt.startY = 16
 	mt.align = 1
 	mt.size = 7
 	mt.layer = layer.B
@@ -24,7 +24,7 @@ function placeMenuText()
 	CreateText(txt.modeSelect, getLangString("selectMode", state.language))
 	textDraw(txt.modeSelect, mt)
 
-	mt.startY = 55
+	mt.startY = 50
 
 	CreateText(txt.appID, "AppID: " + '\n' + app.id)
 	textDraw(txt.appID, mt)

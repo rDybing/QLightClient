@@ -36,42 +36,42 @@ function handleControlButtons(mode ref as mode_t, clock ref as clock_t, clockCol
 			keyTimer = keyPressed(sprite.bCtrlAudio)
 			mode.emit = false
 			mode.altButton = true
-			mode.enum = "audio"
+			mode.enum = enum.audio
 		endCase
 		case sprite.bCtrlFade
 			keyTimer = keyPressed(sprite.bCtrlFade)
 			mode.emit = false
 			mode.altButton = true
-			mode.enum = "fade"
+			mode.enum = enum.fade
 		endCase
 		case sprite.bCtrlWait
 			state.buttonHit = true
-			state.mode = "cue"
-			mode.enum = "wait"
+			state.mode = enum.cue
+			mode.enum = enum.wait
 			mode.emit = true
 		endCase
 		case sprite.bCtrlReady
 			state.buttonHit = true
-			state.mode = "cue"
-			mode.enum = "ready"
+			state.mode = enum.cue
+			mode.enum = enum.ready
 			mode.emit = true
 		endCase
 		case sprite.bCtrlAction
 			state.buttonHit = true
-			state.mode = "cue"
-			mode.enum = "action"
+			state.mode = enum.cue
+			mode.enum = enum.action
 			mode.emit = true
 		endCase
 		case sprite.bCtrlTimer
 			state.buttonHit = true
-			state.mode = "timer"
-			mode.enum = "timer"
+			state.mode = enum.countdown
+			mode.enum = enum.countdown
 			mode.emit = true
 		endCase
 		case sprite.bCtrlPlayPause
-			if state.mode = "timer"
+			if state.mode = enum.countdown
 				state.buttonHit = true
-				mode.enum = "playpause"
+				mode.enum = enum.playPause
 				//mode.emit = true
 				clock.play = not clock.play
 				clockTimer = setTimer(1000)
@@ -81,19 +81,19 @@ function handleControlButtons(mode ref as mode_t, clock ref as clock_t, clockCol
 			if not clock.play
 				keyTimer = keyPressed(sprite.bCtrlEdit)
 				mode.altButton = true
-				mode.enum = "edit"
+				mode.enum = enum.edit
 				//mode.emit = false
 			endif
 		endCase
 		case sprite.bCtrlReset
-			if state.mode = "timer"
+			if state.mode = enum.countdown
 				keyTimer = keyPressed(sprite.bCtrlReset)
 				mode.altButton = true
 				clock.play = false
 				clock = loadClockTimer()
 				setSecondsInClock(clock)
 				resetCtrlClock(clock, clockCol, alpha)
-				mode.enum = "reset"
+				mode.enum = enum.reset
 				//mode.emit = true
 			endif
 		endCase
@@ -108,9 +108,9 @@ function getButton(sprID as integer)
 
 	m	as mouse_t
 	out	as integer
-	
+
 	m = getMouseHit(updateMouse())
-	
+
 	if m.hit and m.spriteID = sprID
 		out = true
 	endif

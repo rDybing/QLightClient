@@ -55,7 +55,7 @@ type globalState_t
 	landscape			as integer
 	language			as integer
 	buttonHit			as integer
-	mode				as string
+	mode				as integer
 endType
 
 type network_t
@@ -104,6 +104,23 @@ type button_t
 	txtY				as float
 endType
 
+type enum_t
+	client				as integer
+	ctrl				as integer
+	cue					as integer
+	countdown			as integer
+	quit				as integer
+	close				as integer
+	wait				as integer
+	ready				as integer
+	action				as integer
+	audio				as integer
+	fade				as integer
+	playPause			as integer
+	edit				as integer
+	reset				as integer
+endType
+
 //************************************************* Module Specific ****************************************************
 
 type cueLight_t
@@ -147,13 +164,13 @@ endType
 type mode_t
 	altButton			as integer
 	spriteID			as integer
-	enum				as string
+	enum				as integer
 	emit				as integer
 endType
 
 type message_t
 	new					as integer
-	mode				as string
+	mode				as integer
 	inJSON				as string	
 endType
 

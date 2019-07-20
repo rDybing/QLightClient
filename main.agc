@@ -58,8 +58,10 @@ global app			as appSettings_t		// constant IP, api and key values
 global color		as color_t[12]			// constant color values
 global state		as globalState_t		// will change here, there and everywhere
 global version		as version_t			// constant version info
+global enum			as enum_t				// constant after init
 
 initConstants()
+initEnums()
 initColor()
 loadMedia()
 setStartState()
@@ -119,15 +121,15 @@ function main()
 
 endFunction
 
-function modeSwitch(mode as string, btn as button_t[])
+function modeSwitch(mode as integer, btn as button_t[])
 
 	clearMainMenu(btn)
 
 	select mode
-	case "client"
+	case enum.client
 		cueController()
 	endCase
-	case "ctrl"
+	case enum.ctrl
 		controlView()
 	endCase
 	endSelect

@@ -35,12 +35,12 @@ function mainMenuView()
 			case sprite.bModeClient
 				keyTimer = keyPressed(sprite.bModeClient)
 				click()
-				mode.enum = "client"
+				mode.enum = enum.client
 			endCase
 			case sprite.bModeCtrl
 				keyTimer = keyPressed(sprite.bModeCtrl)
 				click()
-				mode.enum = "ctrl"
+				mode.enum = enum.ctrl
 			endCase
 			endSelect
 		endif
@@ -100,7 +100,7 @@ function controlView()
 	clockCol = setClockColors()
 
 	setSecondsInClock(clock)
-	placeCountdownStart(clock, color[5], prop, "ctrl")
+	placeCountdownStart(clock, color[5], prop, enum.ctrl)
 
 	if app.name = ""
 		app.name = "Server"
@@ -131,10 +131,10 @@ function controlView()
 			mode.altButton = false
 			highlightButton(mode.spriteID, false)
 			select mode.enum
-			case "edit"
+			case enum.edit
 				btnOK = placeSetClockEdit()
 			endCase
-			case "audio"
+			case enum.audio
 				cue.audioOn = not cue.audioOn
 				if cue.audioOn
 					updateButtonText(txt.bCtrlAudio, getLangString("audioOn", state.language))
@@ -142,7 +142,7 @@ function controlView()
 					updateButtonText(txt.bCtrlAudio, getLangString("audioOff", state.language))
 				endif
 			endCase
-			case "fade"
+			case enum.fade
 				cue.fadeOn = not cue.fadeOn
 				if cue.fadeOn
 					updateButtonText(txt.bCtrlFade, getLangString("fadeOn", state.language))
@@ -177,11 +177,11 @@ function controlView()
 		receiveClientsMessage(net)
 
 		//testClockRaw(clock)
-		testNetwork(net)
+		//testNetwork(net)
 		sync()
 	until quit
 	
-	networkEmitter(net, "close", cue)
+	networkEmitter(net, enum.close, cue)
 	clearControl(button)
 
 endFunction
@@ -217,44 +217,44 @@ function resetCtrlClock(c ref as clock_t, cc as color_t[], alpha as integer)
 
 endFunction
 
-function changeButtonHighlight(in as string, dimmed as integer, clock ref as clock_t)
+function changeButtonHighlight(in as integer, dimmed as integer, clock ref as clock_t)
 
 	select in
-	case "wait"
+	case enum.wait
 		highlightColorButton(sprite.bCtrlWait, true, dimmed)
 		highlightColorButton(sprite.bCtrlReady, false, dimmed)
 		highlightColorButton(sprite.bCtrlAction, false, dimmed)
 		highlightButton(sprite.bCtrlTimer, false)
 		resetPlayPause(clock)
 	endCase
-	case "ready"
+	case enum.ready
 		highlightColorButton(sprite.bCtrlWait, false, dimmed)
 		highlightColorButton(sprite.bCtrlReady, true, dimmed)
 		highlightColorButton(sprite.bCtrlAction, false, dimmed)
 		highlightButton(sprite.bCtrlTimer, false)
 		resetPlayPause(clock)
 	endCase
-	case "action"
+	case enum.action
 		highlightColorButton(sprite.bCtrlWait, false, dimmed)
 		highlightColorButton(sprite.bCtrlReady, false, dimmed)
 		highlightColorButton(sprite.bCtrlAction, true, dimmed)
 		highlightButton(sprite.bCtrlTimer, false)
 		resetPlayPause(clock)
 	endCase
-	case "timer"
+	case enum.countdown
 		highlightColorButton(sprite.bCtrlWait, false, dimmed)
 		highlightColorButton(sprite.bCtrlReady, false, dimmed)
 		highlightColorButton(sprite.bCtrlAction, false, dimmed)
 		highlightButton(sprite.bCtrlTimer, true)
 		setSpriteFramePlayPause(false)
 	endCase
-	case "playpause"
+	case enum.playPause
 		setSpriteFramePlayPause(clock.play)
 	endCase
-	case "edit"
+	case enum.edit
 		highlightButton(sprite.bCtrlEdit, true)
 	endCase
-	case "reset"
+	case enum.reset
 		highlightButton(sprite.bCtrlReset, true)
 		setSpriteFramePlayPause(clock.play)
 	endCase
@@ -415,7 +415,7 @@ function cueController()
 	net		as network_t
 	netMsg	as message_t
 
-	netMsg.mode = "cue"
+	netMsg.mode = enum.cue
 
 	if app.name = ""
 		app.name = "client"
@@ -431,13 +431,13 @@ function cueController()
 	
 	repeat
 		select netMsg.mode
-		case "cue"
+		case enum.cue
 			netMsg = cueLightView(net, netMsg)
 		endCase
-		case "timer"
+		case enum.countdown
 			//netMsg = countdownView(net, netMsg)
 		endCase
-		case "quit"
+		case enum.quit
 			quit = true
 		endCase
 		endSelect
@@ -467,11 +467,11 @@ function cueLightView(net ref as network_t, netMsg as message_t)
 		// get network message
 		netMsg = receiveCueLAN(net)
 
-		if netMsg.mode = "quit" or netMsg.mode = "timer"
+		if netMsg.mode = enum.quit or netMsg.mode = enum.countdown
 			quit = true
 		else
 			if GetRawKeyReleased(escKey)
-				netMsg.mode = "quit"
+				netMsg.mode = enum.quit
 				quit = true
 			endif
 			// if new message from server
@@ -509,8 +509,9 @@ function cueLightView(net ref as network_t, netMsg as message_t)
 			updateTweenSpriteReady()
 		endif
 		updateTweenBackground()
-		testCueRaw(cue)
-		testNetwork(net)
+
+		//testCueRaw(cue)
+		//testNetwork(net)
 		sync()
 	until quit
 
@@ -534,7 +535,7 @@ function countdownView(clock ref as clock_t, prop as property_t)
 	setSecondsInClock(clock)
 	backCol = setClockColors()
 
-	placeCountdownStart(clock, backCol[0], prop, "countdown")
+	placeCountdownStart(clock, backCol[0], prop, enum.countdown)
 	placeFrame()
 	time = setTimer(1000)
 

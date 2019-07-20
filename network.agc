@@ -21,24 +21,24 @@ endFunction
 
 //************************************************* LAN Server *********************************************************
 
-function networkEmitter(net ref as network_t, cmd as string, cue as cueLight_t)
+function networkEmitter(net ref as network_t, cmd as integer, cue as cueLight_t)
 
 	select cmd
-	case "close"
+	case enum.close
 		closeHostLAN(net)
 	endCase
-	case "wait" // red
+	case enum.wait // red
 		cue.colorStep = 2
 	endCase
-	case "ready" // yellow
+	case enum.ready // yellow
 		cue.colorStep = 1
 	endCase
-	case "action" // green
+	case enum.action // green
 		cue.colorStep = 0
 	endCase
 	endSelect
 
-	if cmd <> "close"
+	if cmd <> enum.close
 		sendCueLAN(net, cue)
 	endif
 
@@ -143,7 +143,7 @@ function sendCueLAN(net as network_t, cue as cueLight_t)
 
 	cueUpdate = CreateNetworkMessage()
 	transmitJSON = cue.toJSON()
-	mode = "cue"
+	mode = str(enum.cue)
 	msg = mode + "|" + transmitJSON
 
 	AddNetworkMessageString(cueUpdate, msg)
@@ -220,7 +220,7 @@ function receiveCueLAN(net as network_t)
 	if serverMsg <> 0
 		temp = GetNetworkMessageString(serverMsg)
 		if CountStringTokens(temp, "|") > 0
-			netMsg.mode = GetStringToken(temp, "|", 1)
+			netMsg.mode = val(GetStringToken(temp, "|", 1))
 			netMsg.inJSON = GetStringToken(temp, "|", 2)
 			netMsg.new = true
 		endif

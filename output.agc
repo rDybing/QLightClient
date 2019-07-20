@@ -46,7 +46,7 @@ function placeMenuButton(col as color_t)
 	spr.posY = 0.5
 
 	imageSetup(sprite.bMenu, layer.front, spr, media.bMenu)
-	SetSpriteColor(sprite.bMenu, col.r, col.g, col.b, 255)	
+	SetSpriteColor(sprite.bMenu, col.r, col.g, col.b, 255)
 
 endFunction
 
@@ -59,7 +59,7 @@ function placeModeButtons(col as color_t)
 	spr.width = 70
 	spr.height = 10
 	spr.posX =  15
-	spr.posY = 30
+	spr.posY = 26
 
 	// Button Client
 	imageSetup(sprite.bModeClient, layer.C, spr, media.dot)
@@ -116,7 +116,7 @@ function placeControlButtons(dimmed as integer)
 	spr.width = 70
 	spr.height = 10
 	spr.posX =  15
-	spr.posY = 18
+	spr.posY = 26
 
 	// Button Audio On/Off (Cue)
 	sprTemp = spr
@@ -478,11 +478,11 @@ endFunction
 
 //************************************************* Countdown Functions ************************************************
 
-function placeCountdownStart(c ref as clock_t, col as color_t, prop ref as property_t, mode as string)
+function placeCountdownStart(c ref as clock_t, col as color_t, prop ref as property_t, mode as integer)
 
 	c.output = ""
 
-	if mode = "ctrl"
+	if mode = enum.ctrl
 		c.output = str(c.hour) + ":" + str(c.min) + ":" + str(c.sec)
 	else
 		if c.hour <> 0 
@@ -498,7 +498,7 @@ function placeCountdownStart(c ref as clock_t, col as color_t, prop ref as prope
 
 	c.output = padClock(c.output)
 
-	if mode = "ctrl"
+	if mode = enum.ctrl
 		placeCtrlClock(c.output, col, prop)
 	else
 		setBackgroundColor(col)
