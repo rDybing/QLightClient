@@ -122,7 +122,9 @@ function controlView()
 			state.buttonHit = false
 			changeButtonHighlight(mode.enum, dimmed, clock)
 			if mode.emit
-				networkEmitter(net, mode.enum, cue)
+				if state.mode = enum.cue or state.mode = enum.countdown
+					networkEmitter(net, mode.enum, cue, clock)
+				endif
 				mode.emit = false
 			endif
 		endif
@@ -181,7 +183,7 @@ function controlView()
 		sync()
 	until quit
 	
-	networkEmitter(net, enum.close, cue)
+	networkEmitter(net, enum.close, cue, clock)
 	clearControl(button)
 
 endFunction
@@ -435,7 +437,7 @@ function cueController()
 			netMsg = cueLightView(net, netMsg)
 		endCase
 		case enum.countdown
-			//netMsg = countdownView(net, netMsg)
+			netMsg = countdownView(net, netMsg)
 		endCase
 		case enum.quit
 			quit = true
@@ -460,7 +462,8 @@ function cueLightView(net ref as network_t, netMsg as message_t)
 
 	time = setTimer(1000)
 	backCol = setCueBackgroundColors()
-	placeCueLightStart(backCol[0])
+	cue.fromJSON(netMsg.inJSON)
+	setBackgroundColor(backCol[cue.colorStep])
 	placeFrame()
 
 	repeat
@@ -508,8 +511,7 @@ function cueLightView(net ref as network_t, netMsg as message_t)
 			endif
 			updateTweenSpriteReady()
 		endif
-		updateTweenBackground()
-
+		updateTweenBackground()		
 		//testCueRaw(cue)
 		//testNetwork(net)
 		sync()
@@ -521,7 +523,7 @@ endFunction netMsg
  
 //************************************************* Countdown Timer ****************************************************
 
-function countdownView(clock ref as clock_t, prop as property_t)
+function countdownView(net ref as network_t, netMsg as message_t)
 
 	quit		as integer
 	items		as integer
@@ -529,8 +531,18 @@ function countdownView(clock ref as clock_t, prop as property_t)
 	backCol		as color_t[2]
 	pulseIn		as integer
 	mouse		as mouse_t
+	clock		as clock_t
+	prop		as property_t
+	play 		as integer
+	
+	prop.baseSize = 0.9
+	prop.font = media.fontC
+	prop.fontColor = 1
+	prop.fontAlpha = 192
+	prop.orientation = 1
 
-	pulseIn = false	
+	pulseIn = false
+	clock.fromJSON(netMsg.inJSON)	
 	items = setClockItems(clock)
 	setSecondsInClock(clock)
 	backCol = setClockColors()
@@ -540,35 +552,50 @@ function countdownView(clock ref as clock_t, prop as property_t)
 	time = setTimer(1000)
 
 	repeat
-		// change to get quit-order from controller
+		netMsg = receiveCueLAN(net)
+		
+		if netMsg.mode = enum.quit or netMsg.mode = enum.cue
+			quit = true
+		elseif netMsg.new
+			clock.fromJSON(netMsg.inJSON)
+			items = setClockItems(clock)
+			updateClockText(clock, items)
+			time = setTimer(1000)
+			if netMsg.subMode = enum.reset
+				resetCountdown(backCol[0], prop)
+			endif
+		endif
+
 		if GetRawKeyReleased(escKey)
 			quit = true
 		endif
-		testClockRaw(clock)
+
 		if device.isComputer
-			// get if new orientation from controller
-			// if so:
 			if getOrientationChange(prop)
 				setScreenTextOrientation(txt.clock, prop.orientation, prop.padVertical)
 			endif
 		else
 			getScreenTextOrientation(txt.clock, prop.padVertical)
 		endif
-		if getTimer(time)
-			if clock.secCurrent = 0
-				pulseIn = setClockBackgroundPulse(pulseIn, backCol[2], prop)
-			else
-				updateClockTime(clock)
-				getClockBackgroundChange(clock, backCol)
-				updateClockText(clock, items)
+		if clock.play
+			if getTimer(time)
+				if clock.secCurrent = 0
+					pulseIn = setClockBackgroundPulse(pulseIn, backCol[2], prop)
+				else
+					updateClockTime(clock)
+					getClockBackgroundChange(clock, backCol)
+					updateClockText(clock, items)
+				endif
 			endif
+			updateTweenBackground()
+			updateTweenString(txt.clock)
 		endif
-		updateTweenBackground()
-		updateTweenString(txt.clock)
+		testClockRaw(clock)
+		testNetwork(net)
 		sync()
 	until quit
 
 	clearCountDown()
 	clearFrame()
 
-endFunction
+endFunction netMsg

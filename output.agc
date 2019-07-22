@@ -415,12 +415,6 @@ endFunction btn
 
 //************************************************* Cue Light Functions ************************************************
 
-function placeCueLightStart(col as color_t)
-
-	setBackgroundColor(col)
-
-endFunction
-
 function placeReadyButton(col as color_t)
 
 	spr as spriteProp_t
@@ -577,6 +571,15 @@ function setClockBackgroundPulse(pulseIn as integer, col as color_t, prop as pro
 	endif
 
 endFunction not pulseIn
+
+function resetCountdown(backCol as color_t, prop as property_t)
+	
+	clearTweenSingle(tween.back)
+	clearTweenSingle(tween.text)
+	setBackgroundColor(backCol)
+	SetTextColor(txt.clock, color[prop.fontColor].r, color[prop.fontColor].g, color[prop.fontColor].b, prop.fontAlpha)
+	
+endFunction
 
 function clearCountDown()
 

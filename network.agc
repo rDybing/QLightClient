@@ -21,11 +21,22 @@ endFunction
 
 //************************************************* LAN Server *********************************************************
 
-function networkEmitter(net ref as network_t, cmd as integer, cue as cueLight_t)
+function networkEmitter(net ref as network_t, cmd as integer, cue as cueLight_t, clock as clock_t)
+	
+	emitCueLAN as integer = true 
 
 	select cmd
 	case enum.close
 		closeHostLAN(net)
+	endCase
+	case enum.countdown
+		emitCueLAN = false
+	endCase
+	case enum.playPause
+		emitCueLAN = false
+	endCase
+	case enum.reset
+		emitCueLAN = false
 	endCase
 	case enum.wait // red
 		cue.colorStep = 2
@@ -38,8 +49,10 @@ function networkEmitter(net ref as network_t, cmd as integer, cue as cueLight_t)
 	endCase
 	endSelect
 
-	if cmd <> enum.close
+	if emitCueLAN
 		sendCueLAN(net, cue)
+	else
+		sendCountdownLAN(net, cmd, clock)
 	endif
 
 endFunction
@@ -137,18 +150,38 @@ endFunction
 
 function sendCueLAN(net as network_t, cue as cueLight_t)
 
-	transmitJSON as string
-	mode as string
-	msg as string
+	transmitJSON	as string
+	mode			as string
+	subMode			as string
+	msg				as string
 
 	cueUpdate = CreateNetworkMessage()
 	transmitJSON = cue.toJSON()
 	mode = str(enum.cue)
-	msg = mode + "|" + transmitJSON
+	subMode = str(0)
+	msg = mode + "|" + subMode + "|" + transmitJSON
 
 	AddNetworkMessageString(cueUpdate, msg)
 	SendNetworkMessage(net.id, 0, cueUpdate)
 
+endFunction
+
+function sendCountdownLAN(net as network_t, cmd as integer, clock as clock_t)
+	
+	transmitJSON	as string
+	mode			as string
+	subMode			as string
+	msg				as string
+
+	cueUpdate = CreateNetworkMessage()
+	transmitJSON = clock.toJSON()
+	mode = str(enum.countdown)
+	subMode = str(cmd)
+	msg = mode + "|" + subMode + "|" + transmitJSON
+
+	AddNetworkMessageString(cueUpdate, msg)
+	SendNetworkMessage(net.id, 0, cueUpdate)
+	
 endFunction
 
 //************************************************* LAN Client *********************************************************
@@ -215,27 +248,20 @@ function receiveCueLAN(net as network_t)
 	temp		as string
 	netMsg		as message_t
 
+	netMsg.new = false
 	serverMsg = GetNetworkMessage(net.id)
-
 	if serverMsg <> 0
 		temp = GetNetworkMessageString(serverMsg)
 		if CountStringTokens(temp, "|") > 0
 			netMsg.mode = val(GetStringToken(temp, "|", 1))
-			netMsg.inJSON = GetStringToken(temp, "|", 2)
+			netMsg.subMode = val(GetStringToken(temp, "|", 2))
+			netMsg.inJSON = GetStringToken(temp, "|", 3)
 			netMsg.new = true
 		endif
+		DeleteNetworkMessage(serverMsg)
 	endif
-
-	DeleteNetworkMessage(serverMsg)
-
+	
 endFunction netMsg
-
-function getCueUpdate(cue ref as cueLight_t)
-
-	out as integer
-	out = testCueUpdate(cue)
-
-endFunction out
 
 //************************************************* Countdown Functions ************************************************
 

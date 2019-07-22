@@ -10,6 +10,7 @@ Copyright 2019 Roy Dybing - all rights reserved
 
 //************************************************* Module Tests *******************************************************
 
+/*
 function testClock()
 
 	clock as clock_t
@@ -25,6 +26,7 @@ function testClock()
 	countdownView(clock, prop)
 
 endFunction
+*/
 
 function testClockUpdate(prop ref as property_t)
 
@@ -128,6 +130,7 @@ function testClockRaw(in as clock_t)
 	print("y startsec : " + str(in.yStartSec))
 	print("r startsec : " + str(in.rStartSec))
 	print("r endsec   : " + str(in.rEndSec))
+	print("play       : " + str(in.play))
 
 	testDevice()
 

@@ -79,7 +79,7 @@ if app.id = ""
 	saveAppSettings()
 endif
 
-SetWindowTitle("QLight Client")
+SetWindowTitle(version.name)
 SetWindowAllowResize(0)
 SetScissor(0,0,0,0)
 SetOrientationAllowed(1, 0, 0, 0)

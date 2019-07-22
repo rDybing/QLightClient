@@ -171,6 +171,7 @@ endType
 type message_t
 	new					as integer
 	mode				as integer
+	subMode				as integer
 	inJSON				as string	
 endType
 
