@@ -116,6 +116,7 @@ function initEnums()
 	enum.playPause			= 21
 	enum.edit				= 22
 	enum.reset				= 23
+	enum.newClient			= 24
 	
 endFunction
 

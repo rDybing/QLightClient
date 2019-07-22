@@ -84,9 +84,9 @@ function controlView()
 	cue			as cueLight_t
 	mode		as mode_t
 	clientTimer	as timer_t
-
+	
+	state.mode = enum.cue
 	cue = initCue()	
-
 	setBackgroundColor(color[10])
 	placeLogo()
 	button = placeControlButtons(dimmed)
@@ -98,7 +98,6 @@ function controlView()
 
 	clock = loadClockTimer()
 	clockCol = setClockColors()
-
 	setSecondsInClock(clock)
 	placeCountdownStart(clock, color[5], prop, enum.ctrl)
 
@@ -173,7 +172,7 @@ function controlView()
 		endif
 
 		if getTimer(clientTimer)
-			receiveClientsConnect(net)
+			receiveClientsConnect(net, state.mode, cue, clock)
 		endif
 
 		receiveClientsMessage(net)
@@ -417,8 +416,6 @@ function cueController()
 	net		as network_t
 	netMsg	as message_t
 
-	netMsg.mode = enum.cue
-
 	if app.name = ""
 		app.name = "client"
 	endif
@@ -428,9 +425,10 @@ function cueController()
 	repeat
 		print("waiting for response from server...")
 		testNetwork(net)
+		netMsg = receiveServerAck(net)
 		sync()
-	until receiveServerAck(net)
-	
+	until netMsg.mode = enum.cue or netMsg.mode = enum.countdown
+
 	repeat
 		select netMsg.mode
 		case enum.cue

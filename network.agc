@@ -21,7 +21,7 @@ endFunction
 
 //************************************************* LAN Server *********************************************************
 
-function networkEmitter(net ref as network_t, cmd as integer, cue as cueLight_t, clock as clock_t)
+function networkEmitter(net ref as network_t, cmd as integer, cue ref as cueLight_t, clock as clock_t)
 	
 	emitCueLAN as integer = true 
 
@@ -57,15 +57,17 @@ function networkEmitter(net ref as network_t, cmd as integer, cue as cueLight_t,
 
 endFunction
 
-function receiveClientsConnect(net ref as network_t)
+function receiveClientsConnect(net ref as network_t, mode as integer, cue as cueLight_t, clock as clock_t)
 
 	maxClients		as integer = 8
-	clientAck		as integer
+	newClientAck	as integer
 	clientName		as string
 	clientRemoval	as integer
 	clientConnectID	as integer
 	tc				as client_t
-	out				as string
+	msg				as string
+	transmitJSON	as string
+	subMode			as string
 
 	clientConnectID = GetNetworkFirstClient(net.id)
 
@@ -90,17 +92,23 @@ function receiveClientsConnect(net ref as network_t)
 					tc.connectId = clientConnectID
 					tc.id = clientName
 					net.clients.insert(tc)
-					clientAck = createNetworkMessage()
-					out = "ok" + ":" + str(net.hostID)
-					AddNetworkMessageString(clientAck, out)
-					sendNetworkMessage(net.id, clientConnectID, clientAck)
+					newClientAck = createNetworkMessage()
+					if mode = enum.countdown
+						transmitJSON = clock.toJSON()
+					else
+						transmitJSON = cue.toJSON()
+					endif
+					subMode = str(0)
+					msg = str(enum.newClient) + "|" + str(mode) + ">" + str(net.hostID) + "|" + subMode + "|" + transmitJSON
+					AddNetworkMessageString(newClientAck, msg)
+					sendNetworkMessage(net.id, clientConnectID, newClientAck)
 				endif
 			endif
 		endif
 		net.clientCount = GetNetworkNumClients(net.id) - 1
 		clientConnectID = GetNetworkNextClient(net.id)
 	endWhile
-
+	
 endFunction
 
 function receiveClientsMessage(net ref as network_t)
@@ -207,30 +215,37 @@ endFunction
 
 function receiveServerAck(net ref as network_t)
 
-	out			as integer = false
-	serverAck	as integer
-	in			as string
+	netMsg		as message_t
+	serverMsg	as integer
+	IDs			as string
 	temp		as string
+	newClient	as integer
 
-	serverAck = GetNetworkMessage(net.id)
+	serverMsg = GetNetworkMessage(net.id)
 
-	if serverAck <> 0
-		temp = GetNetworkMessageString(serverAck)
+	if serverMsg <> 0
+		temp = GetNetworkMessageString(serverMsg)
 	endif
 
-	if CountStringTokens(temp, ":") > 0
-		in = GetStringToken(temp, ":", 1)
+	if CountStringTokens(temp, "|") > 0
+		newClient = val(GetStringToken(temp, "|", 1))
+	endif
+	
+	if newCLient = enum.newClient
+		IDs = GetStringToken(temp, "|", 2)	
+		if CountStringTokens(IDs, ">") > 0
+			net.clientID = GetNetworkMyClientID(net.id)
+			netMsg.mode = val(GetStringToken(IDs, ">", 1))
+			net.hostID = val(GetStringToken(IDs, ">", 2))
+		endif
+		netMsg.subMode = val(GetStringToken(temp, "|", 3))
+		netMsg.inJSON = GetStringToken(temp, "|", 4)
+		netMsg.new = true
 	endif
 
-	if in = "ok"
-		out = true
-		net.clientID = GetNetworkMyClientID(net.id)
-		net.hostID = val(GetStringToken(temp, ":", 2))
-	endif
+	DeleteNetworkMessage(serverMsg)	
 
-	DeleteNetworkMessage(serverAck)	
-
-endFunction out
+endFunction netMsg
 
 function getServerInActive(net as network_t)
 

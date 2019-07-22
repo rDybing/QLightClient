@@ -119,6 +119,7 @@ type enum_t
 	playPause			as integer
 	edit				as integer
 	reset				as integer
+	newClient			as integer
 endType
 
 //************************************************* Module Specific ****************************************************
