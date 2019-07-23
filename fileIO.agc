@@ -71,28 +71,37 @@ function saveAppSettings()
 endFunction
 
 function loadClockTimer()
-
-	clock as clock_t
-
-	clock.hour = 0
-	clock.min = 0
-	clock.sec = 30
-	// note: 100% = start of countdown || 0% = end of countdown
-	clock.yStartPercent = 90
-	clock.rStartPercent = 20
-	clock.rEndPercent = 5
+	
+	clock		as clock_t
+	clockTemp	as clock_t[]
+	clockFile	as String
+	
+	clockFile = "clockTimer.json"
+	
+	if GetFileExists(clockFile)
+		clockTemp.Load(clockFile)
+		clock = clockTemp[0]
+	else
+		clock.hour = 0
+		clock.min = 0
+		clock.sec = 30
+		// note: 100% = start of countdown || 0% = end of countdown
+		clock.yStartPercent = 90
+		clock.rStartPercent = 20
+		clock.rEndPercent = 5
+	endif
 
 endFunction clock
 
 function saveClockTimer(c as clock_t)
 
-	clockTimer	as string
+	clockFile	as string
 	clockTemp	as clock_t[]
 
-	clockTimer = "clockTimer.json"
+	clockFile = "clockTimer.json"
 
 	clockTemp.insert(c)
-	clockTemp.Save(clockTimer)
+	clockTemp.Save(clockFile)
 
 endFunction
 

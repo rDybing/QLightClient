@@ -54,7 +54,7 @@ global tween		as tween_t				// constant IDs
 global txt			as txt_t				// constant IDs
 global ml 			as menuLang_t[]			// constant language strings after load from file
 global device 		as device_t				// constant device properties
-global app			as appSettings_t		// constant IP, api and key values
+global app			as appSettings_t		// constant IP, api and key values after load from file
 global color		as color_t[12]			// constant color values
 global state		as globalState_t		// will change here, there and everywhere
 global version		as version_t			// constant version info

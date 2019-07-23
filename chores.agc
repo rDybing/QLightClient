@@ -99,9 +99,7 @@ function setClockFromInput(c ref as clock_t)
 	percent as float
 	total as float
 
-	c.output = trimString(c.output, ".") 
-
-	c.secTotal = val(c.output) * 60
+	c.secTotal = valFloat(c.output) * 60.0
 	c.secCurrent = c.secTotal
 
 	c.hour = c.secCurrent / 3600
