@@ -40,7 +40,11 @@ function mainMenuView()
 			case sprite.bModeCtrl
 				keyTimer = keyPressed(sprite.bModeCtrl)
 				click()
-				mode.enum = enum.ctrl
+				if networkAreadyExist()
+					mode.enum = enum.client
+				else
+					mode.enum = enum.ctrl
+				endif
 			endCase
 			endSelect
 		endif

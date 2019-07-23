@@ -101,16 +101,20 @@ function main()
 	restore as integer = false
 
 	if not state.fatalError
+		// insert splash here...
 		if device.isComputer
 			cueController()
 		else
 			if restore
 				cueController()
 			else
-				mainMenuView()
+				if networkAreadyExist()
+					cueController()
+				else
+					mainMenuView()
+				endif
 			endif
 		endif
-
 		appJSON = app.toJSON()
 		repeat
 			print("In JSON")

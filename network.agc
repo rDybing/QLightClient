@@ -19,6 +19,54 @@ function initHostLAN(net ref as network_t)
 	//testNetConnect(gs)
 endFunction
 
+
+function networkAreadyExist()
+        
+	listener	as integer
+	netExist	as integer = false
+	found		as integer = false
+	netNames	as string[]
+	netNameTemp	as string
+	netFind		as timer_t
+
+	listener = CreateBroadcastListener(45631)
+	netFind = setTimer(2000)
+
+	repeat
+		inMsg = GetBroadcastMessage(listener)
+		while (inMsg > 0)
+			netNameTemp = GetNetworkMessageString(inMsg)
+			found = false
+			for i = 0 to netNames.length
+				if netNames[i] = netNameTemp
+					found = true
+					exit
+				endif
+			next i
+			if not found
+				netNames.insert(netNameTemp)
+			endif
+			DeleteNetworkMessage(inMsg)
+			inMsg = GetBroadcastMessage(listener)
+		endwhile
+
+		if netNames.length = nil
+			print("No Network Found")
+		else
+			for i = 0 to netNames.length
+				if netNames[i] = "QLightNet"
+					netExist = true
+				endif
+				print(netNames[i])
+			next i
+		endif
+		sync()
+	until getTimer(netFind)
+	
+	DeleteBroadcastListener(listener)
+	
+endfunction netExist
+
 //************************************************* LAN Server *********************************************************
 
 function networkEmitter(net ref as network_t, cmd as integer, cue ref as cueLight_t, clock as clock_t)
