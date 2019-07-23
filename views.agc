@@ -561,6 +561,7 @@ function countdownView(net ref as network_t, netMsg as message_t)
 			clock.fromJSON(netMsg.inJSON)
 			items = setClockItems(clock)
 			updateClockText(clock, items)
+			placeCountdownStart(clock, backCol[0], prop, enum.countdown)
 			time = setTimer(1000)
 			if netMsg.subMode = enum.reset
 				resetCountdown(backCol[0], prop)

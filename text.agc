@@ -83,6 +83,8 @@ function placeStartClock(in as string, prop ref as property_t)
 	mt.startY = 50
 	mt.align = 1
 	mt.layer = layer.front
+	
+	prop.padVertical = 0
 
 	chars = len(in)
 
@@ -101,6 +103,10 @@ function placeStartClock(in as string, prop ref as property_t)
 	endif
 
 	mt.startY = mt.startY - (mt.size / 2)
+	
+	if GetTextExists(txt.clock)
+		deleteText(txt.clock)
+	endif
 
 	setFontProperties(color[prop.fontColor], prop.fontAlpha, prop.font, mt.size)
 	CreateText(txt.clock, in)
