@@ -1,11 +1,21 @@
 # QLightClient
 
-### Client app for Android and iOS
+### Client and simple controller app for Android and iOS
+
+This is primarily the client app for the future QLight Pro Controller - but 
+also contain a simple controller that can control up to 8 QLight devices, 
+albeit over just the one channel **and** just simple cues and timer.
+
+### Releases:
+
+##### TBA
+- Initial Release
 
 #### Copyright 2019 Roy Dybing  - all rights reserved.
 
-Source is open to provide insight into working app, mainly to ensure any and all that this app do not collect any data
-of use or user or device it is installed upon - except as explicitly noted below:
+Source is open to provide insight into working app, mainly to ensure any and 
+all that this app do not collect any data of use or user or device it is 
+installed upon - except as explicitly noted below:
 
 - ip of device when connecting to WAN and LAN server
 - appId of app when connecting to WAN and LAN server
@@ -28,14 +38,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ##### Todo:
 
-- LAN Client Networking
 - HTTPS API Client Networking
 
 ##### WiP:
 
-- Menu Views
+- Add (optional) audio alerts to cues
 
 ##### Done:
 
+- LAN Client Networking
+- Menu Views
 - Cue Light view
 - Countdown view
