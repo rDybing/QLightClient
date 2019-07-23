@@ -63,6 +63,12 @@ function updateButtonText(txtID as integer, in as string)
 
 endFunction
 
+function updateTextColor(txtID as integer, col as color_t)
+	
+	SetTextColor(txtID, col.r, col.g, col.b, col.a)
+	
+endFunction
+
 //************************************************* Cue Light Functions ************************************************
 
 

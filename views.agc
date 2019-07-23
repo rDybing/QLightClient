@@ -40,11 +40,7 @@ function mainMenuView()
 			case sprite.bModeCtrl
 				keyTimer = keyPressed(sprite.bModeCtrl)
 				click()
-				if networkAreadyExist()
-					mode.enum = enum.client
-				else
-					mode.enum = enum.ctrl
-				endif
+				mode.enum = enum.ctrl
 			endCase
 			endSelect
 		endif
@@ -137,6 +133,7 @@ function controlView()
 			highlightButton(mode.spriteID, false)
 			select mode.enum
 			case enum.edit
+				hideCtrlTopButtons(true)
 				btnOK = placeSetClockEdit()
 			endCase
 			case enum.audio
@@ -162,9 +159,11 @@ function controlView()
 			timeSet = handleChangeClockEdit(mode.spriteID, btnOK, clock)
 			if timeSet
 				clearTextInput(btnOK.sprID)
+				hideCtrlTopButtons(false)
 				timeSet = false
 				btnOK.active = false
 				updateClockText(clock, 3)
+				updateTextColor(txt.clock, color[prop.fontColor])
 			endif
 		endif
 
@@ -432,7 +431,7 @@ function cueController()
 		netMsg = receiveServerAck(net)
 		sync()
 	until netMsg.mode = enum.cue or netMsg.mode = enum.countdown
-
+	
 	repeat
 		select netMsg.mode
 		case enum.cue

@@ -244,6 +244,22 @@ function placeSetClockEdit()
 
 endFunction btn
 
+function hideCtrlTopButtons(hide as integer)
+	
+	if hide
+		SetSpriteVisible(sprite.bCtrlAudio, 0)
+		SetSpriteVisible(sprite.bCtrlFade, 0)
+		SetTextVisible(txt.bCtrlAudio, 0)
+		SetTextVisible(txt.bCtrlFade, 0)
+	else
+		SetSpriteVisible(sprite.bCtrlAudio, 1)
+		SetSpriteVisible(sprite.bCtrlFade, 1)
+		SetTextVisible(txt.bCtrlAudio, 1)
+		SetTextVisible(txt.bCtrlFade, 1)
+	endif
+	
+endFunction
+
 function clearControl(btn as button_t[])
 
 	clearSpriteSingle(sprite.logo)

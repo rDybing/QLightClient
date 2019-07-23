@@ -8,7 +8,11 @@ albeit over just the one channel **and** just simple cues and timer.
 
 ### Releases:
 
-##### TBA
+- Version format: [major release].[new feature(s)].[bugfix patch-version]
+- Date format: yyyy-mm-dd
+
+**v1.0.0: TBA Medio August 2019**
+
 - Initial Release
 
 #### Copyright 2019 Roy Dybing  - all rights reserved.

@@ -82,7 +82,7 @@ function handleControlButtons(mode ref as mode_t, clock ref as clock_t, clockCol
 				keyTimer = keyPressed(sprite.bCtrlEdit)
 				mode.altButton = true
 				mode.enum = enum.edit
-				mode.emit = true
+				mode.emit = false
 			endif
 		endCase
 		case sprite.bCtrlReset
