@@ -84,7 +84,12 @@ function controlView()
 	cue			as cueLight_t
 	mode		as mode_t
 	clientTimer	as timer_t
-	
+	timeSet		as integer = false
+	pulseTimer	as timer_t
+	resetGlow	as integer = false
+	pulseReset	as integer = true
+	mutedGreen	as color_t
+		
 	state.mode = enum.cue
 	cue = initCue()	
 	setBackgroundColor(color[10])
@@ -101,6 +106,9 @@ function controlView()
 	setSecondsInClock(clock)
 	placeCountdownStart(clock, color[5], prop, enum.ctrl)
 
+	mutedGreen = color[5]
+	mutedGreen.a = dimmed
+
 	if app.name = ""
 		app.name = "Server"
 	endif
@@ -108,6 +116,7 @@ function controlView()
 	initHostLAN(net)
 
 	clientTimer = setTimer(500)
+	pulseTimer = setTimer(1000)
 
 	repeat
 		if GetRawKeyReleased(escKey)
@@ -135,6 +144,12 @@ function controlView()
 			case enum.edit
 				hideCtrlTopButtons(true)
 				btnOK = placeSetClockEdit()
+			endCase
+			case enum.reset
+				if resetGlow
+					resetGlow = false
+					spriteColor(sprite.bCtrlReset, 11)
+				endif
 			endCase
 			case enum.audio
 				cue.audioOn = not cue.audioOn
@@ -164,6 +179,7 @@ function controlView()
 				btnOK.active = false
 				updateClockText(clock, 3)
 				updateTextColor(txt.clock, color[prop.fontColor])
+				resetGlow = true
 			endif
 		endif
 
@@ -176,6 +192,13 @@ function controlView()
 
 		if getTimer(clientTimer)
 			receiveClientsConnect(net, state.mode, cue, clock)
+		endif
+		
+		if resetGlow
+			if getTimer(pulseTimer)
+				pulseReset = setButtonPulse(pulseReset, tween.button, sprite.bCtrlReset, mutedGreen, color[11])
+			endif
+			updateTweenSpriteButton(tween.button, sprite.bCtrlReset)
 		endif
 
 		receiveClientsMessage(net)
@@ -510,7 +533,7 @@ function cueLightView(net ref as network_t, netMsg as message_t)
 			if getTimer(time)
 				pulseIn = setButtonPulse(pulseIn, tween.ready, sprite.bReady, backCol[1], backCol[2])
 			endif
-			updateTweenSpriteReady()
+			updateTweenSpriteButton(tween.ready, sprite.bReady)
 		endif
 		updateTweenBackground()		
 		//testCueRaw(cue)

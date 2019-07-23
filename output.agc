@@ -746,10 +746,10 @@ function updateTweenString(textID as integer)
 
 endFunction
 
-function updateTweenSpriteReady()
+function updateTweenSpriteButton(tweenID as integer, spriteID as integer)
 
-	if GetTweenExists(tween.ready)
-		UpdateTweenSprite(tween.ready, sprite.bReady, GetFrameTime())
+	if GetTweenExists(tweenID)
+		UpdateTweenSprite(tweenID, spriteID, GetFrameTime())
 	endif
 
 endFunction
