@@ -568,6 +568,7 @@ function countdownView(net ref as network_t, netMsg as message_t)
 		endif
 
 		if GetRawKeyReleased(escKey)
+			netMsg.mode = enum.quit
 			quit = true
 		endif
 

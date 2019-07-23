@@ -21,11 +21,12 @@ Source is open to provide insight into working app, mainly to ensure any and
 all that this app do not collect any data of use or user or device it is 
 installed upon - except as explicitly noted below:
 
-- ip of device when connecting to WAN and LAN server
-- appId of app when connecting to WAN and LAN server
-- time of contact with WAN and LAN server
+- ip of device when connecting to WAN API server
+- appId of app when connecting to LAN server and WAN API server
+- time of contact with WAN API server
 
-Source is not to be used to facilitate distribution of compiled code.
+Source is not to be used to facilitate distribution of compiled code by any 
+third party.
 
 Configuration files and media files are *NOT* included in this source repo.
 
@@ -48,7 +49,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - Add (optional) audio alerts to cues
 
-##### Done:
+##### Done (to within a reasonable level):
 
 - LAN Client Networking
 - Menu Views
