@@ -37,6 +37,7 @@ function loadMedia()
 	LoadImage(media.bPause, "btnPause.png")
 	LoadImage(media.flagNO, "flagNorway.png")
 	LoadImage(media.flagUK, "flagUK.png")
+	LoadImage(media.flagDE, "flagGermany.png")
 
 endFunction
  

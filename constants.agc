@@ -97,6 +97,7 @@ function initConstants()
 	media.bPause			= 1019
 	media.flagNO			= 1080
 	media.flagUK			= 1081
+	media.flagDE			= 1082
 
 endFunction
 

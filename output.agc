@@ -352,6 +352,7 @@ function placeSelectLanguage(posY as float)
 	languages as integer[]
 	languages.insert(media.flagNO)
 	languages.insert(media.flagUK)
+	languages.insert(media.flagDE)
 
 	spr.width = 16
 	spr.height = -1

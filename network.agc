@@ -30,7 +30,7 @@ function networkAreadyExist()
 	netFind		as timer_t
 
 	listener = CreateBroadcastListener(45631)
-	netFind = setTimer(2000)
+	netFind = setTimer(2500)
 
 	repeat
 		inMsg = GetBroadcastMessage(listener)

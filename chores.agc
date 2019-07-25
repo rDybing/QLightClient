@@ -216,6 +216,9 @@ function getLangCode(in as integer)
 	case 1
 		out = "en"
 	endCase
+	case 2
+		out = "de"
+	endCase
 	case default
 		out = "en"
 	endCase

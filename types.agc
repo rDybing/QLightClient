@@ -201,6 +201,7 @@ type media_t
 	bPause				as integer
 	flagNO				as integer
 	flagUK				as integer
+	flagDE				as integer
 endType
 
 type spriteProp_t
