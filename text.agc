@@ -223,6 +223,21 @@ function updateTextOrientation(txtID, pad as integer)
 
 endFunction
 
+//************************************************* HTTP Text **********************************************************
+
+function placeTextFromServer(s as string, y as integer)
+	
+	mt as txtProp_t
+	col as integer
+		
+	clearText(txt.server, txt.server)
+	setFontProperties(color[0], 255, media.fontA, 4)
+	mt = setTextProperties(mt, 50, y, 1)
+	createText(txt.server, s)
+	textDraw(txt.server, mt)
+	
+endFunction
+
 //************************************************* Static Text ********************************************************
 
 function placeVersionText()

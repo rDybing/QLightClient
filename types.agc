@@ -20,11 +20,11 @@ endType
 type appSettings_t
 	id					as string
 	apiIp				as string
-	apiPort				as string
 	apiId				as string
 	apiKey				as string
 	language			as string
 	name				as string
+	mode				as string
 endType
 
 type mouse_t
@@ -42,6 +42,7 @@ type device_t
 	os					as string
 	model				as string
 	isComputer			as integer
+	privateIP			as string
 endType
 
 type globalState_t
@@ -294,6 +295,7 @@ type txt_t
 	appID				as integer
 	bLang				as integer
 	bName				as integer	
+	server				as integer
 endType
 
 type locale_t

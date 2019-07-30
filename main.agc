@@ -33,6 +33,7 @@ Contact: roy[dot]dybing[at]gmail[dot]com
 #include "text.agc"
 #include "input.agc"
 #include "network.agc"
+#include "httpIO.agc"
 #include "fileIO.agc"
 #include "chores.agc"
 #include "errors.agc"
@@ -99,7 +100,7 @@ function main()
 	appJSON as string
 	placeVersionText()
 	restore as integer = false
-
+	
 	if not state.fatalError
 		// insert splash here...
 		if device.isComputer

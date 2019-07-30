@@ -147,6 +147,7 @@ function setDevice()
 
 	device.os = GetDeviceBaseName()
 	device.model = GetDeviceType()
+	device.privateIP = GetDeviceIP()
 
 	SetWindowSize(device.width, device.height, 1)
 

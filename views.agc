@@ -110,9 +110,15 @@ function controlView()
 	mutedGreen.a = dimmed
 
 	if app.name = ""
-		app.name = "Server"
+		app.name = "Ctrl-"
 	endif
 
+	app.mode = "ctrlLite"
+	
+	print(uploadAppInfo())
+	
+	clearTextSingle(txt.server)
+	
 	initHostLAN(net)
 
 	clientTimer = setTimer(500)
@@ -443,7 +449,7 @@ function cueController()
 	netMsg	as message_t
 
 	if app.name = ""
-		app.name = "client"
+		app.name = "Client-"
 	endif
 
 	joinHost(net)
