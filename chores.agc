@@ -187,14 +187,17 @@ function setLanguage()
 	//testGeneral(lang)
 
 	select lang
-	case "en"		// english
-		state.language = 1
-	endCase
 	case "nb"		// norwegian (bokmål)
 		state.language = 0
 	endCase
 	case "nn"		// norwegian (nynorsk)
 		state.language = 0
+	endCase
+	case "en"		// english
+		state.language = 1
+	endCase
+	case "de"		// german
+		state.language = 2
 	endCase
 	case default	// default english
 		state.language = 1

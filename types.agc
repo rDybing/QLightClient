@@ -296,6 +296,7 @@ type txt_t
 	bLang				as integer
 	bName				as integer	
 	server				as integer
+	startup				as integer
 endType
 
 type locale_t

@@ -102,7 +102,9 @@ function main()
 	restore as integer = false
 	
 	if not state.fatalError
-		// insert splash here...
+		
+		splash()
+		
 		if device.isComputer
 			cueController()
 		else
@@ -124,6 +126,28 @@ function main()
 		until GetRawKeyReleased(escKey)
 	endif
 
+endFunction
+
+function splash()
+	
+	msg				as string
+	proceedTimer	as timer_t
+	
+	msg = getWelcome()
+	
+	clearText(txt.server, txt.server)	
+	placeStartupText(msg)
+	textFade(txt.startup, txt.startup + 1, "in")
+	proceedTimer = setTimer(4000)
+	clearText(txt.server, txt.server)
+	
+	repeat
+		sync()
+	until GetPointerPressed() or getTimer(proceedTimer)
+	
+	textFade(txt.startup, txt.startup + 1, "out")
+	clearText(txt.startup, txt.startup + 1)
+	
 endFunction
 
 function modeSwitch(mode as integer, btn as button_t[])

@@ -44,6 +44,7 @@ function initConstants()
 	txt.bLang				= 1020
 	txt.bName				= 1021
 	txt.server				= 1022
+	txt.startup				= 1095
 	txt.clock				= 1100
 
 	sprite.logo				= 1010
