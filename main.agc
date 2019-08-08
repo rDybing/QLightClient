@@ -133,6 +133,9 @@ function splash()
 	msg				as string
 	proceedTimer	as timer_t
 	
+	setBackgroundColor(color[10])
+	placeLogoSplash()
+	
 	msg = getWelcome()
 	
 	clearText(txt.server, txt.server)	
@@ -147,6 +150,7 @@ function splash()
 	
 	textFade(txt.startup, txt.startup + 1, "out")
 	clearText(txt.startup, txt.startup + 1)
+	clearSpriteSingle(sprite.logo)
 	
 endFunction
 

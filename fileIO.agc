@@ -23,7 +23,7 @@ function loadMedia()
 	LoadFont(media.fontG, "Aurebesh-Bold.ttf")
 
 	LoadImage(media.back, "whiteDot.png")
-	LoadImage(media.logo, "QLiteLogo.png")
+	LoadImage(media.logo, "qlight32b.png")
 	LoadImage(media.framePc, "frame_trans_pc.png")
 	LoadImage(media.framePhone, "frame_trans_phone.png")
 	LoadImage(media.dot, "whiteDot.png")

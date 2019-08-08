@@ -36,6 +36,27 @@ function placeLogo()
 
 endFunction
 
+function placeLogoSplash()
+
+	spr as spriteProp_t
+
+	if device.isComputer
+		spr.width = 22.5
+		spr.height = -1
+		spr.posX = 50 - (spr.width / 2)
+		spr.posY = 5
+	else
+		spr.width = 40
+		spr.height = -1
+		spr.posX = 50 - (spr.width / 2)
+		spr.posY = 25
+	endif
+
+	imageSetup(sprite.logo, layer.B, spr, media.logo)
+	SetSpriteColor(sprite.logo, 255, 255, 255, 255)	
+
+endFunction
+
 function placeMenuButton(col as color_t)
 
 	spr as spriteProp_t
