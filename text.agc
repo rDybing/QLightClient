@@ -35,6 +35,12 @@ function placeStartupText(msg as string)
 	
 endFunction
 
+function updateServerText(msg as string)
+	
+	SetTextString(txt.server, msg)
+	
+endFunction
+
 //************************************************* Menu Functions *****************************************************
 
 function placeMenuText()
@@ -44,7 +50,7 @@ function placeMenuText()
 	mt.startX = 50
 	mt.startY = 16
 	mt.align = 1
-	mt.size = 7
+	mt.size = 6
 	mt.layer = layer.B
 
 	setFontProperties(color[0], 255, media.fontA, mt.size)
@@ -58,21 +64,16 @@ function placeMenuText()
 
 endFunction
 
-function placeButtonText(txtId as integer, 
-	txtStr as string, 
-	layer as integer, 
-	spr as spriteProp_t, 
-	col as color_t, 
-	smallText as integer)
+function placeButtonText(txtId as integer, txtStr as string, layer as integer, spr as spriteProp_t, col as color_t, smallText as integer)
 
 	mt as txtProp_t
-	sizeDec as integer = 2
+	sizeDec as float = 3
 
 	mt.startX = spr.posX + (spr.width / 2)
-	mt.startY = spr.posY + 0.5
+	mt.startY = spr.posY + 1
 	mt.align = 1
 	if smallText
-		sizeDec = 4
+		sizeDec = 5
 		mt.startY = mt.startY + 1
 	endif
 	mt.size = spr.height - sizeDec
@@ -119,7 +120,7 @@ function placeStartClock(in as string, prop ref as property_t)
 		mt.size = 50 * prop.baseSize
 		prop.padVertical = -20
 	elseif chars < 6
-		mt.size = 27 * prop.baseSize
+		mt.size = 24 * prop.baseSize
 	else
 		mt.size = 17 * prop.baseSize
 		prop.padVertical = 10

@@ -366,7 +366,7 @@ endFunction
 
 function placeSelectLanguage(posY as float)
 
-	btn as button_t[3]
+	btn as button_t[4]
 	spr as spriteProp_t
 	col as color_t
 	col = color[11]
@@ -374,6 +374,7 @@ function placeSelectLanguage(posY as float)
 	languages.insert(media.flagNO)
 	languages.insert(media.flagUK)
 	languages.insert(media.flagDE)
+	languages.insert(media.flagFR)
 
 	spr.width = 16
 	spr.height = -1

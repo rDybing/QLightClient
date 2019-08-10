@@ -12,6 +12,7 @@ Copyright 2019 Roy Dybing - all rights reserved
 
 function uploadAppInfo()
 	
+	msgOut	as string
 	posY	as integer = 5
 	appName	as string
 	query	as string
@@ -36,7 +37,9 @@ function uploadAppInfo()
 	out = out + "&Model=" + device.model 
 	msg = postToServer(query, out, posY)
 	
-endFunction msg
+	msgOut = GetStringToken(msg, ":", 2)
+	
+endFunction msgOut
 
 // ************************************************ GET Functions ******************************************************
 
@@ -51,6 +54,19 @@ function getWelcome()
 	msg = getFromServer(query, posY)
 	
 endFunction msg
+
+function getLANServerIP()
+
+	posY	as integer = 5
+	server	as server_t
+	query	as string
+	msg		as string
+
+	query = "getServerIP?clientIP=" + device.privateIP
+
+	msg = getFromServer(query, posY)
+	
+endFunction server
 
 //************************************************* Send Query Functions ***********************************************
 
@@ -71,7 +87,7 @@ function getFromServer(query as string, posY as integer)
 		if GetHTTPResponseReady(http) = -1
 			placeTextFromServer("Connection Failed", posY)
 			state.httpOK = false
-			response = "ERROR:No response from server"
+			response = "ERROR:No response from server!"
 		else
 			response = GetHTTPResponse(http)
 			state.httpOK = true
@@ -80,7 +96,7 @@ function getFromServer(query as string, posY as integer)
 		DeleteHTTPConnection(http)
 	else
 		placeTextFromServer("No internet!", posY)
-		response = "ERROR:No internet"
+		response = "ERROR:No internet!"
 	endif
 	
 endFunction response
@@ -102,7 +118,7 @@ function postToServer(query as string, post as string, posY as integer)
 		if GetHTTPResponseReady(http) = -1
 			placeTextFromServer("Connection Failed!", posY)
 			state.httpOK = false
-			response = "ERROR:No response from server"
+			response = "ERROR:No response from server!"
 		else
 			response = GetHTTPResponse(http)
 			state.httpOK = true
@@ -111,7 +127,7 @@ function postToServer(query as string, post as string, posY as integer)
 		DeleteHTTPConnection(http)
 	else
 		placeTextFromServer("No internet!", posY)
-		response = "ERROR:No internet"
+		response = "ERROR:No internet!"
 	endif
 	
 endFunction response

@@ -89,6 +89,7 @@ function controlView()
 	resetGlow	as integer = false
 	pulseReset	as integer = true
 	mutedGreen	as color_t
+	serverTimer	as timer_t
 		
 	state.mode = enum.cue
 	cue = initCue()	
@@ -115,7 +116,12 @@ function controlView()
 
 	app.mode = "ctrlLite"
 	
-	print(uploadAppInfo())
+	updateServerText(uploadAppInfo())
+	serverTimer = setTimer(1000)
+	
+	repeat
+		sync()
+	until getTimer(serverTimer)
 	
 	clearTextSingle(txt.server)
 	
@@ -303,7 +309,7 @@ function dropDownView()
 	mouse		as mouse_t
 	options		as string[2] = ["setLang", "setName"]
 	button		as button_t[2]
-	langBtn		as button_t[3]
+	langBtn		as button_t[4]
 	nameBtn		as button_t
 	spriteID	as integer
 	ddHeight 	as float

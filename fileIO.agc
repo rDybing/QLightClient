@@ -38,6 +38,7 @@ function loadMedia()
 	LoadImage(media.flagNO, "flagNorway.png")
 	LoadImage(media.flagUK, "flagUK.png")
 	LoadImage(media.flagDE, "flagGermany.png")
+	LoadImage(media.flagFR, "flagFrance.png")
 
 endFunction
  

@@ -75,6 +75,13 @@ type client_t
 	name				as string
 endType
 
+type server_t
+	exist				as integer
+	ip					as integer
+	hostID				as integer
+	hostPort			as integer
+endType
+
 type timer_t
 	old					as integer
 	new					as integer
@@ -203,6 +210,7 @@ type media_t
 	flagNO				as integer
 	flagUK				as integer
 	flagDE				as integer
+	flagFR				as integer
 endType
 
 type spriteProp_t
