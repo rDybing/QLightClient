@@ -23,12 +23,17 @@ endFunction
 function networkAreadyExist()
         
 	listener	as integer
-	netExist	as integer = false
 	found		as integer = false
 	netNames	as string[]
 	netNameTemp	as string
 	netFind		as timer_t
-
+	msgAPI		as string
+	lanServer	as lanServer_t
+	status		as string
+	
+	lanServer.exist = false
+	lanServer.port = 1025	
+	
 	listener = CreateBroadcastListener(45631)
 	netFind = setTimer(2500)
 
@@ -55,17 +60,31 @@ function networkAreadyExist()
 		else
 			for i = 0 to netNames.length
 				if netNames[i] = "QLightNet"
-					netExist = true
+					lanServer.exist = true
+					lanServer.directConnect = true
 				endif
 				print(netNames[i])
 			next i
 		endif
 		sync()
 	until getTimer(netFind)
-	
+
 	DeleteBroadcastListener(listener)
 	
-endfunction netExist
+	if not lanServer.exist
+		print("Finding LAN host on server")
+		sync()
+		msgAPI = getLANServerIP()
+		status = GetStringToken(msgAPI, ":", 1)
+		if status = "OK"
+			lanServer.exist = true
+			lanServer.directConnect = false
+			lanServer.ip = GetStringToken(msgAPI, ":", 2)
+			//lanServer.hostID = JoinNetwork(server.ip, server.port, gs.netClientName)
+		endif
+	endif
+
+endfunction lanServer
 
 //************************************************* LAN Server *********************************************************
 
@@ -242,9 +261,13 @@ endFunction
 
 //************************************************* LAN Client *********************************************************
 
-function joinHost(net ref as network_t)
+function joinHost(net ref as network_t, lanServer as lanServer_t)
 
-	net.id = JoinNetwork("QLightNet", app.id)
+	if lanServer.directConnect
+		net.id = JoinNetwork("QLightNet", app.id)
+	else
+		net.id = JoinNetwork(lanServer.ip, lanServer.port, app.id)
+	endif
 
 endFunction
 

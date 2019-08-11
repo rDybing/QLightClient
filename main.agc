@@ -97,24 +97,25 @@ main()
 
 function main()
 
-	appJSON as string
+	appJSON		as string
+	restore		as integer = false
+	lanServer	as lanServer_t
+	
 	placeVersionText()
-	restore as integer = false
 	
 	if not state.fatalError
-		
 		splash()
-		
+		lanServer = networkAreadyExist()
 		if device.isComputer
-			cueController()
+			cueController(lanServer)
 		else
 			if restore
-				cueController()
+				cueController(lanServer)
 			else
-				if networkAreadyExist()
-					cueController()
+				if lanServer.exist
+					cueController(lanServer)
 				else
-					mainMenuView()
+					mainMenuView(lanServer)
 				endif
 			endif
 		endif
@@ -137,7 +138,6 @@ function splash()
 	placeLogoSplash()
 	
 	msg = getWelcome()
-	
 	clearText(txt.server, txt.server)	
 	placeStartupText(msg)
 	textFade(txt.startup, txt.startup + 1, "in")
@@ -154,13 +154,13 @@ function splash()
 	
 endFunction
 
-function modeSwitch(mode as integer, btn as button_t[])
+function modeSwitch(mode as integer, btn as button_t[], lanServer ref as lanServer_t)
 
 	clearMainMenu(btn)
 
 	select mode
 	case enum.client
-		cueController()
+		cueController(lanServer)
 	endCase
 	case enum.ctrl
 		controlView()

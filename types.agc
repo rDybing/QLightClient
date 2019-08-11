@@ -75,11 +75,11 @@ type client_t
 	name				as string
 endType
 
-type server_t
+type lanServer_t
 	exist				as integer
-	ip					as integer
-	hostID				as integer
-	hostPort			as integer
+	directConnect		as integer
+	ip					as string
+	port				as integer
 endType
 
 type timer_t

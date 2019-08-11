@@ -10,7 +10,7 @@ Copyright 2019 Roy Dybing - all rights reserved
 
 //************************************************* Main Menu Functions ************************************************
 
-function mainMenuView()
+function mainMenuView(lanServer ref as lanServer_t)
 
 	quit		as integer = false
 	keyTimer	as timer_t
@@ -48,7 +48,7 @@ function mainMenuView()
 		if getTimer(keyTimer) and state.buttonHit
 			state.buttonHit = false
 			highlightButton(spriteID, state.buttonHit)
-			modeSwitch(mode.enum, button)
+			modeSwitch(mode.enum, button, lanServer)
 			placeMainMenu()
 		endif
 		sync()
@@ -448,17 +448,33 @@ endFunction out
 
 //************************************************* Cue Controller Functions *******************************************
 
-function cueController()
+function cueController(lanServer as lanServer_t)
 
-	quit	as integer
-	net		as network_t
-	netMsg	as message_t
+	quit		as integer
+	net			as network_t
+	netMsg		as message_t
+	serverTimer	as timer_t
 
 	if app.name = ""
 		app.name = "Client-"
 	endif
+	
+	if device.isComputer
+		app.mode = "clientComp"
+	else
+		app.mode = "clientSP"
+	endif
+	
+	updateServerText(uploadAppInfo())
+	serverTimer = setTimer(1000)
+	
+	repeat
+		sync()
+	until getTimer(serverTimer)
+	
+	clearTextSingle(txt.server)
 
-	joinHost(net)
+	joinHost(net, lanServer)
 
 	repeat
 		print("waiting for response from server...")

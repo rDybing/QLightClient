@@ -58,15 +58,14 @@ endFunction msg
 function getLANServerIP()
 
 	posY	as integer = 5
-	server	as server_t
 	query	as string
 	msg		as string
 
-	query = "getServerIP?clientIP=" + device.privateIP
+	query = "getServerIP?privateIP=" + device.privateIP
 
 	msg = getFromServer(query, posY)
 	
-endFunction server
+endFunction msg
 
 //************************************************* Send Query Functions ***********************************************
 
