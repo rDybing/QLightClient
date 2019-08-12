@@ -46,9 +46,9 @@ endFunction bc
 
 //************************************************* Countdown Functions ************************************************
 
-function updateClockTime(c ref as clock_t)
+function updateClockTime(c ref as clock_t, tick as integer)
 
-	if c.secCurrent <> 0
+	if c.secCurrent <> 0 and tick
 		dec c.secCurrent
 	endif
 

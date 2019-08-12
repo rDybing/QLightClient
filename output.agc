@@ -518,17 +518,6 @@ function placeCountdownStart(c ref as clock_t, col as color_t, prop ref as prope
 	if mode = enum.ctrl
 		c.output = str(c.hour) + ":" + str(c.min) + ":" + str(c.sec)
 	else
-		/*
-		if c.hour <> 0 
-			c.output = str(c.hour) + ":" + str(c.min) + ":" + str(c.sec)
-		endif
-		if c.hour = 0 and c.min <> 0  
-			c.output = str(c.min) + ":" + str(c.sec)
-		endif
-		if c.hour = 0 and c.min = 0
-			c.output = str(c.sec)
-		endif
-		*/
 		if c.secTotal => 3600 
 			c.output = str(c.hour) + ":" + str(c.min) + ":" + str(c.sec)
 		endif
@@ -568,6 +557,7 @@ function getClockBackgroundChange(c as clock_t, col as color_t[])
 	if c.secCurrent = 0
 		clearTweenSingle(tween.back)
 	endif
+	
 
 endFunction
 
@@ -604,18 +594,18 @@ endFunction
 function setClockBackgroundPulse(pulseIn as integer, col as color_t, prop as property_t)
 
 	duration as integer
-	duration = 1
+	duration = 2
 
 	if pulseIn
 		// go to red background
 		clearTweenSingle(tween.back)
 		setSpriteTweenColor(tween.back, sprite.back, col, duration, 3)
 		clearTweenSingle(tween.text)	
-		setTextTweenColor(tween.text, txt.clock, color[prop.fontColor], duration, 3)
+		setTextTweenColor(tween.text, txt.clock, color[1], duration, 3)
 	else
-		// go to black background 
+		// go to black background
 		clearTweenSingle(tween.back)
-		setSpriteTweenColor(tween.back, sprite.back, color[1], duration, 3)	
+		setSpriteTweenColor(tween.back, sprite.back, color[prop.fontColor], duration, 3)	
 		clearTweenSingle(tween.text)
 		setTextTweenColor(tween.text, txt.clock, col, duration, 3)
 	endif

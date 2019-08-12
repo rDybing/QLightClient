@@ -198,6 +198,7 @@ function controlView()
 		if clock.play 
 			if getTimer(clockTimer)
 				updateCtrlClock(clock, clockCol)
+				networkEmitter(net, enum.countdown, cue, clock)
 			endif
 			updateTweenString(txt.clock)
 		endif
@@ -243,7 +244,7 @@ endFunction out
 function updateCtrlClock(c ref as clock_t, cc as color_t[])
 
 	if c.secCurrent <> 0
-		updateClockTime(c)
+		updateClockTime(c, true)
 		getClockCtrlChange(c, cc)
 		updateClockText(c, 3)
 	endif
@@ -588,13 +589,13 @@ function countdownView(net ref as network_t, netMsg as message_t)
 
 	quit		as integer
 	items		as integer
-	time		as timer_t
 	backCol		as color_t[2]
 	pulseIn		as integer
 	mouse		as mouse_t
 	clock		as clock_t
 	prop		as property_t
 	play 		as integer
+	pulseTimer	as timer_t
 	
 	prop.baseSize = 0.9
 	prop.font = media.fontC
@@ -603,14 +604,16 @@ function countdownView(net ref as network_t, netMsg as message_t)
 	prop.orientation = 1
 
 	pulseIn = false
-	clock.fromJSON(netMsg.inJSON)	
+	clock.fromJSON(netMsg.inJSON)
+	secOld = clock.secCurrent	
 	items = setClockItems(clock)
 	setSecondsInClock(clock)
 	backCol = setClockColors()
 
 	placeCountdownStart(clock, backCol[0], prop, enum.countdown)
 	placeFrame()
-	time = setTimer(1000)
+
+	pulseTimer = setTimer(2000)
 
 	repeat
 		netMsg = receiveCueLAN(net)
@@ -621,8 +624,9 @@ function countdownView(net ref as network_t, netMsg as message_t)
 			clock.fromJSON(netMsg.inJSON)
 			items = setClockItems(clock)
 			updateClockText(clock, items)
-			placeCountdownStart(clock, backCol[0], prop, enum.countdown)
-			time = setTimer(1000)
+			if clock.secCurrent = clock.secTotal
+				placeCountdownStart(clock, backCol[0], prop, enum.countdown)
+			endif
 			if netMsg.subMode = enum.reset
 				resetCountdown(backCol[0], prop)
 			endif
@@ -640,19 +644,18 @@ function countdownView(net ref as network_t, netMsg as message_t)
 		else
 			getScreenTextOrientation(txt.clock, prop.padVertical)
 		endif
-		if clock.play
-			if getTimer(time)
-				if clock.secCurrent = 0
-					pulseIn = setClockBackgroundPulse(pulseIn, backCol[2], prop)
-				else
-					updateClockTime(clock)
-					getClockBackgroundChange(clock, backCol)
-					updateClockText(clock, items)
-				endif
+		if clock.secCurrent = 0
+			if getTimer(pulseTimer)
+				pulseIn = setClockBackgroundPulse(pulseIn, backCol[2], prop)
 			endif
-			updateTweenBackground()
-			updateTweenString(txt.clock)
+		else
+			updateClockTime(clock, false)
+			getClockBackgroundChange(clock, backCol)
+			updateClockText(clock, items)
 		endif
+		updateTweenBackground()
+		updateTweenString(txt.clock)
+		//endif
 		testClockRaw(clock)
 		testNetwork(net)
 		sync()
