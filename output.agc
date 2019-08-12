@@ -44,7 +44,7 @@ function placeLogoSplash()
 		spr.width = 22.5
 		spr.height = -1
 		spr.posX = 50 - (spr.width / 2)
-		spr.posY = 5
+		spr.posY = 12.5
 	else
 		spr.width = 40
 		spr.height = -1
@@ -518,6 +518,7 @@ function placeCountdownStart(c ref as clock_t, col as color_t, prop ref as prope
 	if mode = enum.ctrl
 		c.output = str(c.hour) + ":" + str(c.min) + ":" + str(c.sec)
 	else
+		/*
 		if c.hour <> 0 
 			c.output = str(c.hour) + ":" + str(c.min) + ":" + str(c.sec)
 		endif
@@ -525,6 +526,16 @@ function placeCountdownStart(c ref as clock_t, col as color_t, prop ref as prope
 			c.output = str(c.min) + ":" + str(c.sec)
 		endif
 		if c.hour = 0 and c.min = 0
+			c.output = str(c.sec)
+		endif
+		*/
+		if c.secTotal => 3600 
+			c.output = str(c.hour) + ":" + str(c.min) + ":" + str(c.sec)
+		endif
+		if c.secTotal < 3600 and c.secTotal => 60  
+			c.output = str(c.min) + ":" + str(c.sec)
+		endif
+		if c.secTotal < 60
 			c.output = str(c.sec)
 		endif
 	endif

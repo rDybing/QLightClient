@@ -500,6 +500,9 @@ function cueController(lanServer as lanServer_t)
 		case enum.quit
 			quit = true
 		endCase
+		case enum.close
+			quit = true
+		endCase
 		endSelect
 	until quit
 
@@ -528,7 +531,7 @@ function cueLightView(net ref as network_t, netMsg as message_t)
 		// get network message
 		netMsg = receiveCueLAN(net)
 
-		if netMsg.mode = enum.quit or netMsg.mode = enum.countdown
+		if netMsg.mode = enum.quit or netMsg.mode = enum.countdown or netMsg.mode = enum.close
 			quit = true
 		else
 			if GetRawKeyReleased(escKey)
@@ -612,7 +615,7 @@ function countdownView(net ref as network_t, netMsg as message_t)
 	repeat
 		netMsg = receiveCueLAN(net)
 		
-		if netMsg.mode = enum.quit or netMsg.mode = enum.cue
+		if netMsg.mode = enum.quit or netMsg.mode = enum.cue or netMsg.mode = enum.close
 			quit = true
 		elseif netMsg.new
 			clock.fromJSON(netMsg.inJSON)

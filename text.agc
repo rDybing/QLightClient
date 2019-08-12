@@ -14,12 +14,19 @@ function placeStartupText(msg as string)
 	
 	mt		as txtProp_t
 	msgOut	as string
+	posY	as float
+	
+	if device.isComputer
+		posY = 70
+	else 
+		posY = 65
+	endif
 	
 	clearText(txt.startup, txt.startup + 1)
 	
 	setFontProperties(color[0], 255, media.fontA, 4)	
 	
-	mt = setTextProperties(mt, 50, 60, 1)
+	mt = setTextProperties(mt, 50, posY, 1)
 	mt.layer = layer.B
 	
 	msgOut = GetStringToken(msg, ":", 2)
@@ -27,7 +34,7 @@ function placeStartupText(msg as string)
 	createText(txt.startup, msgOut)
 	textDraw(txt.startup, mt)
 	
-	mt = setTextProperties(mt, 50, 75, 1)
+	mt = setTextProperties(mt, 50, posY + 10, 1)
 	
 	setFontProperties(color[0], 255, media.fontA, 3)	
 	createText(txt.startup + 1, getLangString("continue", state.language))

@@ -80,19 +80,19 @@ endFunction
 
 function setClockItems(c as clock_t)
 
-	out as integer
+	items as integer
 
-	if c.hour <> 0
-		out = 3
+	if c.secTotal => 3600
+		items = 3
 	endif
-	if c.hour = 0 and c.min <> 0
-		out = 2
+	if c.secTotal < 3600 and c.secTotal => 60  
+		items = 2
 	endif
-	if out = 0
-		out = 1
+	if c.secTotal < 60
+		items = 1
 	endif
-
-endFunction out
+	
+endFunction items
 
 function setClockFromInput(c ref as clock_t)
 
