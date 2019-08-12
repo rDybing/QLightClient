@@ -45,6 +45,7 @@ Contact: roy[dot]dybing[at]gmail[dot]com
 #constant true			= 1
 #constant nil			= -1
 #constant escKey		= 27
+#constant maxClients	= 8
 
 global media		as media_t				// constant IDs
 global font			as font_t				// constant IDs
@@ -106,13 +107,14 @@ function main()
 	if not state.fatalError
 		splash()
 		lanServer = networkAreadyExist()
+		clearTextSingle(txt.server)
 		if device.isComputer
 			cueController(lanServer)
 		else
 			if restore
 				cueController(lanServer)
 			else
-				if lanServer.exist
+				if lanServer.exist and lanServer.ip <> device.privateIP
 					cueController(lanServer)
 				else
 					mainMenuView(lanServer)
@@ -121,7 +123,7 @@ function main()
 		endif
 		appJSON = app.toJSON()
 		repeat
-			print("In JSON")
+			print("--In JSON--")
 			print(appJSON)
 			sync()
 		until GetRawKeyReleased(escKey)
@@ -133,16 +135,36 @@ function splash()
 	
 	msg				as string
 	proceedTimer	as timer_t
+	serverTimer		as timer_t
 	
 	setBackgroundColor(color[10])
 	placeLogoSplash()
 	
+	if app.name = ""
+		app.name = "Ctrl-"
+	endif
+
+	if device.isComputer
+		app.mode = "noneComp"
+	else
+		app.mode = "noneSP"
+	endif
+	
+	updateServerText(uploadAppInfo())
+	serverTimer = setTimer(1000)
+	
+	repeat
+		sync()
+	until getTimer(serverTimer)
+	
+	clearTextSingle(txt.server)
+	
 	msg = getWelcome()
-	clearText(txt.server, txt.server)	
+	clearTextSingle(txt.server)	
 	placeStartupText(msg)
 	textFade(txt.startup, txt.startup + 1, "in")
 	proceedTimer = setTimer(4000)
-	clearText(txt.server, txt.server)
+	clearTextSingle(txt.server)
 	
 	repeat
 		sync()

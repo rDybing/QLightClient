@@ -116,7 +116,7 @@ function controlView()
 
 	app.mode = "ctrlLite"
 	
-	updateServerText(uploadAppInfo())
+	updateServerText(updateAppInfo())
 	serverTimer = setTimer(1000)
 	
 	repeat
@@ -204,6 +204,7 @@ function controlView()
 
 		if getTimer(clientTimer)
 			receiveClientsConnect(net, state.mode, cue, clock)
+			receiveClientsDisconnect(net)
 		endif
 		
 		if resetGlow
@@ -454,6 +455,7 @@ function cueController(lanServer as lanServer_t)
 	net			as network_t
 	netMsg		as message_t
 	serverTimer	as timer_t
+	netActive	as integer
 
 	if app.name = ""
 		app.name = "Client-"
@@ -465,7 +467,7 @@ function cueController(lanServer as lanServer_t)
 		app.mode = "clientSP"
 	endif
 	
-	updateServerText(uploadAppInfo())
+	updateServerText(updateAppInfo())
 	serverTimer = setTimer(1000)
 	
 	repeat
@@ -474,14 +476,18 @@ function cueController(lanServer as lanServer_t)
 	
 	clearTextSingle(txt.server)
 
-	joinHost(net, lanServer)
+	netActive = joinHost(net, lanServer)
 
-	repeat
-		print("waiting for response from server...")
-		testNetwork(net)
-		netMsg = receiveServerAck(net)
-		sync()
-	until netMsg.mode = enum.cue or netMsg.mode = enum.countdown
+	if netActive
+		repeat
+			print("waiting for response from server...")
+			testNetwork(net)
+			netMsg = receiveServerAck(net)
+			sync()
+		until netMsg.mode = enum.cue or netMsg.mode = enum.countdown
+	else
+		quit = true
+	endif
 	
 	repeat
 		select netMsg.mode

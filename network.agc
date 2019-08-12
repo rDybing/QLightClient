@@ -74,13 +74,12 @@ function networkAreadyExist()
 	if not lanServer.exist
 		print("Finding LAN host on server")
 		sync()
-		msgAPI = getLANServerIP()
+		msgAPI = getServerIP()
 		status = GetStringToken(msgAPI, ":", 1)
 		if status = "OK"
 			lanServer.exist = true
 			lanServer.directConnect = false
 			lanServer.ip = GetStringToken(msgAPI, ":", 2)
-			//lanServer.hostID = JoinNetwork(server.ip, server.port, gs.netClientName)
 		endif
 	endif
 
@@ -126,7 +125,6 @@ endFunction
 
 function receiveClientsConnect(net ref as network_t, mode as integer, cue as cueLight_t, clock as clock_t)
 
-	maxClients		as integer = 8
 	newClientAck	as integer
 	clientName		as string
 	clientRemoval	as integer
@@ -172,9 +170,31 @@ function receiveClientsConnect(net ref as network_t, mode as integer, cue as cue
 				endif
 			endif
 		endif
-		net.clientCount = GetNetworkNumClients(net.id) - 1
 		clientConnectID = GetNetworkNextClient(net.id)
 	endWhile
+	
+	net.clientCount = GetNetworkNumClients(net.id) - 1
+	
+endFunction
+
+function receiveClientsDisconnect(net ref as network_t)
+	
+	clientConnectID	as integer
+	
+	clientConnectID = GetNetworkFirstClient(net.id)
+	
+	while clientConnectID > 0 and net.clients.length < maxClients
+		if GetNetworkClientDisconnected(net.id, clientConnectID)
+			if GetNetworkClientUserData(net.id, clientConnectID, 0) = 0
+				SetNetworkClientUserData(net.id, clientConnectID, 0, 1)
+				DeleteNetworkClient(net.id, clientConnectID)
+			endif
+			removeClient(net, clientConnectID)
+		endif
+		clientConnectID = GetNetworkNextClient(net.id)	
+	endWhile
+	
+	net.clientCount = GetNetworkNumClients(net.id) - 1
 	
 endFunction
 
@@ -263,13 +283,19 @@ endFunction
 
 function joinHost(net ref as network_t, lanServer as lanServer_t)
 
+	ok as integer = false
+
 	if lanServer.directConnect
 		net.id = JoinNetwork("QLightNet", app.id)
 	else
 		net.id = JoinNetwork(lanServer.ip, lanServer.port, app.id)
 	endif
 
-endFunction
+	if IsNetworkActive(net.id) and lanServer.ip <> device.privateIP
+		ok = true
+	endif
+	
+endFunction ok
 
 function disconnectHost(net as network_t)
 

@@ -41,6 +41,34 @@ function uploadAppInfo()
 	
 endFunction msgOut
 
+// ************************************************ PUT Functions ******************************************************
+
+function updateAppInfo()
+	
+	msgOut	as string
+	posY	as integer = 5
+	appName	as string
+	query	as string
+	
+	query = "postAppUpdate"
+	
+	msg as string
+	out as string
+	
+	if app.name = "Client-" or app.name = "Ctrl-"
+		appName = app.name + app.id
+	else
+		appName = app.name
+	endif
+	out = "ID=" + app.id
+	out = out + "&Name=" + appName
+	out = out + "&Mode=" + app.mode 
+	msg = postToServer(query, out, posY)
+	
+	msgOut = GetStringToken(msg, ":", 2)
+	
+endFunction msgOut
+
 // ************************************************ GET Functions ******************************************************
 
 function getWelcome()
@@ -55,7 +83,7 @@ function getWelcome()
 	
 endFunction msg
 
-function getLANServerIP()
+function getServerIP()
 
 	posY	as integer = 5
 	query	as string
