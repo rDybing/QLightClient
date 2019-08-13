@@ -131,6 +131,7 @@ function testClockRaw(in as clock_t)
 	print("r startsec : " + str(in.rStartSec))
 	print("r endsec   : " + str(in.rEndSec))
 	print("play       : " + str(in.play))
+	print("binary     : " + str(in.binary))
 
 	testDevice()
 

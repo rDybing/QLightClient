@@ -97,6 +97,13 @@ function handleControlButtons(mode ref as mode_t, clock ref as clock_t, clockCol
 				mode.emit = true
 			endif
 		endCase
+		case sprite.bCtrlBinary
+			keyTimer = keyPressed(sprite.bCtrlBinary)
+			mode.altButton = true
+			mode.enum = enum.binary
+			mode.emit = true
+			clock.binary = not clock.binary
+		endCase
 		endSelect
 	endif
 

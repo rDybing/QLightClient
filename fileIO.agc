@@ -27,6 +27,7 @@ function loadMedia()
 	LoadImage(media.framePc, "frame_trans_pc.png")
 	LoadImage(media.framePhone, "frame_trans_phone.png")
 	LoadImage(media.dot, "whiteDot.png")
+	loadImage(media.bits, "bit.png")
 	LoadImage(media.bBack, "btnBack.png")
 	LoadImage(media.bReady, "btnReady.png")
 	LoadImage(media.bMenu, "btnMenu.png")
@@ -39,6 +40,14 @@ function loadMedia()
 	LoadImage(media.flagUK, "flagUK.png")
 	LoadImage(media.flagDE, "flagGermany.png")
 	LoadImage(media.flagFR, "flagFrance.png")
+
+	for i = 0 to 39
+		if i < 9 
+			LoadSubimage(media.bitStart + i, media.bits, "countDown_000" + str(i + 1) + ".png")
+		else
+			LoadSubimage(media.bitStart + i, media.bits, "countDown_00" + str(i + 1) + ".png")
+		endif
+	next i
 
 endFunction
  

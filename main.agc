@@ -46,6 +46,7 @@ Contact: roy[dot]dybing[at]gmail[dot]com
 #constant nil			= -1
 #constant escKey		= 27
 #constant maxClients	= 8
+#constant bHeight		= 8
 
 global media		as media_t				// constant IDs
 global font			as font_t				// constant IDs

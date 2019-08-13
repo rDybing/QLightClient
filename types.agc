@@ -128,6 +128,7 @@ type enum_t
 	edit				as integer
 	reset				as integer
 	newClient			as integer
+	binary				as integer
 endType
 
 //************************************************* Module Specific ****************************************************
@@ -158,6 +159,7 @@ type clock_t
 	rEndSec				as integer
 	play				as integer
 	output				as string
+	binary				as integer
 endType
 
 // text control in countdown
@@ -199,6 +201,7 @@ type media_t
 	framePhone			as integer
 	logo				as integer
 	dot					as integer
+	bits				as integer
 	bBack				as integer
 	bReady				as integer
 	bMenu				as integer
@@ -207,6 +210,7 @@ type media_t
 	bCheck				as integer
 	bPlay				as integer
 	bPause				as integer
+	bitStart			as integer
 	flagNO				as integer
 	flagUK				as integer
 	flagDE				as integer
@@ -238,6 +242,7 @@ type sprite_t
 	bCtrlTimer			as integer
 	bCtrlEdit			as integer
 	bCtrlReset			as integer
+	bCtrlBinary			as integer
 	bCtrlPlayPause		as integer
 	bCtrlAudio			as integer
 	bCtrlFade			as integer
@@ -247,6 +252,8 @@ type sprite_t
 	bRight				as integer
 	bCheck				as integer
 	flag				as integer
+	bitStart			as integer
+	bit					as integer[]
 endType
 
 type tween_t
@@ -297,6 +304,7 @@ type txt_t
 	bCtrlTimer			as integer
 	bCtrlEdit			as integer
 	bCtrlReset			as integer
+	bCtrlBinary			as integer
 	bCtrlAudio			as integer
 	bCtrlFade			as integer
 	modeSelect			as integer

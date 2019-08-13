@@ -78,9 +78,9 @@ function placeModeButtons(col as color_t)
 	sTxt	as integer = false
 
 	spr.width = 70
-	spr.height = 10
+	spr.height = bHeight
 	spr.posX =  15
-	spr.posY = 26
+	spr.posY = 23
 
 	// Button Client
 	imageSetup(sprite.bModeClient, layer.C, spr, media.dot)
@@ -99,7 +99,7 @@ endFunction btn
 function highlightButton(spriteID as integer, highlight as integer)
 
 	if highlight
-		SetSpriteColorAlpha(spriteID, 32)
+		SetSpriteColorAlpha(spriteID, 48)
 	else
 		SetSpriteColorAlpha(spriteID, color[11].a)
 	endif
@@ -127,7 +127,7 @@ function placeControlButtons(dimmed as integer)
 
 	spr 	as spriteProp_t
 	sprTemp	as spriteProp_t
-	btn 	as button_t[9]
+	btn 	as button_t[10]
 	sTxt	as integer = false
 	btnPP	as integer[]
 
@@ -135,9 +135,9 @@ function placeControlButtons(dimmed as integer)
 	btnPP.insert(media.bPause)
 
 	spr.width = 70
-	spr.height = 10
+	spr.height = bHeight
 	spr.posX =  15
-	spr.posY = 26
+	spr.posY = 23
 
 	// Button Audio On/Off (Cue)
 	sprTemp = spr
@@ -186,12 +186,13 @@ function placeControlButtons(dimmed as integer)
 	spr.width = 15
 	spr.height = -1
 	spriteSetup(sprite.bCtrlPlayPause, layer.C, spr, btnPP)
-	SetSpriteColor(sprite.bCtrlPlayPause, color[5].r, color[5].g, color[5].b, color[11].a)
+	SetSpriteColor(sprite.bCtrlPlayPause, color[5].r, color[5].g, color[5].b, dimmed)
 	placeButtonText(txt.null, "", layer.B, spr, color[0], sTxt)
 	btn[6] = buttonTransfer(spr, sprite.bCtrlPlayPause, txt.null)
 	spr = sprTemp
 	// Button Edit (timer)
 	spr.posY = spr.posY + spr.height + 2
+	sprTemp = spr
 	spr.width = (spr.width / 2) - 1.5
 	sTxt = true
 	imageSetup(sprite.bCtrlEdit, layer.C, spr, media.dot)
@@ -204,6 +205,14 @@ function placeControlButtons(dimmed as integer)
 	SetSpriteColor(sprite.bCtrlReset, color[11].r, color[11].g, color[11].b, color[11].a)
 	placeButtonText(txt.bCtrlReset, getLangString("reset", state.language), layer.B, spr, color[0], sTxt)
 	btn[8] = buttonTransfer(spr, sprite.bCtrlReset, txt.bCtrlReset)
+	// Button Binary
+	spr = sprTemp
+	sTxt = false
+	spr.posY = spr.posY + spr.height + 2
+	imageSetup(sprite.bCtrlBinary, layer.C, spr, media.dot)
+	SetSpriteColor(sprite.bCtrlBinary, color[11].r, color[11].g, color[11].b, color[11].a)
+	placeButtonText(txt.bCtrlBinary, getLangString("binary", state.language), layer.B, spr, color[0], sTxt)
+	btn[9] = buttonTransfer(spr, sprite.bCtrlBinary, txt.bCtrlBinary)
 
 endFunction btn
 
@@ -217,10 +226,10 @@ function highlightColorButton(spriteID as integer, highlight as integer, dimmed 
 
 endFunction
 
-function resetPlayPause(c ref as clock_t)
+function resetPlayPause(c ref as clock_t, dimmed as integer)
 
 		SetSpriteFrame(sprite.bCtrlPlayPause, 1)
-		SetSpriteColor(sprite.bCtrlPlayPause, color[5].r, color[5].g, color[5].b, color[11].a)
+		SetSpriteColor(sprite.bCtrlPlayPause, color[5].r, color[5].g, color[5].b, dimmed)
 		c.play = false
 
 endFunction
@@ -251,7 +260,7 @@ function placeSetClockEdit()
 	spr.posX = 70
 	spr.posY = mt.startY - 2
 	spr.width = 16
-	spr.height = 10
+	spr.height = bHeight
 
 	placeTextInput(mt, "", 10)
 	SetEditBoxInputType(txt.editbox, 1) 
@@ -305,7 +314,7 @@ function placeDropDownMenu(options as string[])
 
 	col = color[12]
 	spr.width = 74
-	spr.height = 8 * (options.length + 1)
+	spr.height = 7 * (options.length + 1)
 	spr.posX =  26
 	spr.posY = 8
 
@@ -313,7 +322,7 @@ function placeDropDownMenu(options as string[])
 	SetSpriteColor(sprite.dropBack, col.r, col.g, col.b, col.a)
 
 	spr.width = 70
-	spr.height = 10
+	spr.height = bHeight
 	spr.posX = 28
 	spr.posY = spr.posY + 1
 
@@ -440,7 +449,7 @@ function placeSetClientName()
 	spr.posX = 80
 	spr.posY = mt.startY - 2
 	spr.width = 16
-	spr.height = 10
+	spr.height = bHeight
 
 	placeTextInput(mt, app.name, 10)
 	// Button Accept
@@ -632,6 +641,27 @@ function clearCountDown()
 endFunction
 
 //************************************************* Static Assets ******************************************************
+
+function createBitSprites()
+
+	for i = 0 to 15
+		sprite.bit.insert(sprite.bitStart + i)
+	next i
+
+	createSprite(sprite.bit[0], media.bitStart)
+
+	for i = 1 to 39
+		addSpriteAnimationFrame(sprite.bit[0], media.bitStart + i)
+	next i
+
+	setSpriteVisible(sprite.bit[0], 0)
+
+	for i = 1 to 15
+		cloneSprite(sprite.bit[i], sprite.bit[0])
+		setSpriteVisible(sprite.bit[i], 0)
+	next i
+
+endFunction
 
 function placeFrame()
 

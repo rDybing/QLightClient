@@ -55,7 +55,7 @@ function placeMenuText()
 	mt as txtProp_t
 
 	mt.startX = 50
-	mt.startY = 16
+	mt.startY = 13
 	mt.align = 1
 	mt.size = 6
 	mt.layer = layer.B
@@ -74,14 +74,14 @@ endFunction
 function placeButtonText(txtId as integer, txtStr as string, layer as integer, spr as spriteProp_t, col as color_t, smallText as integer)
 
 	mt as txtProp_t
-	sizeDec as float = 3
+	sizeDec as float = 2
 
 	mt.startX = spr.posX + (spr.width / 2)
-	mt.startY = spr.posY + 1
+	mt.startY = spr.posY + 0.5
 	mt.align = 1
 	if smallText
-		sizeDec = 5
-		mt.startY = mt.startY + 1
+		sizeDec = 3.25
+		mt.startY = mt.startY + 0.75
 	endif
 	mt.size = spr.height - sizeDec
 	mt.layer = layer

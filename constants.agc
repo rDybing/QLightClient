@@ -37,13 +37,14 @@ function initConstants()
 	txt.bCtrlTimer			= 1013
 	txt.bCtrlEdit			= 1014
 	txt.bCtrlReset			= 1015
-	txt.bCtrlAudio			= 1016
-	txt.bCtrlFade			= 1017
-	txt.modeSelect			= 1018
-	txt.appID				= 1019
-	txt.bLang				= 1020
-	txt.bName				= 1021
-	txt.server				= 1022
+	txt.bCtrlBinary			= 1016
+	txt.bCtrlAudio			= 1017
+	txt.bCtrlFade			= 1018
+	txt.modeSelect			= 1019
+	txt.appID				= 1020
+	txt.bLang				= 1021
+	txt.bName				= 1022
+	txt.server				= 1023
 	txt.startup				= 1095
 	txt.clock				= 1100
 
@@ -60,14 +61,16 @@ function initConstants()
 	sprite.bCtrlTimer		= 1020
 	sprite.bCtrlEdit		= 1021
 	sprite.bCtrlReset		= 1022
-	sprite.bCtrlPlayPause	= 1023
-	sprite.bCtrlAudio		= 1024
-	sprite.bCtrlFade		= 1025
-	sprite.bLang			= 1026
-	sprite.bName			= 1027
-	sprite.bLeft			= 1028
-	sprite.bRight			= 1029
-	sprite.bCheck			= 1030
+	sprite.bCtrlBinary		= 1023
+	sprite.bCtrlPlayPause	= 1024
+	sprite.bCtrlAudio		= 1025
+	sprite.bCtrlFade		= 1026
+	sprite.bLang			= 1027
+	sprite.bName			= 1028
+	sprite.bLeft			= 1029
+	sprite.bRight			= 1030
+	sprite.bCheck			= 1031
+	sprite.bitStart			= 1063 // reserved up to 1079 - 16 bits
 	sprite.flag				= 1080
 	sprite.frame			= 1097
 	sprite.back				= 1099
@@ -89,18 +92,20 @@ function initConstants()
 	media.framePhone		= 1009
 	media.logo				= 1010
 	media.dot				= 1011
-	media.bBack				= 1012
-	media.bReady			= 1013
-	media.bMenu				= 1014
-	media.bLeft				= 1015
-	media.bRight			= 1016
-	media.bCheck			= 1017
-	media.bPlay				= 1018
-	media.bPause			= 1019
-	media.flagNO			= 1080
-	media.flagUK			= 1081
-	media.flagDE			= 1082
-	media.flagFR			= 1083
+	media.bits				= 1012
+	media.bBack				= 1013
+	media.bReady			= 1014
+	media.bMenu				= 1015
+	media.bLeft				= 1016
+	media.bRight			= 1017
+	media.bCheck			= 1018
+	media.bPlay				= 1019
+	media.bPause			= 1020
+	media.bitStart			= 1050 // reserved up to 1089
+	media.flagNO			= 1090
+	media.flagUK			= 1091
+	media.flagDE			= 1092
+	media.flagFR			= 1093
 
 endFunction
 
@@ -121,6 +126,7 @@ function initEnums()
 	enum.edit				= 22
 	enum.reset				= 23
 	enum.newClient			= 24
+	enum.binary				= 25
 	
 endFunction
 

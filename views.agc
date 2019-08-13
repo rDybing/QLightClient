@@ -73,7 +73,7 @@ function controlView()
 	quit 		as integer
 	keyTimer	as timer_t
 	button		as button_t[]
-	dimmed		as integer = 48
+	dimmed		as integer = 80
 	altButton	as integer = false
 	clock		as clock_t
 	clockTimer	as timer_t
@@ -179,6 +179,13 @@ function controlView()
 					updateButtonText(txt.bCtrlFade, getLangString("fadeOff", state.language))
 				endif
 			endCase
+			case enum.binary
+				if clock.binary
+					highlightButton(sprite.bCtrlBinary, true)
+				else
+					highlightButton(sprite.bCtrlBinary, false)
+				endif
+			endCase
 			endSelect
 		endif
 
@@ -266,21 +273,21 @@ function changeButtonHighlight(in as integer, dimmed as integer, clock ref as cl
 		highlightColorButton(sprite.bCtrlReady, false, dimmed)
 		highlightColorButton(sprite.bCtrlAction, false, dimmed)
 		highlightButton(sprite.bCtrlTimer, false)
-		resetPlayPause(clock)
+		resetPlayPause(clock, dimmed)
 	endCase
 	case enum.ready
 		highlightColorButton(sprite.bCtrlWait, false, dimmed)
 		highlightColorButton(sprite.bCtrlReady, true, dimmed)
 		highlightColorButton(sprite.bCtrlAction, false, dimmed)
 		highlightButton(sprite.bCtrlTimer, false)
-		resetPlayPause(clock)
+		resetPlayPause(clock, dimmed)
 	endCase
 	case enum.action
 		highlightColorButton(sprite.bCtrlWait, false, dimmed)
 		highlightColorButton(sprite.bCtrlReady, false, dimmed)
 		highlightColorButton(sprite.bCtrlAction, true, dimmed)
 		highlightButton(sprite.bCtrlTimer, false)
-		resetPlayPause(clock)
+		resetPlayPause(clock, dimmed)
 	endCase
 	case enum.countdown
 		highlightColorButton(sprite.bCtrlWait, false, dimmed)
@@ -298,6 +305,9 @@ function changeButtonHighlight(in as integer, dimmed as integer, clock ref as cl
 	case enum.reset
 		highlightButton(sprite.bCtrlReset, true)
 		setSpriteFramePlayPause(clock.play)
+	endCase
+	case enum.binary
+		// more here possibly
 	endCase
 	endSelect
 
