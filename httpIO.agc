@@ -87,7 +87,7 @@ function getServerIP()
 	query	as string
 	msg		as string
 
-	query = "getServerIP?PrivateIP=" + device.privateIP
+	query = "getServerIP?ID=" + app.id
 
 	msg = getFromServer(query, posY)
 	
