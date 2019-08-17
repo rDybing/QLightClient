@@ -77,7 +77,7 @@ function getWelcome()
 	query		as string
 	msg			as string
 		
-	query = "getWelcome?appID=" + app.id
+	query = "getWelcome?ID=" + app.id
 	
 	msg = getFromServer(query, posY)
 	
@@ -89,7 +89,7 @@ function getServerIP()
 	query	as string
 	msg		as string
 
-	query = "getServerIP?privateIP=" + device.privateIP
+	query = "getServerIP?PrivateIP=" + device.privateIP
 
 	msg = getFromServer(query, posY)
 	

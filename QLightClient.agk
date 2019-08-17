@@ -19,6 +19,7 @@ firebase_config_path=
 url_scheme=
 deep_link=
 arcore=0
+admob_app_id=
 
 [ipa_settings]
 app_name=
@@ -38,6 +39,7 @@ splash_960_path=
 splash_2048_path=
 splash_1136_path=
 prov_profile_path=
+admob_app_id=
 
 [html5_settings]
 commands_used=0
@@ -60,19 +62,19 @@ FILE_11=network.agc;-1
 FILE_12=httpIO.agc;-1
 
 [files]
-FILE_NAME_0=0;main.agc;4310;0
-FILE_NAME_1=0;types.agc;1669;10
-FILE_NAME_2=0;fileIO.agc;1542;7
-FILE_NAME_3=0;chores.agc;1899;8
-FILE_NAME_4=0;tests.agc;3843;12
+FILE_NAME_0=1;main.agc;2732;0
+FILE_NAME_1=0;types.agc;3196;10
+FILE_NAME_2=0;fileIO.agc;1952;7
+FILE_NAME_3=0;chores.agc;33;8
+FILE_NAME_4=0;tests.agc;3222;12
 FILE_NAME_5=0;errors.agc;451;9
 FILE_NAME_6=0;input.agc;628;4
-FILE_NAME_7=0;views.agc;14037;1
-FILE_NAME_8=0;output.agc;1023;2
-FILE_NAME_9=0;constants.agc;2431;11
-FILE_NAME_10=1;text.agc;909;3
-FILE_NAME_11=0;network.agc;8440;5
-FILE_NAME_12=0;httpIO.agc;2020;6
+FILE_NAME_7=0;views.agc;14448;1
+FILE_NAME_8=0;output.agc;15192;2
+FILE_NAME_9=0;constants.agc;2976;11
+FILE_NAME_10=0;text.agc;2650;3
+FILE_NAME_11=0;network.agc;15;5
+FILE_NAME_12=0;httpIO.agc;0;6
 
 [project]
 description=
