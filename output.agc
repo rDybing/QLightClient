@@ -8,7 +8,7 @@ Copyright 2019 Roy Dybing - all rights reserved
 
 ***********************************************************************************************************************/
 
-//************************************************* Menu Functions *****************************************************
+//************************************************* Main Menu Functions ************************************************
 
 function placeMainMenu()
 
@@ -120,6 +120,164 @@ function clearMainMenu(btn as button_t[])
 	clearTextSingle(txt.appID)
 
 endFunction
+
+//************************************************* Main Menu Drop Down Functions **************************************
+
+function placeDropDownMenu(options as string[])
+
+	btn		as button_t[2]
+	spr		as spriteProp_t
+	sTxt	as integer = false
+	col		as color_t
+
+	col = color[12]
+	spr.width = 74
+	spr.height = 7 * (options.length + 1)
+	spr.posX =  26
+	spr.posY = 8
+
+	imageSetup(sprite.dropBack, layer.A, spr, media.dot)
+	SetSpriteColor(sprite.dropBack, col.r, col.g, col.b, col.a)
+
+	spr.width = 70
+	spr.height = bHeight
+	spr.posX = 28
+	spr.posY = spr.posY + 1
+
+	col = color[11]
+	// Button Set Language
+	imageSetup(sprite.bLang, layer.front, spr, media.dot)
+	SetSpriteColor(sprite.bLang, col.r, col.g, col.b, 32)
+	placeButtonText(txt.bLang, getLangString(options[0], state.language), layer.top, spr, color[0], sTxt)
+	btn[0] = buttonTransfer(spr, sprite.bLang, txt.bLang)
+	// Button Set Client Name
+	spr.posY = spr.posY + spr.height + 2
+	imageSetup(sprite.bName, layer.front, spr, media.dot)
+	SetSpriteColor(sprite.bName, col.r, col.g, col.b, 32)
+	placeButtonText(txt.bName, getLangString(options[1], state.language), layer.top, spr, color[0], sTxt)
+	btn[1] = buttonTransfer(spr, sprite.bName, txt.bName)
+
+endFunction btn
+
+function getDropDownMenuSize()
+
+	out as float
+	out = GetSpriteHeight(sprite.dropBack)
+
+endFunction out
+
+function resizeDropDownMenu(size as float)
+
+	SetSpriteSize(sprite.dropBack, GetSpriteWidth(sprite.dropBack), size)
+
+endFunction
+
+function moveButton(btn as button_t, offset as integer)
+
+	if GetSpriteExists(btn.sprID)
+		SetSpritePosition(btn.sprID, btn.sprX, btn.sprY + offset)
+		SetTextPosition(btn.txtID, btn.txtX, btn.txtY + offset)
+	endIf
+
+endFunction
+
+function clearDropDownMenu(btn as button_t[])
+
+	clearSpriteSingle(sprite.dropBack)
+	for i = 0 to btn.length
+		clearSpriteSingle(btn[i].sprID)
+		clearTextSingle(btn[i].txtID)
+	next i
+
+endFunction
+
+function placeSelectLanguage(posY as float)
+
+	btn as button_t[4]
+	spr as spriteProp_t
+	col as color_t
+	col = color[11]
+	languages as integer[]
+	languages.insert(media.flagNO)
+	languages.insert(media.flagUK)
+	languages.insert(media.flagDE)
+	languages.insert(media.flagFR)
+
+	spr.width = 16
+	spr.height = -1
+	spr.posX = 28
+	spr.posY = posY
+
+	// Button Prev Language
+	imageSetup(sprite.bLeft, layer.front, spr, media.bLeft)
+	btn[0] = buttonTransfer(spr, sprite.bLeft, nil)
+	// Sprite Flag
+	spr.posX = spr.posX + spr.width + 1
+	spriteSetup(sprite.flag, layer.front, spr, languages)
+	SetSpriteFrame(sprite.flag, state.language + 1)
+	// Button Next Language
+	spr.posX = spr.posX + spr.width + 1
+	imageSetup(sprite.bRight, layer.front, spr, media.bRight)
+	btn[1] = buttonTransfer(spr, sprite.bRight, nil)
+	// Button Accept
+	spr.posX = spr.posX + spr.width + 1
+	imageSetup(sprite.bCheck, layer.front, spr, media.bCheck)
+	btn[2] = buttonTransfer(spr, sprite.bCheck, nil)
+	SetSpriteColor(sprite.bCheck, color[3].r, color[3].g, color[3].b, 128)
+
+endFunction btn
+
+function updateFlagSprite(in as integer)
+
+	inc in
+	setSpriteFrame(sprite.flag, in)
+
+endFunction
+
+function updateCheckSprite(in as integer)
+
+	if in = state.language
+		SetSpriteColor(sprite.bCheck, color[3].r, color[3].g, color[3].b, 128)
+	else
+		SetSpriteColor(sprite.bCheck, color[5].r, color[5].g, color[5].b, 255)
+	endif
+
+endFunction
+
+function clearSelectLanguage(btn as button_t[])
+
+	clearSpriteSingle(sprite.flag)
+	for i = 0 to btn.length
+		clearSpriteSingle(btn[i].sprID)
+	next i
+
+endFunction
+
+function placeSetClientName()
+
+	btn as button_t
+	mt	as txtProp_t
+	spr as spriteProp_t
+
+	mt.startX = getSpriteX(sprite.bName)
+	mt.startY = getSpriteY(sprite.bName) + GetSpriteHeight(sprite.bName) + 2
+	mt.size = 7
+	mt.align = 1
+
+	spr.posX = 80
+	spr.posY = mt.startY - 2
+	spr.width = 16
+	spr.height = bHeight
+
+	placeTextInput(mt, app.name, 10)
+	// Button Accept
+	imageSetup(sprite.bCheck, layer.front, spr, media.bCheck)
+	btn = buttonTransfer(spr, sprite.bCheck, nil)
+	SetSpriteColor(sprite.bCheck, color[5].r, color[5].g, color[5].b, 255)
+
+	SetEditBoxFocus(txt.editBox, 1)
+
+endFunction btn
 
 //************************************************* Controller Functions ***********************************************
 
@@ -302,164 +460,6 @@ function clearControl(btn as button_t[])
 	clearTextSingle(txt.clock)
 
 endFunction
-
-//************************************************* Main Menu Drop Down Functions **************************************
-
-function placeDropDownMenu(options as string[])
-
-	btn		as button_t[2]
-	spr		as spriteProp_t
-	sTxt	as integer = false
-	col		as color_t
-
-	col = color[12]
-	spr.width = 74
-	spr.height = 7 * (options.length + 1)
-	spr.posX =  26
-	spr.posY = 8
-
-	imageSetup(sprite.dropBack, layer.A, spr, media.dot)
-	SetSpriteColor(sprite.dropBack, col.r, col.g, col.b, col.a)
-
-	spr.width = 70
-	spr.height = bHeight
-	spr.posX = 28
-	spr.posY = spr.posY + 1
-
-	col = color[11]
-	// Button Set Language
-	imageSetup(sprite.bLang, layer.front, spr, media.dot)
-	SetSpriteColor(sprite.bLang, col.r, col.g, col.b, 32)
-	placeButtonText(txt.bLang, getLangString(options[0], state.language), layer.top, spr, color[0], sTxt)
-	btn[0] = buttonTransfer(spr, sprite.bLang, txt.bLang)
-	// Button Set Client Name
-	spr.posY = spr.posY + spr.height + 2
-	imageSetup(sprite.bName, layer.front, spr, media.dot)
-	SetSpriteColor(sprite.bName, col.r, col.g, col.b, 32)
-	placeButtonText(txt.bName, getLangString(options[1], state.language), layer.top, spr, color[0], sTxt)
-	btn[1] = buttonTransfer(spr, sprite.bName, txt.bName)
-
-endFunction btn
-
-function getDropDownMenuSize()
-
-	out as float
-	out = GetSpriteHeight(sprite.dropBack)
-
-endFunction out
-
-function resizeDropDownMenu(size as float)
-
-	SetSpriteSize(sprite.dropBack, GetSpriteWidth(sprite.dropBack), size)
-
-endFunction
-
-function moveButton(btn as button_t, offset as integer)
-
-	if GetSpriteExists(btn.sprID)
-		SetSpritePosition(btn.sprID, btn.sprX, btn.sprY + offset)
-		SetTextPosition(btn.txtID, btn.txtX, btn.txtY + offset)
-	endIf
-
-endFunction
-
-function clearDropDownMenu(btn as button_t[])
-
-	clearSpriteSingle(sprite.dropBack)
-	for i = 0 to btn.length
-		clearSpriteSingle(btn[i].sprID)
-		clearTextSingle(btn[i].txtID)
-	next i
-
-endFunction
-
-function placeSelectLanguage(posY as float)
-
-	btn as button_t[4]
-	spr as spriteProp_t
-	col as color_t
-	col = color[11]
-	languages as integer[]
-	languages.insert(media.flagNO)
-	languages.insert(media.flagUK)
-	languages.insert(media.flagDE)
-	languages.insert(media.flagFR)
-
-	spr.width = 16
-	spr.height = -1
-	spr.posX = 28
-	spr.posY = posY
-
-	// Button Prev Language
-	imageSetup(sprite.bLeft, layer.front, spr, media.bLeft)
-	btn[0] = buttonTransfer(spr, sprite.bLeft, nil)
-	// Sprite Flag
-	spr.posX = spr.posX + spr.width + 1
-	spriteSetup(sprite.flag, layer.front, spr, languages)
-	SetSpriteFrame(sprite.flag, state.language + 1)
-	// Button Next Language
-	spr.posX = spr.posX + spr.width + 1
-	imageSetup(sprite.bRight, layer.front, spr, media.bRight)
-	btn[1] = buttonTransfer(spr, sprite.bRight, nil)
-	// Button Accept
-	spr.posX = spr.posX + spr.width + 1
-	imageSetup(sprite.bCheck, layer.front, spr, media.bCheck)
-	btn[2] = buttonTransfer(spr, sprite.bCheck, nil)
-	SetSpriteColor(sprite.bCheck, color[3].r, color[3].g, color[3].b, 128)
-
-endFunction btn
-
-function updateFlagSprite(in as integer)
-
-	inc in
-	setSpriteFrame(sprite.flag, in)
-
-endFunction
-
-function updateCheckSprite(in as integer)
-
-	if in = state.language
-		SetSpriteColor(sprite.bCheck, color[3].r, color[3].g, color[3].b, 128)
-	else
-		SetSpriteColor(sprite.bCheck, color[5].r, color[5].g, color[5].b, 255)
-	endif
-
-endFunction
-
-function clearSelectLanguage(btn as button_t[])
-
-	clearSpriteSingle(sprite.flag)
-	for i = 0 to btn.length
-		clearSpriteSingle(btn[i].sprID)
-	next i
-
-endFunction
-
-function placeSetClientName()
-
-	btn as button_t
-	mt	as txtProp_t
-	spr as spriteProp_t
-
-	mt.startX = getSpriteX(sprite.bName)
-	mt.startY = getSpriteY(sprite.bName) + GetSpriteHeight(sprite.bName) + 2
-	mt.size = 7
-	mt.align = 1
-
-	spr.posX = 80
-	spr.posY = mt.startY - 2
-	spr.width = 16
-	spr.height = bHeight
-
-	placeTextInput(mt, app.name, 10)
-	// Button Accept
-	imageSetup(sprite.bCheck, layer.front, spr, media.bCheck)
-	btn = buttonTransfer(spr, sprite.bCheck, nil)
-	SetSpriteColor(sprite.bCheck, color[5].r, color[5].g, color[5].b, 255)
-
-	SetEditBoxFocus(txt.editBox, 1)
-
-endFunction btn
 
 //************************************************* Cue Light Functions ************************************************
 

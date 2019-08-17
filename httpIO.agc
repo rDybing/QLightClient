@@ -41,8 +41,6 @@ function uploadAppInfo()
 	
 endFunction msgOut
 
-// ************************************************ PUT Functions ******************************************************
-
 function updateAppInfo()
 	
 	msgOut	as string

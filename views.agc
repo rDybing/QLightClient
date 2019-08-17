@@ -8,7 +8,7 @@ Copyright 2019 Roy Dybing - all rights reserved
 
 ***********************************************************************************************************************/
 
-//************************************************* Main Menu Functions ************************************************
+//************************************************* Main Menu View *****************************************************
 
 function mainMenuView(lanServer ref as lanServer_t)
 
@@ -56,6 +56,8 @@ function mainMenuView(lanServer ref as lanServer_t)
 
 endFunction
 
+//************************************************* Main Menu Update ***************************************************
+
 function keyPressed(spriteID)
 
 	keyTimer as timer_t
@@ -66,254 +68,7 @@ function keyPressed(spriteID)
 
 endFunction keyTimer
 
-//************************************************* Controller Functions ***********************************************
-
-function controlView()
-
-	quit 		as integer
-	keyTimer	as timer_t
-	button		as button_t[]
-	dimmed		as integer = 80
-	altButton	as integer = false
-	clock		as clock_t
-	clockTimer	as timer_t
-	clockCol	as color_t[2]
-	prop		as property_t
-	btnOk		as button_t
-	net			as network_t
-	cue			as cueLight_t
-	mode		as mode_t
-	clientTimer	as timer_t
-	timeSet		as integer = false
-	pulseTimer	as timer_t
-	resetGlow	as integer = false
-	pulseReset	as integer = true
-	mutedGreen	as color_t
-	serverTimer	as timer_t
-		
-	state.mode = enum.cue
-	cue = initCue()	
-	setBackgroundColor(color[10])
-	placeLogo()
-	button = placeControlButtons(dimmed)
-
-	prop.baseSize = 7.5
-	prop.font = media.fontC
-	prop.fontColor = 5
-	prop.fontAlpha = 192
-
-	clock = loadClockTimer()
-	clockCol = setClockColors()
-	setSecondsInClock(clock)
-	placeCountdownStart(clock, color[5], prop, enum.ctrl)
-
-	mutedGreen = color[5]
-	mutedGreen.a = dimmed
-
-	if app.name = ""
-		app.name = "Ctrl-"
-	endif
-
-	app.mode = "ctrlLite"
-	
-	updateServerText(updateAppInfo())
-	serverTimer = setTimer(1000)
-	
-	repeat
-		sync()
-	until getTimer(serverTimer)
-	
-	clearTextSingle(txt.server)
-	
-	initHostLAN(net)
-
-	clientTimer = setTimer(500)
-	pulseTimer = setTimer(1000)
-
-	repeat
-		if GetRawKeyReleased(escKey)
-			quit = true
-		endif
-		
-		handleControlButtons(mode, clock, clockCol, clockTimer, keyTimer, prop.fontAlpha)
-
-		if state.buttonHit
-			click()
-			state.buttonHit = false
-			changeButtonHighlight(mode.enum, dimmed, clock)
-			if mode.emit
-				if state.mode = enum.cue or state.mode = enum.countdown
-					networkEmitter(net, mode.enum, cue, clock)
-				endif
-				mode.emit = false
-			endif
-		endif
-
-		if getTimer(keyTimer) and mode.altButton
-			mode.altButton = false
-			highlightButton(mode.spriteID, false)
-			select mode.enum
-			case enum.edit
-				hideCtrlTopButtons(true)
-				btnOK = placeSetClockEdit()
-			endCase
-			case enum.reset
-				if resetGlow
-					resetGlow = false
-					spriteColor(sprite.bCtrlReset, 11)
-				endif
-			endCase
-			case enum.audio
-				cue.audioOn = not cue.audioOn
-				if cue.audioOn
-					updateButtonText(txt.bCtrlAudio, getLangString("audioOn", state.language))
-				else
-					updateButtonText(txt.bCtrlAudio, getLangString("audioOff", state.language))
-				endif
-			endCase
-			case enum.fade
-				cue.fadeOn = not cue.fadeOn
-				if cue.fadeOn
-					updateButtonText(txt.bCtrlFade, getLangString("fadeOn", state.language))
-				else
-					updateButtonText(txt.bCtrlFade, getLangString("fadeOff", state.language))
-				endif
-			endCase
-			case enum.binary
-				if clock.binary
-					highlightButton(sprite.bCtrlBinary, true)
-				else
-					highlightButton(sprite.bCtrlBinary, false)
-				endif
-			endCase
-			endSelect
-		endif
-
-		if btnOK.active
-			timeSet = handleChangeClockEdit(mode.spriteID, btnOK, clock)
-			if timeSet
-				clearTextInput(btnOK.sprID)
-				hideCtrlTopButtons(false)
-				timeSet = false
-				btnOK.active = false
-				updateClockText(clock, 3)
-				updateTextColor(txt.clock, color[prop.fontColor])
-				resetGlow = true
-			endif
-		endif
-
-		if clock.play 
-			if getTimer(clockTimer)
-				updateCtrlClock(clock, clockCol)
-				networkEmitter(net, enum.countdown, cue, clock)
-			endif
-			updateTweenString(txt.clock)
-		endif
-
-		if getTimer(clientTimer)
-			receiveClientsConnect(net, state.mode, cue, clock)
-			receiveClientsDisconnect(net)
-		endif
-		
-		if resetGlow
-			if getTimer(pulseTimer)
-				pulseReset = setButtonPulse(pulseReset, tween.button, sprite.bCtrlReset, mutedGreen, color[11])
-			endif
-			updateTweenSpriteButton(tween.button, sprite.bCtrlReset)
-		endif
-
-		receiveClientsMessage(net)
-
-		//testClockRaw(clock)
-		//testNetwork(net)
-		sync()
-	until quit
-	
-	networkEmitter(net, enum.close, cue, clock)
-	clearControl(button)
-
-endFunction
-
-function handleChangeClockEdit(spriteID as integer, nameBtn ref as button_t, c ref as clock_t)
-
-	out as integer = false
-
-	if spriteID = nameBtn.sprID
-		click()
-		c.output = getEditBoxInput()
-		setClockFromInput(c)
-		saveClockTimer(c)
-		out = true
-	endif
-
-endFunction out
-
-function updateCtrlClock(c ref as clock_t, cc as color_t[])
-
-	if c.secCurrent <> 0
-		updateClockTime(c, true)
-		getClockCtrlChange(c, cc)
-		updateClockText(c, 3)
-	endif
-
-endFunction
-
-function resetCtrlClock(c ref as clock_t, cc as color_t[], alpha as integer)
-
-	setClockCtrlReset(c, cc[0], alpha)
-	updateClockText(c, 3)
-
-endFunction
-
-function changeButtonHighlight(in as integer, dimmed as integer, clock ref as clock_t)
-
-	select in
-	case enum.wait
-		highlightColorButton(sprite.bCtrlWait, true, dimmed)
-		highlightColorButton(sprite.bCtrlReady, false, dimmed)
-		highlightColorButton(sprite.bCtrlAction, false, dimmed)
-		highlightButton(sprite.bCtrlTimer, false)
-		resetPlayPause(clock, dimmed)
-	endCase
-	case enum.ready
-		highlightColorButton(sprite.bCtrlWait, false, dimmed)
-		highlightColorButton(sprite.bCtrlReady, true, dimmed)
-		highlightColorButton(sprite.bCtrlAction, false, dimmed)
-		highlightButton(sprite.bCtrlTimer, false)
-		resetPlayPause(clock, dimmed)
-	endCase
-	case enum.action
-		highlightColorButton(sprite.bCtrlWait, false, dimmed)
-		highlightColorButton(sprite.bCtrlReady, false, dimmed)
-		highlightColorButton(sprite.bCtrlAction, true, dimmed)
-		highlightButton(sprite.bCtrlTimer, false)
-		resetPlayPause(clock, dimmed)
-	endCase
-	case enum.countdown
-		highlightColorButton(sprite.bCtrlWait, false, dimmed)
-		highlightColorButton(sprite.bCtrlReady, false, dimmed)
-		highlightColorButton(sprite.bCtrlAction, false, dimmed)
-		highlightButton(sprite.bCtrlTimer, true)
-		setSpriteFramePlayPause(false)
-	endCase
-	case enum.playPause
-		setSpriteFramePlayPause(clock.play)
-	endCase
-	case enum.edit
-		highlightButton(sprite.bCtrlEdit, true)
-	endCase
-	case enum.reset
-		highlightButton(sprite.bCtrlReset, true)
-		setSpriteFramePlayPause(clock.play)
-	endCase
-	case enum.binary
-		// more here possibly
-	endCase
-	endSelect
-
-endFunction
-
-//************************************************* Main Menu Drop Down Functions **************************************
+//************************************************* Main Menu Drop Down View *******************************************
 
 function dropDownView()
 
@@ -361,6 +116,8 @@ function dropDownView()
 	until quit
 
 endFunction
+
+//************************************************* Main Menu Drop Down Update *****************************************
 
 function handleMainDropDown(spriteID as integer, button ref as button_t[], langBtn ref as button_t[], nameBtn ref as button_t, ddHeight as float, offset as integer, quit as integer)
 
@@ -458,7 +215,266 @@ function handleChangeClientName(spriteID as integer, nameBtn ref as button_t)
 
 endFunction out
 
-//************************************************* Cue Controller Functions *******************************************
+//************************************************* Controller View ****************************************************
+
+function controlView()
+
+	quit 		as integer
+	keyTimer	as timer_t
+	button		as button_t[]
+	dimmed		as integer = 80
+	altButton	as integer = false
+	clock		as clock_t
+	clockTimer	as timer_t
+	clockCol	as color_t[2]
+	prop		as property_t
+	btnOk		as button_t
+	net			as network_t
+	cue			as cueLight_t
+	mode		as mode_t
+	clientTimer	as timer_t
+	timeSet		as integer = false
+	pulseTimer	as timer_t
+	resetGlow	as integer = false
+	pulseReset	as integer = true
+	mutedGreen	as color_t
+	serverTimer	as timer_t
+		
+	state.mode = enum.cue
+	cue = initCue()	
+	setBackgroundColor(color[10])
+	placeLogo()
+	button = placeControlButtons(dimmed)
+
+	prop.baseSize = 7.5
+	prop.font = media.fontC
+	prop.fontColor = 5
+	prop.fontAlpha = 192
+
+	clock = loadClockTimer()
+	clockCol = setClockColors()
+	setSecondsInClock(clock)
+	placeCountdownStart(clock, color[5], prop, enum.ctrl)
+
+	mutedGreen = color[5]
+	mutedGreen.a = dimmed
+
+	if app.name = ""
+		app.name = "Ctrl-"
+	endif
+
+	app.mode = "ctrlLite"
+	
+	updateServerText(updateAppInfo())
+	serverTimer = setTimer(1000)
+	
+	repeat
+		sync()
+	until getTimer(serverTimer)
+	
+	clearTextSingle(txt.server)
+	
+	initHostLAN(net)
+
+	clientTimer = setTimer(500)
+	pulseTimer = setTimer(1000)
+
+	repeat
+		if GetRawKeyReleased(escKey)
+			quit = true
+		endif
+		
+		handleControlButtons(mode, clock, clockCol, clockTimer, keyTimer, prop.fontAlpha)
+
+		if state.buttonHit
+			click()
+			state.buttonHit = false
+			changeButtonHighlight(mode.enum, dimmed, clock)
+			if mode.emit
+				if state.mode = enum.cue or state.mode = enum.countdown
+					networkEmitter(net, mode.enum, cue, clock)
+				endif
+				mode.emit = false
+			endif
+		endif
+
+		if getTimer(keyTimer) and mode.altButton
+			resetGlow = handleControlButtonsUpdate(mode, btnOK, resetGlow, clock.binary, cue)
+		endif
+
+		if btnOK.active
+			timeSet = handleChangeClockEdit(mode.spriteID, btnOK, clock)
+			if timeSet
+				handleChangeClockEditDone(btnOK, clock, color[prop.fontColor])
+				timeSet = false
+				resetGlow = true
+			endif
+		endif
+
+		if clock.play 
+			if getTimer(clockTimer)
+				updateCtrlClock(clock, clockCol)
+				networkEmitter(net, enum.countdown, cue, clock)
+			endif
+			updateTweenString(txt.clock)
+		endif
+
+		if getTimer(clientTimer)
+			receiveClientsConnect(net, state.mode, cue, clock)
+			receiveClientsDisconnect(net)
+		endif
+		
+		if resetGlow
+			if getTimer(pulseTimer)
+				pulseReset = setButtonPulse(pulseReset, tween.button, sprite.bCtrlReset, mutedGreen, color[11])
+			endif
+			updateTweenSpriteButton(tween.button, sprite.bCtrlReset)
+		endif
+		receiveClientsMessage(net)
+		//testClockRaw(clock)
+		//testNetwork(net)
+		sync()
+	until quit
+	
+	networkEmitter(net, enum.close, cue, clock)
+	clearControl(button)
+
+endFunction
+
+//************************************************* Controller View Update  ********************************************
+
+function handleControlButtonsUpdate(mode ref as mode_t, btnOK ref as button_t, resetGlow as integer, binary as integer, cue ref as cueLight_t)
+	
+	mode.altButton = false
+	highlightButton(mode.spriteID, false)
+	select mode.enum
+	case enum.edit
+		hideCtrlTopButtons(true)
+		btnOK = placeSetClockEdit()
+	endCase
+	case enum.reset
+		if resetGlow
+			resetGlow = false
+			spriteColor(sprite.bCtrlReset, 11)
+		endif
+	endCase
+	case enum.audio
+		cue.audioOn = not cue.audioOn
+		if cue.audioOn
+			updateButtonText(txt.bCtrlAudio, getLangString("audioOn", state.language))
+		else
+			updateButtonText(txt.bCtrlAudio, getLangString("audioOff", state.language))
+		endif
+	endCase
+	case enum.fade
+		cue.fadeOn = not cue.fadeOn
+		if cue.fadeOn
+			updateButtonText(txt.bCtrlFade, getLangString("fadeOn", state.language))
+		else
+			updateButtonText(txt.bCtrlFade, getLangString("fadeOff", state.language))
+		endif
+	endCase
+	case enum.binary
+		if binary
+			highlightButton(sprite.bCtrlBinary, true)
+		else
+			highlightButton(sprite.bCtrlBinary, false)
+		endif
+	endCase
+	endSelect
+
+endFunction resetGlow
+
+function handleChangeClockEdit(spriteID as integer, nameBtn ref as button_t, c ref as clock_t)
+
+	out as integer = false
+
+	if spriteID = nameBtn.sprID
+		click()
+		c.output = getEditBoxInput()
+		setClockFromInput(c)
+		saveClockTimer(c)
+		out = true
+	endif
+
+endFunction out
+
+function handleChangeClockEditDone(btnOK ref as button_t, clock ref as clock_t, col as color_t)
+	
+	clearTextInput(btnOK.sprID)
+	hideCtrlTopButtons(false)
+	btnOK.active = false
+	updateClockText(clock, 3)
+	updateTextColor(txt.clock, col)
+	
+endFunction
+
+function updateCtrlClock(c ref as clock_t, cc as color_t[])
+
+	if c.secCurrent <> 0
+		updateClockTime(c, true)
+		getClockCtrlChange(c, cc)
+		updateClockText(c, 3)
+	endif
+
+endFunction
+
+function resetCtrlClock(c ref as clock_t, cc as color_t[], alpha as integer)
+
+	setClockCtrlReset(c, cc[0], alpha)
+	updateClockText(c, 3)
+
+endFunction
+
+function changeButtonHighlight(in as integer, dimmed as integer, clock ref as clock_t)
+
+	select in
+	case enum.wait
+		highlightColorButton(sprite.bCtrlWait, true, dimmed)
+		highlightColorButton(sprite.bCtrlReady, false, dimmed)
+		highlightColorButton(sprite.bCtrlAction, false, dimmed)
+		highlightButton(sprite.bCtrlTimer, false)
+		resetPlayPause(clock, dimmed)
+	endCase
+	case enum.ready
+		highlightColorButton(sprite.bCtrlWait, false, dimmed)
+		highlightColorButton(sprite.bCtrlReady, true, dimmed)
+		highlightColorButton(sprite.bCtrlAction, false, dimmed)
+		highlightButton(sprite.bCtrlTimer, false)
+		resetPlayPause(clock, dimmed)
+	endCase
+	case enum.action
+		highlightColorButton(sprite.bCtrlWait, false, dimmed)
+		highlightColorButton(sprite.bCtrlReady, false, dimmed)
+		highlightColorButton(sprite.bCtrlAction, true, dimmed)
+		highlightButton(sprite.bCtrlTimer, false)
+		resetPlayPause(clock, dimmed)
+	endCase
+	case enum.countdown
+		highlightColorButton(sprite.bCtrlWait, false, dimmed)
+		highlightColorButton(sprite.bCtrlReady, false, dimmed)
+		highlightColorButton(sprite.bCtrlAction, false, dimmed)
+		highlightButton(sprite.bCtrlTimer, true)
+		setSpriteFramePlayPause(false)
+	endCase
+	case enum.playPause
+		setSpriteFramePlayPause(clock.play)
+	endCase
+	case enum.edit
+		highlightButton(sprite.bCtrlEdit, true)
+	endCase
+	case enum.reset
+		highlightButton(sprite.bCtrlReset, true)
+		setSpriteFramePlayPause(clock.play)
+	endCase
+	case enum.binary
+		// more here possibly
+	endCase
+	endSelect
+
+endFunction
+
+//************************************************* Cue Controller Switching *******************************************
 
 function cueController(lanServer as lanServer_t)
 
@@ -521,7 +537,7 @@ function cueController(lanServer as lanServer_t)
 
 endFunction
 
-//************************************************* Cue Light Functions ************************************************
+//************************************************* Cue Light View *****************************************************
 
 function cueLightView(net ref as network_t, netMsg as message_t)
 
@@ -539,35 +555,17 @@ function cueLightView(net ref as network_t, netMsg as message_t)
 	placeFrame()
 
 	repeat
-		// get network message
 		netMsg = receiveCueLAN(net)
 
 		if netMsg.mode = enum.quit or netMsg.mode = enum.countdown or netMsg.mode = enum.close
 			quit = true
-		else
-			if GetRawKeyReleased(escKey)
-				netMsg.mode = enum.quit
-				quit = true
-			endif
-			// if new message from server
-			if netMsg.new
-				cue.fromJSON(netMsg.inJSON)
-				// set background
-				if cue.fadeOn
-					setSpriteTweenColor(tween.back, sprite.back, backCol[cue.colorStep], cue.fadeDuration, 3)
-				else
-					setBackgroundColor(backCol[cue.colorStep])
-				endif
-				// set readybutton
-				if cue.responseUpd
-					if cue.responseReq
-						placeReadyButton(backCol[2])
-					endif
-					if cue.responseAck
-						clearSpriteSingle(sprite.bReady)
-					endif
-				endif
-			endif
+		elseif netMsg.new
+			cue = cueLightViewUpdate(netMsg, backCol)
+		endif
+
+		if GetRawKeyReleased(escKey)
+			netMsg.mode = enum.quit
+			quit = true
 		endif
 		// if ready button is active
 		if cue.responseReq
@@ -592,8 +590,33 @@ function cueLightView(net ref as network_t, netMsg as message_t)
 	clearCueLight()
 
 endFunction netMsg
- 
-//************************************************* Countdown Timer ****************************************************
+
+//************************************************* Cue Light Update ***************************************************
+
+function cueLightViewUpdate(netMsg as message_t, backCol as color_t[])
+	
+	cue as cueLight_t
+	
+	cue.fromJSON(netMsg.inJSON)
+	// set background
+	if cue.fadeOn
+		setSpriteTweenColor(tween.back, sprite.back, backCol[cue.colorStep], cue.fadeDuration, 3)
+	else
+		setBackgroundColor(backCol[cue.colorStep])
+	endif
+	// set readybutton
+	if cue.responseUpd
+		if cue.responseReq
+			placeReadyButton(backCol[2])
+		endif
+		if cue.responseAck
+			clearSpriteSingle(sprite.bReady)
+		endif
+	endif
+	
+endFunction cue
+
+//************************************************* Countdown View *****************************************************
 
 function countdownView(net ref as network_t, netMsg as message_t)
 
@@ -631,15 +654,7 @@ function countdownView(net ref as network_t, netMsg as message_t)
 		if netMsg.mode = enum.quit or netMsg.mode = enum.cue or netMsg.mode = enum.close
 			quit = true
 		elseif netMsg.new
-			clock.fromJSON(netMsg.inJSON)
-			items = setClockItems(clock)
-			updateClockText(clock, items)
-			if clock.secCurrent = clock.secTotal
-				placeCountdownStart(clock, backCol[0], prop, enum.countdown)
-			endif
-			if netMsg.subMode = enum.reset
-				resetCountdown(backCol[0], prop)
-			endif
+			items = countdownViewUpdate(netMsg, clock, backCol[0], prop)
 		endif
 
 		if GetRawKeyReleased(escKey)
@@ -654,6 +669,7 @@ function countdownView(net ref as network_t, netMsg as message_t)
 		else
 			getScreenTextOrientation(txt.clock, prop.padVertical)
 		endif
+		
 		if clock.secCurrent = 0
 			if getTimer(pulseTimer)
 				pulseIn = setClockBackgroundPulse(pulseIn, backCol[2], prop)
@@ -663,11 +679,11 @@ function countdownView(net ref as network_t, netMsg as message_t)
 			getClockBackgroundChange(clock, backCol)
 			updateClockText(clock, items)
 		endif
+		
 		updateTweenBackground()
 		updateTweenString(txt.clock)
-		//endif
-		testClockRaw(clock)
-		testNetwork(net)
+		//testClockRaw(clock)
+		//testNetwork(net)
 		sync()
 	until quit
 
@@ -675,3 +691,21 @@ function countdownView(net ref as network_t, netMsg as message_t)
 	clearFrame()
 
 endFunction netMsg
+
+//************************************************* Countdown Update ***************************************************
+
+function countdownViewUpdate(netMsg as message_t, clock ref as clock_t, backCol as color_t, prop ref as property_t)
+	
+	items as integer
+	
+	clock.fromJSON(netMsg.inJSON)
+	items = setClockItems(clock)
+	updateClockText(clock, items)
+	if clock.secCurrent = clock.secTotal
+		placeCountdownStart(clock, backCol, prop, enum.countdown)
+	endif
+	if netMsg.subMode = enum.reset
+		resetCountdown(backCol, prop)
+	endif
+	
+endFunction items
