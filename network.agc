@@ -115,6 +115,9 @@ function networkEmitter(net ref as network_t, cmd as integer, cue ref as cueLigh
 	case enum.action // green
 		cue.colorStep = 0
 	endCase
+	case enum.text
+		cue.textOn = not cue.textOn
+	endCase
 	endSelect
 
 	if emitCueLAN
@@ -382,7 +385,7 @@ endFunction netMsg
 function getOrientationChange(prop ref as property_t)
 
 	out as integer
-	out = testClockUpdate(prop)
+	out = testOrientationUpdate(prop)
 
 endFunction out
 

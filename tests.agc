@@ -28,7 +28,7 @@ function testClock()
 endFunction
 */
 
-function testClockUpdate(prop ref as property_t)
+function testOrientationUpdate(prop ref as property_t)
 
 	out as integer = false
 

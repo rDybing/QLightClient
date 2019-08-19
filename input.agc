@@ -33,10 +33,12 @@ function handleControlButtons(mode ref as mode_t, clock ref as clock_t, clockCol
 		mode.spriteID = mouse.spriteID
 		select mode.spriteID
 		case sprite.bCtrlText
-			keyTimer = keyPressed(sprite.bCtrlText)
-			mode.altButton = true
-			mode.enum = enum.text
-			mode.emit = false
+			if state.mode = enum.cue
+				keyTimer = keyPressed(sprite.bCtrlText)
+				mode.altButton = true
+				mode.enum = enum.text
+				mode.emit = true
+			endif
 		endCase
 		case sprite.bCtrlFade
 			keyTimer = keyPressed(sprite.bCtrlFade)

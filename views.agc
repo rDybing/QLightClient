@@ -356,7 +356,6 @@ function handleControlButtonsUpdate(mode ref as mode_t, btnOK ref as button_t, r
 		endif
 	endCase
 	case enum.text
-		cue.textOn = not cue.textOn
 		if cue.textOn
 			highlightButtonColor(sprite.bCtrlText, mutedGreen, true)
 		else
@@ -588,25 +587,7 @@ function cueLightView(net ref as network_t, netMsg as message_t)
 			updateTweenSpriteButton(tween.ready, sprite.bReady)
 		endif
 		
-		if cue.textOn and textActive = false
-			placeCueText(cue.colorStep, prop)
-			textActive = true
-		endif
-		if cue.textOn = false and textActive
-			clearTextSingle(txt.cueStep)
-			textActive = false
-		endif
-		if cue.textOn and textActive
-			if device.isComputer
-				if getOrientationChange(prop)
-					setScreenTextOrientation(txt.cueStep, prop.orientation, prop.padVertical)
-				endif
-			else
-				getScreenTextOrientation(txt.cueStep, prop.padVertical)
-			endif
-			updateCueText(cue.colorStep)
-		endif
-		
+		textActive = cueLightTextUpdate(cue, textActive, prop)
 		updateTweenBackground()		
 		//testCueRaw(cue)
 		//testNetwork(net)
@@ -641,6 +622,29 @@ function cueLightViewUpdate(netMsg as message_t, backCol as color_t[])
 	endif
 	
 endFunction cue
+
+function cueLightTextUpdate(cue as cueLight_t, textActive as integer, prop ref as property_t)
+	
+	if cue.textOn and textActive = false
+		placeCueText(cue.colorStep, prop)
+		textActive = true
+	endif
+	if cue.textOn = false and textActive
+		clearTextSingle(txt.cueStep)
+		textActive = false
+	endif
+	if cue.textOn and textActive
+		if device.isComputer
+			if getOrientationChange(prop)
+				setScreenTextOrientation(txt.cueStep, prop.orientation, prop.padVertical)
+			endif
+		else
+			getScreenTextOrientation(txt.cueStep, prop.padVertical)
+		endif
+		updateCueText(cue.colorStep)
+	endif
+	
+endFunction textActive
 
 //************************************************* Countdown View *****************************************************
 
