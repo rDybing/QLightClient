@@ -57,6 +57,7 @@ type globalState_t
 	language			as integer
 	buttonHit			as integer
 	mode				as integer
+	isLanHost			as integer
 endType
 
 type network_t

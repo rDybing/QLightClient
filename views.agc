@@ -18,6 +18,7 @@ function mainMenuView(lanServer ref as lanServer_t)
 	spriteID	as integer
 	button		as button_t[]
 	mode		as mode_t
+	lanHost		as network_t
 
 	state.buttonHit = false
 
@@ -48,7 +49,7 @@ function mainMenuView(lanServer ref as lanServer_t)
 		if getTimer(keyTimer) and state.buttonHit
 			state.buttonHit = false
 			highlightButton(spriteID, state.buttonHit)
-			modeSwitch(mode.enum, button, lanServer)
+			modeSwitch(mode.enum, button, lanServer, lanHost)
 			placeMainMenu()
 		endif
 		sync()
@@ -217,7 +218,7 @@ endFunction out
 
 //************************************************* Controller View ****************************************************
 
-function controlView()
+function controlView(net ref as network_t)
 
 	quit 		as integer
 	keyTimer	as timer_t
@@ -229,7 +230,6 @@ function controlView()
 	clockCol	as color_t[2]
 	prop		as property_t
 	btnOk		as button_t
-	net			as network_t
 	cue			as cueLight_t
 	mode		as mode_t
 	clientTimer	as timer_t
@@ -274,8 +274,6 @@ function controlView()
 	
 	clearTextSingle(txt.server)
 	
-	initHostLAN(net)
-
 	clientTimer = setTimer(500)
 	pulseTimer = setTimer(1000)
 
@@ -336,7 +334,6 @@ function controlView()
 		sync()
 	until quit
 	
-	networkEmitter(net, enum.close, cue, clock)
 	clearControl(button)
 
 endFunction

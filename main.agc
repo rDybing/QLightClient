@@ -177,16 +177,24 @@ function splash()
 	
 endFunction
 
-function modeSwitch(mode as integer, btn as button_t[], lanServer ref as lanServer_t)
-
+function modeSwitch(mode as integer, btn as button_t[], lanServer ref as lanServer_t, lanHost ref as network_t)
+	
 	clearMainMenu(btn)
 
 	select mode
 	case enum.client
+		if state.isLanHost
+			closeLanHost(lanHost)
+		endif
+		state.isLanHost = false
 		cueController(lanServer)
 	endCase
 	case enum.ctrl
-		controlView()
+		if not state.isLanHost
+			initLanHost(lanHost)
+		endif
+		state.isLanHost = true
+		controlView(lanHost)
 	endCase
 	endSelect
 

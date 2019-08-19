@@ -10,13 +10,14 @@ Copyright 2019 Roy Dybing - all rights reserved
 
 //************************************************* LAN Client/Server Init *********************************************
 
-function initHostLAN(net ref as network_t)
+function initLanHost(net ref as network_t)
 
 	net.hostPort = 1025
 	net.active = true
 	net.id = hostNetwork("QLightNet", app.name, net.hostPort)
 	SetNetworkLatency(net.id, 50)
 	//testNetConnect(gs)
+	
 endFunction
 
 
@@ -82,6 +83,7 @@ function networkAreadyExist()
 			lanServer.ip = GetStringToken(msgAPI, ":", 2)
 		endif
 	endif
+	//testGeneral(lanServer.toJSON())
 
 endfunction lanServer
 
@@ -93,7 +95,7 @@ function networkEmitter(net ref as network_t, cmd as integer, cue ref as cueLigh
 
 	select cmd
 	case enum.close
-		closeHostLAN(net)
+		closeLanHost(net)
 	endCase
 	case enum.countdown
 		emitCueLAN = false
@@ -222,7 +224,7 @@ function receiveClientsMessage(net ref as network_t)
 
 endFunction
 
-function closeHostLAN(net ref as network_t)
+function closeLanHost(net ref as network_t)
 
 	if state.loggedIn
 		if IsNetworkActive(net.id)

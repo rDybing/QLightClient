@@ -137,6 +137,7 @@ function setStartState()
 	state.apiBusy = false
 	state.httpOK = false
 	state.live = false
+	state.isLanHost = false
 
 endFunction
 
