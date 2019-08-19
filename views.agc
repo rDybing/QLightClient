@@ -48,7 +48,7 @@ function mainMenuView(lanServer ref as lanServer_t)
 		// reset button highlight
 		if getTimer(keyTimer) and state.buttonHit
 			state.buttonHit = false
-			highlightButton(spriteID, state.buttonHit)
+			highlightButtonGrey(spriteID, state.buttonHit)
 			modeSwitch(mode.enum, button, lanServer, lanHost)
 			placeMainMenu()
 		endif
@@ -64,7 +64,7 @@ function keyPressed(spriteID)
 	keyTimer as timer_t
 
 	state.buttonHit = true
-	highlightButton(spriteID, state.buttonHit)
+	highlightButtonGrey(spriteID, state.buttonHit)
 	keyTimer = setTimer(50)
 
 endFunction keyTimer
@@ -297,7 +297,7 @@ function controlView(net ref as network_t)
 		endif
 
 		if getTimer(keyTimer) and mode.altButton
-			resetGlow = handleControlButtonsUpdate(mode, btnOK, resetGlow, clock.binary, cue)
+			resetGlow = handleControlButtonsUpdate(mode, btnOK, resetGlow, clock.binary, cue, mutedGreen)
 		endif
 
 		if btnOK.active
@@ -340,10 +340,10 @@ endFunction
 
 //************************************************* Controller View Update  ********************************************
 
-function handleControlButtonsUpdate(mode ref as mode_t, btnOK ref as button_t, resetGlow as integer, binary as integer, cue ref as cueLight_t)
+function handleControlButtonsUpdate(mode ref as mode_t, btnOK ref as button_t, resetGlow as integer, binary as integer, cue ref as cueLight_t, mutedGreen as color_t)
 	
 	mode.altButton = false
-	highlightButton(mode.spriteID, false)
+	highlightButtonGrey(mode.spriteID, false)
 	select mode.enum
 	case enum.edit
 		hideCtrlTopButtons(true)
@@ -355,27 +355,27 @@ function handleControlButtonsUpdate(mode ref as mode_t, btnOK ref as button_t, r
 			spriteColor(sprite.bCtrlReset, 11)
 		endif
 	endCase
-	case enum.audio
-		cue.audioOn = not cue.audioOn
-		if cue.audioOn
-			updateButtonText(txt.bCtrlAudio, getLangString("audioOn", state.language))
+	case enum.text
+		cue.textOn = not cue.textOn
+		if cue.textOn
+			highlightButtonColor(sprite.bCtrlText, mutedGreen, true)
 		else
-			updateButtonText(txt.bCtrlAudio, getLangString("audioOff", state.language))
+			highlightButtonColor(sprite.bCtrlText, mutedGreen, false)
 		endif
 	endCase
 	case enum.fade
 		cue.fadeOn = not cue.fadeOn
 		if cue.fadeOn
-			updateButtonText(txt.bCtrlFade, getLangString("fadeOn", state.language))
+			highlightButtonColor(sprite.bCtrlFade, mutedGreen, true)
 		else
-			updateButtonText(txt.bCtrlFade, getLangString("fadeOff", state.language))
+			highlightButtonColor(sprite.bCtrlFade, mutedGreen, false)
 		endif
 	endCase
 	case enum.binary
 		if binary
-			highlightButton(sprite.bCtrlBinary, true)
+			highlightButtonColor(sprite.bCtrlBinary, mutedGreen, true)
 		else
-			highlightButton(sprite.bCtrlBinary, false)
+			highlightButtonColor(sprite.bCtrlBinary, mutedGreen, false)
 		endif
 	endCase
 	endSelect
@@ -430,38 +430,38 @@ function changeButtonHighlight(in as integer, dimmed as integer, clock ref as cl
 		highlightColorButton(sprite.bCtrlWait, true, dimmed)
 		highlightColorButton(sprite.bCtrlReady, false, dimmed)
 		highlightColorButton(sprite.bCtrlAction, false, dimmed)
-		highlightButton(sprite.bCtrlTimer, false)
+		highlightButtonGrey(sprite.bCtrlTimer, false)
 		resetPlayPause(clock, dimmed)
 	endCase
 	case enum.ready
 		highlightColorButton(sprite.bCtrlWait, false, dimmed)
 		highlightColorButton(sprite.bCtrlReady, true, dimmed)
 		highlightColorButton(sprite.bCtrlAction, false, dimmed)
-		highlightButton(sprite.bCtrlTimer, false)
+		highlightButtonGrey(sprite.bCtrlTimer, false)
 		resetPlayPause(clock, dimmed)
 	endCase
 	case enum.action
 		highlightColorButton(sprite.bCtrlWait, false, dimmed)
 		highlightColorButton(sprite.bCtrlReady, false, dimmed)
 		highlightColorButton(sprite.bCtrlAction, true, dimmed)
-		highlightButton(sprite.bCtrlTimer, false)
+		highlightButtonGrey(sprite.bCtrlTimer, false)
 		resetPlayPause(clock, dimmed)
 	endCase
 	case enum.countdown
 		highlightColorButton(sprite.bCtrlWait, false, dimmed)
 		highlightColorButton(sprite.bCtrlReady, false, dimmed)
 		highlightColorButton(sprite.bCtrlAction, false, dimmed)
-		highlightButton(sprite.bCtrlTimer, true)
+		highlightButtonGrey(sprite.bCtrlTimer, true)
 		setSpriteFramePlayPause(false)
 	endCase
 	case enum.playPause
 		setSpriteFramePlayPause(clock.play)
 	endCase
 	case enum.edit
-		highlightButton(sprite.bCtrlEdit, true)
+		highlightButtonGrey(sprite.bCtrlEdit, true)
 	endCase
 	case enum.reset
-		highlightButton(sprite.bCtrlReset, true)
+		highlightButtonGrey(sprite.bCtrlReset, true)
 		setSpriteFramePlayPause(clock.play)
 	endCase
 	case enum.binary
@@ -544,6 +544,15 @@ function cueLightView(net ref as network_t, netMsg as message_t)
 	time		as timer_t
 	pulseIn		as integer = false
 	mouse		as mouse_t
+	prop		as property_t
+	textActive	as integer = false
+	
+	prop.baseSize = 0.8
+	prop.font = media.fontC
+	prop.fontColor = 1
+	prop.fontAlpha = 192
+	prop.orientation = 1
+	prop.padVertical = 0
 
 	time = setTimer(1000)
 	backCol = setCueBackgroundColors()
@@ -578,6 +587,26 @@ function cueLightView(net ref as network_t, netMsg as message_t)
 			endif
 			updateTweenSpriteButton(tween.ready, sprite.bReady)
 		endif
+		
+		if cue.textOn and textActive = false
+			placeCueText(cue.colorStep, prop)
+			textActive = true
+		endif
+		if cue.textOn = false and textActive
+			clearTextSingle(txt.cueStep)
+			textActive = false
+		endif
+		if cue.textOn and textActive
+			if device.isComputer
+				if getOrientationChange(prop)
+					setScreenTextOrientation(txt.cueStep, prop.orientation, prop.padVertical)
+				endif
+			else
+				getScreenTextOrientation(txt.cueStep, prop.padVertical)
+			endif
+			updateCueText(cue.colorStep)
+		endif
+		
 		updateTweenBackground()		
 		//testCueRaw(cue)
 		//testNetwork(net)

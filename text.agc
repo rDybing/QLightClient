@@ -106,6 +106,39 @@ endFunction
 
 //************************************************* Cue Light Functions ************************************************
 
+function placeCueText(cueStep as integer, prop as property_t)
+	
+	mt		as txtProp_t
+	cueText	as string[3] = ["action", "ready", "wait"]
+
+	mt.startX = 50
+	mt.startY = 50
+	mt.align = 1
+	mt.layer = layer.front
+		
+	mt.size = 24 * prop.baseSize
+	
+	if device.isComputer
+		mt.size = mt.size * 1.6
+	endif
+	
+	if GetTextExists(txt.cueStep)
+		deleteText(txt.cueStep)
+	endif
+
+	setFontProperties(color[prop.fontColor], prop.fontAlpha, prop.font, mt.size)
+	CreateText(txt.cueStep, getLangString(cueText[cueStep], state.language))
+	textDraw(txt.cueStep, mt)
+	updateTextOrientation(txt.cueStep, prop.padVertical)
+	
+endFunction
+
+function updateCueText(cueStep as integer)
+	
+	cueText	as string[3] = ["action", "ready", "wait"]
+	SetTextString(txt.cueStep, getLangString(cueText[cueStep], state.language))
+	
+endFunction
 
 //************************************************* Countdown Functions ************************************************
 
@@ -426,7 +459,7 @@ function setTextProperties(mt ref as txtProp_t, x as float, y as float, align as
 
 endFunction mt
 
-function getLangString(item as string, ID as integer)
+function getLangString(item as string, langID as integer)
 
 	out as string
 
@@ -434,7 +467,7 @@ function getLangString(item as string, ID as integer)
 
 	for i = 0 to ml.length
 		if ml[i].item = item
-			out = ml[i].lang[ID]
+			out = ml[i].lang[langID]
 			exit
 		endif
 	next i

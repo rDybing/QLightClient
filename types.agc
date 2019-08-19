@@ -124,6 +124,7 @@ type enum_t
 	ready				as integer
 	action				as integer
 	audio				as integer
+	text				as integer
 	fade				as integer
 	playPause			as integer
 	edit				as integer
@@ -140,6 +141,7 @@ type cueLight_t
 	fadeOn				as integer
 	fadeDuration		as float
 	audioOn				as integer
+	textOn				as integer
 	responseReq			as integer
 	responseAck			as integer
 	responseUpd			as integer
@@ -245,7 +247,7 @@ type sprite_t
 	bCtrlReset			as integer
 	bCtrlBinary			as integer
 	bCtrlPlayPause		as integer
-	bCtrlAudio			as integer
+	bCtrlText			as integer
 	bCtrlFade			as integer
 	bLang				as integer
 	bName				as integer
@@ -297,6 +299,7 @@ type txt_t
 	version				as integer
 	editBox				as integer
 	clock				as integer
+	cueStep				as integer
 	bModeClient			as integer
 	bModeCtrl			as integer
 	bCtrlWait			as integer
@@ -306,7 +309,7 @@ type txt_t
 	bCtrlEdit			as integer
 	bCtrlReset			as integer
 	bCtrlBinary			as integer
-	bCtrlAudio			as integer
+	bCtrlText			as integer
 	bCtrlFade			as integer
 	modeSelect			as integer
 	appID				as integer

@@ -38,7 +38,7 @@ function initConstants()
 	txt.bCtrlEdit			= 1014
 	txt.bCtrlReset			= 1015
 	txt.bCtrlBinary			= 1016
-	txt.bCtrlAudio			= 1017
+	txt.bCtrlText			= 1017
 	txt.bCtrlFade			= 1018
 	txt.modeSelect			= 1019
 	txt.appID				= 1020
@@ -46,6 +46,7 @@ function initConstants()
 	txt.bName				= 1022
 	txt.server				= 1023
 	txt.startup				= 1095
+	txt.cueStep				= 1099
 	txt.clock				= 1100
 
 	sprite.logo				= 1010
@@ -63,7 +64,7 @@ function initConstants()
 	sprite.bCtrlReset		= 1022
 	sprite.bCtrlBinary		= 1023
 	sprite.bCtrlPlayPause	= 1024
-	sprite.bCtrlAudio		= 1025
+	sprite.bCtrlText		= 1025
 	sprite.bCtrlFade		= 1026
 	sprite.bLang			= 1027
 	sprite.bName			= 1028

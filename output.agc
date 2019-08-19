@@ -96,7 +96,7 @@ function placeModeButtons(col as color_t)
 
 endFunction btn
 
-function highlightButton(spriteID as integer, highlight as integer)
+function highlightButtonGrey(spriteID as integer, highlight as integer)
 
 	if highlight
 		SetSpriteColorAlpha(spriteID, 48)
@@ -104,6 +104,16 @@ function highlightButton(spriteID as integer, highlight as integer)
 		SetSpriteColorAlpha(spriteID, color[11].a)
 	endif
 
+endFunction
+
+function highlightButtonColor(spriteID as integer, col as color_t, highlight as integer)
+	
+	if highLight
+		setSpriteColor(spriteID, col.r, col.g, col.b, col.a)
+	else
+		setSpriteColor(spriteID, color[11].r, color[11].g, color[11].b, color[11].a)
+	endif
+	
 endFunction
 
 function clearMainMenu(btn as button_t[])
@@ -297,20 +307,20 @@ function placeControlButtons(dimmed as integer)
 	spr.posX =  15
 	spr.posY = 23
 
-	// Button Audio On/Off (Cue)
+	// Button Text On/Off (Cue)
 	sprTemp = spr
 	spr.posY = spr.posY - spr.height - 2
 	spr.width = (spr.width / 2) - 1.5
 	sTxt = true
-	imageSetup(sprite.bCtrlAudio, layer.C, spr, media.dot)
-	SetSpriteColor(sprite.bCtrlAudio, color[11].r, color[11].g, color[11].b, color[11].a)
-	placeButtonText(txt.bCtrlAudio, getLangString("audioOff", state.language), layer.B, spr, color[0], sTxt)
-	btn[0] = buttonTransfer(spr, sprite.bCtrlAudio, txt.bCtrlAudio)
+	imageSetup(sprite.bCtrlText, layer.C, spr, media.dot)
+	SetSpriteColor(sprite.bCtrlText, color[11].r, color[11].g, color[11].b, color[11].a)
+	placeButtonText(txt.bCtrlText, getLangString("text", state.language), layer.B, spr, color[0], sTxt)
+	btn[0] = buttonTransfer(spr, sprite.bCtrlText, txt.bCtrlText)
 	// Button Fade/Cut (Cue)
 	spr.posX = spr.posX + spr.width + 3
 	imageSetup(sprite.bCtrlFade, layer.C, spr, media.dot)
 	SetSpriteColor(sprite.bCtrlFade, color[11].r, color[11].g, color[11].b, color[11].a)
-	placeButtonText(txt.bCtrlFade, getLangString("fadeOff", state.language), layer.B, spr, color[0], sTxt)
+	placeButtonText(txt.bCtrlFade, getLangString("fade", state.language), layer.B, spr, color[0], sTxt)
 	btn[1] = buttonTransfer(spr, sprite.bCtrlFade, txt.bCtrlFade)
 	spr = sprTemp
 	sTxt = false
@@ -435,14 +445,14 @@ endFunction btn
 function hideCtrlTopButtons(hide as integer)
 	
 	if hide
-		SetSpriteVisible(sprite.bCtrlAudio, 0)
+		SetSpriteVisible(sprite.bCtrlText, 0)
 		SetSpriteVisible(sprite.bCtrlFade, 0)
-		SetTextVisible(txt.bCtrlAudio, 0)
+		SetTextVisible(txt.bCtrlText, 0)
 		SetTextVisible(txt.bCtrlFade, 0)
 	else
-		SetSpriteVisible(sprite.bCtrlAudio, 1)
+		SetSpriteVisible(sprite.bCtrlText, 1)
 		SetSpriteVisible(sprite.bCtrlFade, 1)
-		SetTextVisible(txt.bCtrlAudio, 1)
+		SetTextVisible(txt.bCtrlText, 1)
 		SetTextVisible(txt.bCtrlFade, 1)
 	endif
 	
@@ -515,6 +525,7 @@ function clearCueLight()
 	setBackgroundColorDefault()
 	clearTweenSingle(tween.back)
 	clearFrame()
+	clearTextSingle(txt.cueStep)
 
 endFunction
 
