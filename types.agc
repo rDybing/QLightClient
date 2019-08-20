@@ -146,6 +146,7 @@ type cueLight_t
 	responseAck			as integer
 	responseUpd			as integer
 	orientation			as integer
+	language			as integer
 endType
 
 type clock_t

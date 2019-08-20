@@ -231,5 +231,6 @@ function initCue()
 	cue.fadeOn = false
 	cue.fadeDuration = 0.25
 	cue.audioOn = false
+	cue.language = state.language
 
 endFunction cue

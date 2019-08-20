@@ -568,7 +568,7 @@ function cueLightView(net ref as network_t, netMsg as message_t)
 		elseif netMsg.new
 			cue = cueLightViewUpdate(netMsg, backCol)
 		endif
-
+		
 		if GetRawKeyReleased(escKey)
 			netMsg.mode = enum.quit
 			quit = true
@@ -620,6 +620,10 @@ function cueLightViewUpdate(netMsg as message_t, backCol as color_t[])
 		if cue.responseAck
 			clearSpriteSingle(sprite.bReady)
 		endif
+	endif
+	
+	if cue.language <> state.language
+		state.language = cue.language
 	endif
 	
 endFunction cue
