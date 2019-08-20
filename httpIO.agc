@@ -13,7 +13,6 @@ Copyright 2019 Roy Dybing - all rights reserved
 function uploadAppInfo()
 	
 	msgOut	as string
-	posY	as integer = 5
 	appName	as string
 	query	as string
 	
@@ -35,7 +34,7 @@ function uploadAppInfo()
 	out = out + "&Mode=" + app.mode
 	out = out + "&OS=" + device.os
 	out = out + "&Model=" + device.model 
-	msg = postToServer(query, out, posY)
+	msg = postToServer(query, out)
 	
 	msgOut = GetStringToken(msg, ":", 2)
 	
@@ -44,7 +43,6 @@ endFunction msgOut
 function updateAppInfo()
 	
 	msgOut	as string
-	posY	as integer = 5
 	appName	as string
 	query	as string
 	
@@ -61,7 +59,7 @@ function updateAppInfo()
 	out = "ID=" + app.id
 	out = out + "&Name=" + appName
 	out = out + "&Mode=" + app.mode 
-	msg = postToServer(query, out, posY)
+	msg = postToServer(query, out)
 	
 	msgOut = GetStringToken(msg, ":", 2)
 	
@@ -71,31 +69,29 @@ endFunction msgOut
 
 function getWelcome()
 
-	posY		as integer = 5
 	query		as string
 	msg			as string
 		
 	query = "getWelcome?ID=" + app.id
 	
-	msg = getFromServer(query, posY)
+	msg = getFromServer(query)
 	
 endFunction msg
 
 function getServerIP()
 
-	posY	as integer = 5
 	query	as string
 	msg		as string
 
 	query = "getServerIP?ID=" + app.id
 
-	msg = getFromServer(query, posY)
+	msg = getFromServer(query)
 	
 endFunction msg
 
 //************************************************* Send Query Functions ***********************************************
 
-function getFromServer(query as string, posY as integer)
+function getFromServer(query as string)
 	
 	http		as integer
 	response	as string
@@ -106,11 +102,11 @@ function getFromServer(query as string, posY as integer)
 		SetHTTPTimeout(http, 10000)
 		SendHTTPRequestASync(http, query)
 		while GetHTTPResponseReady(http) = 0
-			placeTextFromServer("Connecting...", posY)
+			placeStatusText("Connecting...")
 			sync()
 		endWhile
 		if GetHTTPResponseReady(http) = -1
-			placeTextFromServer("Connection Failed", posY)
+			placeStatusText("Connection Failed")
 			state.httpOK = false
 			response = "ERROR:No response from server!"
 		else
@@ -120,13 +116,13 @@ function getFromServer(query as string, posY as integer)
 		CloseHTTPConnection(http)
 		DeleteHTTPConnection(http)
 	else
-		placeTextFromServer("No internet!", posY)
+		placeStatusText("No internet!")
 		response = "ERROR:No internet!"
 	endif
 	
 endFunction response
 
-function postToServer(query as string, post as string, posY as integer)
+function postToServer(query as string, post as string)
 	
 	http		as integer
 	response	as string
@@ -137,11 +133,11 @@ function postToServer(query as string, post as string, posY as integer)
 		SetHTTPTimeout(http, 10000)
 		SendHTTPRequestASync(http, query, post)
 		while GetHTTPResponseReady(http) = 0
-			placeTextFromServer("Connecting...", posY)
+			placeStatusText("Connecting...")
 			sync()
 		endWhile
 		if GetHTTPResponseReady(http) = -1
-			placeTextFromServer("Connection Failed!", posY)
+			placeStatusText("Connection Failed!")
 			state.httpOK = false
 			response = "ERROR:No response from server!"
 		else
@@ -151,7 +147,7 @@ function postToServer(query as string, post as string, posY as integer)
 		CloseHTTPConnection(http)
 		DeleteHTTPConnection(http)
 	else
-		placeTextFromServer("No internet!", posY)
+		placeStatusText("No internet!")
 		response = "ERROR:No internet!"
 	endif
 	

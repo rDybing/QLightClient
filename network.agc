@@ -57,23 +57,23 @@ function networkAreadyExist()
 		endwhile
 
 		if netNames.length = nil
-			print("No Network Found")
+			placeStatusText("No Network Found")
 		else
 			for i = 0 to netNames.length
 				if netNames[i] = "QLightNet"
 					lanServer.exist = true
 					lanServer.directConnect = true
 				endif
-				print(netNames[i])
+				placeStatusText(netNames[i])
 			next i
 		endif
 		sync()
 	until getTimer(netFind)
-
+	
 	DeleteBroadcastListener(listener)
 	
 	if not lanServer.exist
-		print("Finding LAN host on server")
+		updateStatusText("Finding LAN host on server")
 		sync()
 		msgAPI = getServerIP()
 		status = GetStringToken(msgAPI, ":", 1)
@@ -83,6 +83,8 @@ function networkAreadyExist()
 			lanServer.ip = GetStringToken(msgAPI, ":", 2)
 		endif
 	endif
+	
+	clearTextSingle(txt.status)
 	//testGeneral(lanServer.toJSON())
 
 endfunction lanServer

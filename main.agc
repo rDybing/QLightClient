@@ -108,7 +108,7 @@ function main()
 	if not state.fatalError
 		splash()
 		lanServer = networkAreadyExist()
-		clearTextSingle(txt.server)
+		clearTextSingle(txt.status)
 		if device.isComputer
 			cueController(lanServer)
 		else
@@ -151,21 +151,21 @@ function splash()
 		app.mode = "noneSP"
 	endif
 	
-	updateServerText(uploadAppInfo())
+	updateStatusText(uploadAppInfo())
 	serverTimer = setTimer(1000)
 	
 	repeat
 		sync()
 	until getTimer(serverTimer)
 	
-	clearTextSingle(txt.server)
+	clearTextSingle(txt.status)
 	
 	msg = getWelcome()
-	clearTextSingle(txt.server)	
+	clearTextSingle(txt.status)	
 	placeStartupText(msg)
 	textFade(txt.startup, txt.startup + 1, "in")
 	proceedTimer = setTimer(4000)
-	clearTextSingle(txt.server)
+	clearTextSingle(txt.status)
 	
 	repeat
 		sync()

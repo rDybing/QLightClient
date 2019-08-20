@@ -315,7 +315,7 @@ type txt_t
 	appID				as integer
 	bLang				as integer
 	bName				as integer	
-	server				as integer
+	status				as integer
 	startup				as integer
 endType
 

@@ -44,7 +44,7 @@ function initConstants()
 	txt.appID				= 1020
 	txt.bLang				= 1021
 	txt.bName				= 1022
-	txt.server				= 1023
+	txt.status				= 1023
 	txt.startup				= 1095
 	txt.cueStep				= 1099
 	txt.clock				= 1100

@@ -42,9 +42,9 @@ function placeStartupText(msg as string)
 	
 endFunction
 
-function updateServerText(msg as string)
+function updateStatusText(msg as string)
 	
-	SetTextString(txt.server, msg)
+	SetTextString(txt.status, msg)
 	
 endFunction
 
@@ -291,18 +291,19 @@ function updateTextOrientation(txtID, pad as integer)
 
 endFunction
 
-//************************************************* HTTP Text **********************************************************
+//************************************************* Status Text ********************************************************
 
-function placeTextFromServer(s as string, y as integer)
+function placeStatusText(s as string)
 	
 	mt as txtProp_t
 	col as integer
+	posY as integer = 5
 		
-	clearText(txt.server, txt.server)
+	clearText(txt.status, txt.status)
 	setFontProperties(color[0], 255, media.fontA, 4)
-	mt = setTextProperties(mt, 50, y, 1)
-	createText(txt.server, s)
-	textDraw(txt.server, mt)
+	mt = setTextProperties(mt, 50, posY, 1)
+	createText(txt.status, s)
+	textDraw(txt.status, mt)
 	
 endFunction
 

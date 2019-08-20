@@ -26,10 +26,10 @@ function placeLogo()
 
 	spr as spriteProp_t
 
-	spr.width = 14
+	spr.width = 12.5
 	spr.height = -1
-	spr.posX =  0.5
-	spr.posY = 0.5
+	spr.posX =  1
+	spr.posY = 1
 
 	imageSetup(sprite.logo, layer.B, spr, media.logo)
 	SetSpriteColor(sprite.logo, 255, 255, 255, 255)	
