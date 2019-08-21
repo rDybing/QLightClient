@@ -43,14 +43,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ##### Todo:
 
-- HTTPS API Client Networking
+- Abort client connect to enable going into main menu to adjust settings
 
 ##### WiP:
 
-- Add (optional) audio alerts to cues
+- General spit and polish
 
 ##### Done (to within a reasonable level):
 
+- Add (optional) text to cues
+- HTTPS API Client Networking
 - LAN Client Networking
 - Menu Views
 - Cue Light view
