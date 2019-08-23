@@ -131,6 +131,8 @@ type enum_t
 	reset				as integer
 	newClient			as integer
 	binary				as integer
+	retry				as integer
+	abort				as integer
 endType
 
 //************************************************* Module Specific ****************************************************

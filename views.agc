@@ -473,13 +473,15 @@ endFunction
 //************************************************* Cue Controller Switching *******************************************
 
 function cueController(lanServer as lanServer_t)
-
+	
 	quit		as integer
 	net			as network_t
 	netMsg		as message_t
 	serverTimer	as timer_t
 	netActive	as integer
 	button		as button_t[]
+	keyTimer	as timer_t
+	mode		as mode_t
 	
 	if app.name = ""
 		app.name = "Client-"
@@ -503,8 +505,9 @@ function cueController(lanServer as lanServer_t)
 	netActive = joinHost(net, lanServer)
 
 	if netActive
-		button = placeConnectClientButtons(col as color_t)
+		button = placeConnectClientButtons(color[11])
 		repeat
+			handleConnectClientButtons(mode, keyTimer)
 			placeStatusText('Waiting for response\nfrom server...')
 			//testNetwork(net)
 			netMsg = receiveServerAck(net)
@@ -529,6 +532,12 @@ function cueController(lanServer as lanServer_t)
 		case enum.close
 			quit = true
 		endCase
+		case enum.retry
+			// do stuff
+		endCase
+		case enum.abort
+			quit = true
+		endCase
 		endSelect
 	until quit
 
@@ -536,13 +545,15 @@ function cueController(lanServer as lanServer_t)
 
 endFunction
 
-function handleConnectClientButtons()
+function handleConnectClientButtons(mode ref as mode_t, keyTimer ref as timer_t)
+	
+	mouse	as mouse_t
 	
 	mouse = updateMouse()
 	if mouse.hit
 		mouse = getMouseHit(mouse)
-		spriteID = mouse.spriteID
-		select spriteID
+		mode.spriteID = mouse.spriteID
+		select mode.spriteID
 		case sprite.bClientRetry
 			keyTimer = keyPressed(sprite.bClientRetry)
 			click()
@@ -558,9 +569,9 @@ function handleConnectClientButtons()
 	// reset button highlight
 	if getTimer(keyTimer) and state.buttonHit
 		state.buttonHit = false
-		highlightButtonGrey(spriteID, state.buttonHit)
-		modeSwitch(mode.enum, button, lanServer, lanHost)
-		placeMainMenu()
+		highlightButtonGrey(mode.spriteID, state.buttonHit)
+		//modeSwitch(mode.enum, button, lanServer, lanHost)
+		//placeMainMenu()
 	endif
 	
 endFunction

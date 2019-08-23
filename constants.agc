@@ -132,6 +132,8 @@ function initEnums()
 	enum.reset				= 23
 	enum.newClient			= 24
 	enum.binary				= 25
+	enum.retry				= 26
+	enum.abort				= 27
 	
 endFunction
 

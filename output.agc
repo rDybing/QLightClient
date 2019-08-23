@@ -79,7 +79,7 @@ function placeModeButtons(col as color_t)
 
 	spr.width = 70
 	spr.height = bHeight
-	spr.posX =  15
+	spr.posX = 15
 	spr.posY = 23
 
 	// Button Client
@@ -479,9 +479,14 @@ function placeConnectClientButtons(col as color_t)
 	btn		as button_t[2]
 	sTxt	as integer = false
 
-	spr.width = 70
+	if device.isComputer
+		spr.width = 30
+		spr.posX =  35
+	else
+		spr.width = 70
+		spr.posX = 15
+	endif
 	spr.height = bHeight
-	spr.posX =  15
 	spr.posY = 23
 
 	// Button Retry Get Server
