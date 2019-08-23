@@ -250,6 +250,8 @@ type sprite_t
 	bCtrlPlayPause		as integer
 	bCtrlText			as integer
 	bCtrlFade			as integer
+	bClientRetry		as integer
+	bClientAbort		as integer
 	bLang				as integer
 	bName				as integer
 	bLeft				as integer
@@ -312,6 +314,8 @@ type txt_t
 	bCtrlBinary			as integer
 	bCtrlText			as integer
 	bCtrlFade			as integer
+	bClientRetry		as integer
+	bClientAbort		as integer
 	modeSelect			as integer
 	appID				as integer
 	bLang				as integer

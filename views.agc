@@ -479,7 +479,8 @@ function cueController(lanServer as lanServer_t)
 	netMsg		as message_t
 	serverTimer	as timer_t
 	netActive	as integer
-
+	button		as button_t[]
+	
 	if app.name = ""
 		app.name = "Client-"
 	endif
@@ -502,6 +503,7 @@ function cueController(lanServer as lanServer_t)
 	netActive = joinHost(net, lanServer)
 
 	if netActive
+		button = placeConnectClientButtons(col as color_t)
 		repeat
 			placeStatusText('Waiting for response\nfrom server...')
 			//testNetwork(net)
@@ -532,6 +534,35 @@ function cueController(lanServer as lanServer_t)
 
 	disconnectHost(net)
 
+endFunction
+
+function handleConnectClientButtons()
+	
+	mouse = updateMouse()
+	if mouse.hit
+		mouse = getMouseHit(mouse)
+		spriteID = mouse.spriteID
+		select spriteID
+		case sprite.bClientRetry
+			keyTimer = keyPressed(sprite.bClientRetry)
+			click()
+			mode.enum = enum.retry
+		endCase
+		case sprite.bClientAbort
+			keyTimer = keyPressed(sprite.bClientAbort)
+			click()
+			mode.enum = enum.abort
+		endCase
+		endSelect
+	endif
+	// reset button highlight
+	if getTimer(keyTimer) and state.buttonHit
+		state.buttonHit = false
+		highlightButtonGrey(spriteID, state.buttonHit)
+		modeSwitch(mode.enum, button, lanServer, lanHost)
+		placeMainMenu()
+	endif
+	
 endFunction
 
 //************************************************* Cue Light View *****************************************************

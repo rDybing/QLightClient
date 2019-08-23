@@ -471,6 +471,33 @@ function clearControl(btn as button_t[])
 
 endFunction
 
+//************************************************* Cue Connect Functions **********************************************
+
+function placeConnectClientButtons(col as color_t)
+
+	spr		as spriteProp_t
+	btn		as button_t[2]
+	sTxt	as integer = false
+
+	spr.width = 70
+	spr.height = bHeight
+	spr.posX =  15
+	spr.posY = 23
+
+	// Button Retry Get Server
+	imageSetup(sprite.bClientRetry, layer.C, spr, media.dot)
+	SetSpriteColor(sprite.bClientRetry, col.r, col.g, col.b, col.a)	
+	placeButtonText(txt.bClientRetry, getLangString("retry", state.language), layer.B, spr, color[0], sTxt)
+	btn[0] = buttonTransfer(spr, sprite.bClientRetry, txt.bClientRetry)
+	// Button Abort to Main Menu
+	spr.posY = spr.posY + spr.height + 2
+	imageSetup(sprite.bClientAbort, layer.C, spr, media.dot)
+	SetSpriteColor(sprite.bClientAbort, col.r, col.g, col.b, col.a)
+	placeButtonText(txt.bClientAbort, getLangString("abort", state.language), layer.B, spr, color[0], sTxt)
+	btn[1] = buttonTransfer(spr, sprite.bClientAbort, txt.bClientAbort)
+
+endFunction btn
+
 //************************************************* Cue Light Functions ************************************************
 
 function placeReadyButton(col as color_t)
