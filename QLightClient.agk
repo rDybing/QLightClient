@@ -62,7 +62,7 @@ FILE_11=network.agc;-1
 FILE_12=httpIO.agc;-1
 
 [files]
-FILE_NAME_0=1;main.agc;4131;0
+FILE_NAME_0=0;main.agc;4131;0
 FILE_NAME_1=0;types.agc;2941;10
 FILE_NAME_2=0;fileIO.agc;1952;7
 FILE_NAME_3=0;chores.agc;1869;8
@@ -70,7 +70,7 @@ FILE_NAME_4=0;tests.agc;695;12
 FILE_NAME_5=0;errors.agc;451;9
 FILE_NAME_6=0;input.agc;1061;4
 FILE_NAME_7=0;views.agc;5865;1
-FILE_NAME_8=0;output.agc;474;2
+FILE_NAME_8=1;output.agc;474;2
 FILE_NAME_9=0;constants.agc;4848;11
 FILE_NAME_10=0;text.agc;1106;3
 FILE_NAME_11=0;network.agc;8595;5

@@ -514,6 +514,7 @@ function cueController(lanServer as lanServer_t)
 			sync()
 		until netMsg.mode = enum.cue or netMsg.mode = enum.countdown
 		clearTextSingle(txt.status)
+		clearConnect(button)
 	else
 		quit = true
 	endif

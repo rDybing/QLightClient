@@ -503,6 +503,17 @@ function placeConnectClientButtons(col as color_t)
 
 endFunction btn
 
+function clearConnect(btn as button_t[])
+
+	clearSpriteSingle(sprite.logo)
+
+	for i = 0 to btn.length
+		clearSpriteSingle(btn[i].sprID)
+		clearTextSingle(btn[i].txtID)
+	next i
+
+endFunction
+
 //************************************************* Cue Light Functions ************************************************
 
 function placeReadyButton(col as color_t)
