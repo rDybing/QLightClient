@@ -265,7 +265,7 @@ function controlView(net ref as network_t)
 
 	app.mode = "ctrlLite"
 	
-	updateStatusText(updateAppInfo())
+	updateStatusText(postAppUpdate())
 	serverTimer = setTimer(1000)
 	
 	repeat
@@ -493,7 +493,7 @@ function cueController(lanServer as lanServer_t)
 		app.mode = "clientSP"
 	endif
 	
-	updateStatusText(updateAppInfo())
+	updateStatusText(postAppUpdate())
 	serverTimer = setTimer(1000)
 	
 	repeat
@@ -511,12 +511,19 @@ function cueController(lanServer as lanServer_t)
 			placeStatusText('Waiting for response\nfrom server...')
 			//testNetwork(net)
 			netMsg = receiveServerAck(net)
+			if mode.enum = enum.retry
+				joinHost(net, lanServer)
+			endif
 			sync()
 		until netMsg.mode = enum.cue or netMsg.mode = enum.countdown
 		clearTextSingle(txt.status)
 		clearConnect(button)
 	else
 		quit = true
+	endif
+	
+	if mode.enum = enum.retry or mode.enum = enum.abort
+		// do stuff
 	endif
 	
 	repeat

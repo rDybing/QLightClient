@@ -151,7 +151,7 @@ function splash()
 		app.mode = "noneSP"
 	endif
 	
-	updateStatusText(uploadAppInfo())
+	updateStatusText(postAppInfo())
 	serverTimer = setTimer(1000)
 	
 	repeat

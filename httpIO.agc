@@ -10,7 +10,7 @@ Copyright 2019 Roy Dybing - all rights reserved
 
 // ************************************************ POST Functions *****************************************************
 
-function uploadAppInfo()
+function postAppInfo()
 	
 	msgOut	as string
 	appName	as string
@@ -40,7 +40,7 @@ function uploadAppInfo()
 	
 endFunction msgOut
 
-function updateAppInfo()
+function postAppUpdate()
 	
 	msgOut	as string
 	appName	as string

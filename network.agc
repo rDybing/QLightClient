@@ -20,7 +20,6 @@ function initLanHost(net ref as network_t)
 	
 endFunction
 
-
 function networkAreadyExist()
         
 	listener	as integer
