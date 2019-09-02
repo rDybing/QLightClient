@@ -75,8 +75,8 @@ function dropDownView()
 
 	quit		as integer = false
 	mouse		as mouse_t
-	options		as string[2] = ["setLang", "setName"]
-	button		as button_t[2]
+	options		as string[3] = ["setLang", "setName", "setMute"]
+	button		as button_t[3]
 	langBtn		as button_t[4]
 	nameBtn		as button_t
 	spriteID	as integer
@@ -84,6 +84,12 @@ function dropDownView()
 	offset		as integer = 12
 	tempLang	as integer
 	nameSet		as integer = false
+	
+	if app.muted
+		options[2] = "setMute"
+	else
+		options[2] = "setSound"
+	endif
 
 	tempLang = state.language
 	button = placeDropDownMenu(options)
@@ -111,6 +117,17 @@ function dropDownView()
 					button[1].active = false
 				endif
 			endif
+			if button[2].active
+				if app.muted
+					options[2] = "setSound"
+					app.muted = false
+				else
+					options[2] = "setMute"
+					app.muted = true
+				endif
+				button[2].active = false
+				updateButtonText(button[2].txtID, getLangString(options[2], state.language))
+			endif
 		endif
 		//testDevice()	
 		sync()
@@ -136,11 +153,13 @@ function handleMainDropDown(spriteID as integer, button ref as button_t[], langB
 		if button[0].active
 			resizeDropDownMenu(ddHeight)
 			moveButton(button[1], 0)
+			moveButton(button[2], 0)
 			clearSelectLanguage(langBtn)
 			button[0].active = false
 		elseif button[0].active = false and button[1].active = false
 			resizeDropDownMenu(ddHeight + offset)
 			moveButton(button[1], offset)
+			moveButton(button[2], offset)
 			langBtn = placeSelectLanguage(button[1].sprY)
 			button[0].active = true
 		endif
@@ -150,13 +169,19 @@ function handleMainDropDown(spriteID as integer, button ref as button_t[], langB
 	case button[1].sprID
 		if button[1].active
 			resizeDropDownMenu(ddHeight)
+			moveButton(button[2], 0)
 			clearTextInput(nameBtn.sprID)
 			button[1].active = false
 		elseif button[1].active = false and button[0].active = false
 			resizeDropDownMenu(ddHeight + offset)
+			moveButton(button[2], offset)
 			nameBtn = placeSetClientName()
 			button[1].active = true
 		endif
+		click()
+	endCase
+	case button[2].sprID
+		button[2].active = true
 		click()
 	endCase
 	endSelect

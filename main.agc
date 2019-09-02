@@ -63,6 +63,8 @@ global state		as globalState_t		// will change here, there and everywhere
 global version		as version_t			// constant version info
 global enum			as enum_t				// constant after init
 
+app.muted = false
+
 initConstants()
 initEnums()
 initColor()

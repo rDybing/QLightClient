@@ -46,7 +46,8 @@ function initConstants()
 	txt.appID				= 1022
 	txt.bLang				= 1023
 	txt.bName				= 1024
-	txt.status				= 1025
+	txt.bMute				= 1025
+	txt.status				= 1026
 	txt.startup				= 1095
 	txt.cueStep				= 1099
 	txt.clock				= 1100
@@ -72,9 +73,10 @@ function initConstants()
 	sprite.bClientAbort		= 1028
 	sprite.bLang			= 1029
 	sprite.bName			= 1030
-	sprite.bLeft			= 1031
-	sprite.bRight			= 1032
-	sprite.bCheck			= 1033
+	sprite.bMute			= 1031
+	sprite.bLeft			= 1032
+	sprite.bRight			= 1033
+	sprite.bCheck			= 1034
 	sprite.bitStart			= 1063 // reserved up to 1079 - 16 bits
 	sprite.flag				= 1080
 	sprite.frame			= 1097

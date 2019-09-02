@@ -135,14 +135,14 @@ endFunction
 
 function placeDropDownMenu(options as string[])
 
-	btn		as button_t[2]
+	btn		as button_t[3]
 	spr		as spriteProp_t
 	sTxt	as integer = false
 	col		as color_t
 
 	col = color[12]
 	spr.width = 74
-	spr.height = 7 * (options.length + 1)
+	spr.height = 7.5 * (options.length + 1)
 	spr.posX =  26
 	spr.posY = 8
 
@@ -166,6 +166,12 @@ function placeDropDownMenu(options as string[])
 	SetSpriteColor(sprite.bName, col.r, col.g, col.b, 32)
 	placeButtonText(txt.bName, getLangString(options[1], state.language), layer.top, spr, color[0], sTxt)
 	btn[1] = buttonTransfer(spr, sprite.bName, txt.bName)
+	// Button Set Client Name
+	spr.posY = spr.posY + spr.height + 2
+	imageSetup(sprite.bMute, layer.front, spr, media.dot)
+	SetSpriteColor(sprite.bMute, col.r, col.g, col.b, 32)
+	placeButtonText(txt.bMute, getLangString(options[2], state.language), layer.top, spr, color[0], sTxt)
+	btn[2] = buttonTransfer(spr, sprite.bMute, txt.bMute)
 
 endFunction btn
 
@@ -956,6 +962,8 @@ endFunction
 
 function click()
 
-	PlaySound(sound.click, 30)
-
+	if not app.muted
+		PlaySound(sound.click, 30)
+	endif
+	
 endFunction

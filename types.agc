@@ -25,6 +25,7 @@ type appSettings_t
 	language			as string
 	name				as string
 	mode				as string
+	muted				as integer
 endType
 
 type mouse_t
@@ -256,6 +257,7 @@ type sprite_t
 	bClientAbort		as integer
 	bLang				as integer
 	bName				as integer
+	bMute				as integer
 	bLeft				as integer
 	bRight				as integer
 	bCheck				as integer
@@ -321,7 +323,8 @@ type txt_t
 	modeSelect			as integer
 	appID				as integer
 	bLang				as integer
-	bName				as integer	
+	bName				as integer
+	bMute				as integer
 	status				as integer
 	startup				as integer
 endType
