@@ -121,6 +121,7 @@ function dropDownView()
 				if app.muted
 					options[2] = "setSound"
 					app.muted = false
+					click()
 				else
 					options[2] = "setMute"
 					app.muted = true
@@ -182,7 +183,6 @@ function handleMainDropDown(spriteID as integer, button ref as button_t[], langB
 	endCase
 	case button[2].sprID
 		button[2].active = true
-		click()
 	endCase
 	endSelect
 
