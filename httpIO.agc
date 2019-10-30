@@ -78,12 +78,12 @@ function getWelcome()
 	
 endFunction msg
 
-function getServerIP()
+function getControllerIP()
 
 	query	as string
 	msg		as string
 
-	query = "getServerIP?ID=" + app.id
+	query = "getControllerIP?ID=" + app.id
 
 	msg = getFromServer(query)
 	

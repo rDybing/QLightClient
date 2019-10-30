@@ -74,7 +74,7 @@ function networkAreadyExist()
 	if not lanServer.exist
 		updateStatusText("Finding LAN host on server")
 		sync()
-		msgAPI = getServerIP()
+		msgAPI = getControllerIP()
 		status = GetStringToken(msgAPI, ":", 1)
 		if status = "OK"
 			lanServer.exist = true
