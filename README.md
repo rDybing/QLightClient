@@ -6,6 +6,15 @@ This is primarily the client app for the future QLight Pro Controller - but
 also contain a simple controller that can control up to 8 QLight devices, 
 albeit over just the one channel **and** just simple cues and timer.
 
+**Contact:**
+
+location   | name/handle |
+-----------|-------------|
+github:    | rDybing     |
+twitter:   | @DybingRoy  |
+linked in: | Roy Dybing  |
+mewe:      | Roy Dybing  |
+
 ### Releases:
 
 - Version format: [major release].[new feature(s)].[bugfix patch-version]
