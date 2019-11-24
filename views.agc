@@ -532,11 +532,13 @@ function cueController(lanServer as lanServer_t)
 	if netActive
 		button = placeConnectClientButtons(color[11])
 		repeat
+			// gets if mode = enum.retry or enum.abort
 			handleConnectClientButtons(mode, keyTimer)
 			placeStatusText('Waiting for response\nfrom server...')
 			//testNetwork(net)
 			netMsg = receiveServerAck(net)
 			if mode.enum = enum.retry
+				CloseNetwork(net.id)
 				joinHost(net, lanServer)
 			endif
 			sync()

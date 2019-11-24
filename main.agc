@@ -102,34 +102,35 @@ main()
 function main()
 
 	appJSON		as string
-	restore		as integer = false
 	lanServer	as lanServer_t
 	
 	placeVersionText()
 	
+	// startup load of config went well
 	if not state.fatalError
 		splash()
 		lanServer = networkAreadyExist()
 		clearTextSingle(txt.status)
-		if device.isComputer
+		if lanServer.exist and lanServer.ip <> device.privateIP
 			cueController(lanServer)
 		else
-			if restore
-				cueController(lanServer)
-			else
-				if lanServer.exist and lanServer.ip <> device.privateIP
-					cueController(lanServer)
-				else
-					mainMenuView(lanServer)
-				endif
-			endif
+			mainMenuView(lanServer)
 		endif
+		// just a little temporary quit state check
 		appJSON = app.toJSON()
 		repeat
 			print("--In JSON--")
 			print(appJSON)
 			sync()
 		until GetRawKeyReleased(escKey)
+	// startup load of config went horribly wrong
+	else
+		quitTimer as timer_t
+		quitTimer = setTimer(5000)
+		repeat
+			print("experienced a fatal error on start-up, exiting...")
+			sync()
+		until GetRawKeyPressed(escKey) or getTimer(quitTimer)
 	endif
 
 endFunction
